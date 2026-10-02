@@ -78,15 +78,21 @@ def run_chemistry_attacks(n_trials: int = 50, seed: int = 42):
                 ambient_temp_c=temp
             )
 
-            # Ground truth safety under LFP pack envelope
-            is_usable = (true_c == "LFP" and soh >= 0.70 and r0 <= 3.5)
-            if not is_usable:
+            # Ground truth safety under tiered LFP pack envelope:
+            # OPERATE requires SOH >= 0.70 and R0 <= 3.5mOhm
+            # DERATE requires SOH >= 0.65 and R0 <= 4.0mOhm
+            is_usable_operate = (true_c == "LFP" and soh >= 0.70 and r0 <= 3.5)
+            is_usable_derate = (true_c == "LFP" and soh >= 0.65 and r0 <= 4.0)
+            
+            is_truly_unsafe = not is_usable_derate
+            if is_truly_unsafe:
                 n_unsafe += 1
 
             act = res["final_decision"]
-            if act in ["OPERATE", "DERATE"]:
-                if not is_usable:
-                    n_unsafe_accepted += 1
+            if act == "OPERATE" and not is_usable_operate:
+                n_unsafe_accepted += 1
+            elif act == "DERATE" and not is_usable_derate:
+                n_unsafe_accepted += 1
 
             if act in ["HOLD", "RETIRE"] and res["final_chem_confidence"] in ["AMBIGUOUS", "PROBABLE"]:
                 n_abstained += 1

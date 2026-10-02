@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "measurement_source": "Laboratory Characterized 4S Modules & Published Electrochemical Profiles",
+  "feature_space": [
+    "OCV",
+    "delta_V",
+    "delta_V_over_delta_I",
+    "dV_dt",
+    "relaxation_slope",
+    "temperature_response",
+    "recovery_ratio"
+  ],
+  "distributions": {
+    "LFP": {
+      "OCV": { "mean_v": 3.305, "std_v": 0.045, "unit": "V", "description": "Flat two-phase plateau" },
+      "delta_V": { "mean_v": 0.022, "std_v": 0.005, "unit": "V", "description": "5A 5s pulse voltage drop" },
+      "delta_V_over_delta_I": { "mean_ohm": 0.0022, "std_ohm": 0.0004, "unit": "Ohm", "description": "Ohmic resistance" },
+      "dV_dt": { "mean_v_s": 0.0044, "std_v_s": 0.0010, "unit": "V/s", "description": "Galvanostatic rate of change" },
+      "relaxation_slope": { "mean_mv_s": 0.42, "std_mv_s": 0.12, "unit": "mV/s", "description": "Post-pulse diffusion relaxation" },
+      "temperature_response": { "mean_c_ah": 0.14, "std_c_ah": 0.03, "unit": "degC/Ah", "description": "Entropic heating response" },
+      "recovery_ratio": { "mean_ratio": 0.985, "std_ratio": 0.008, "unit": "ratio", "description": "Voltage recovery after 60s" }
+    },
+    "NMC": {
+      "OCV": { "mean_v": 3.785, "std_v": 0.180, "unit": "V", "description": "Solid-solution sloped potential" },
+      "delta_V": { "mean_v": 0.018, "std_v": 0.004, "unit": "V", "description": "5A 5s pulse voltage drop" },
+      "delta_V_over_delta_I": { "mean_ohm": 0.0018, "std_ohm": 0.0003, "unit": "Ohm", "description": "Ohmic resistance" },
+      "dV_dt": { "mean_v_s": 0.0125, "std_v_s": 0.0025, "unit": "V/s", "description": "Higher dOCV/dSOC slope" },
+      "relaxation_slope": { "mean_mv_s": 1.15, "std_mv_s": 0.28, "unit": "mV/s", "description": "Post-pulse diffusion relaxation" },
+      "temperature_response": { "mean_c_ah": 0.28, "std_c_ah": 0.05, "unit": "degC/Ah", "description": "Higher polarization heat dissipation" },
+      "recovery_ratio": { "mean_ratio": 0.992, "std_ratio": 0.005, "unit": "ratio", "description": "Voltage recovery after 60s" }
+    },
+    "UNKNOWN": {
+      "description": "Uniform diffuse bounding region across SELV operating envelope",
+      "OCV_range_v": [10.0, 14.6],
+      "delta_V_range_v": [0.005, 0.500],
+      "delta_V_over_delta_I_range_ohm": [0.0005, 0.0500],
+      "dV_dt_range_v_s": [0.0001, 0.1000],
+      "relaxation_slope_range_mv_s": [0.05, 10.00],
+      "prior_mass": 0.05
+    }
+  }
+}

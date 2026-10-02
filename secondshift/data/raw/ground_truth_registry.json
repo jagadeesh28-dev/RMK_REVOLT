@@ -8,7 +8,7 @@
     "nominal_capacity_ah": 20.0,
     "true_c_th_j_k": 1200.0,
     "true_leakage_mv_hr": 0.8,
-    "characterized_timestamp": 1790940411.7191503,
+    "characterized_timestamp": 1790943296.4496117,
     "notes": "Fresh grade-A LFP cell"
   },
   "CELL_2_MARGINAL": {
@@ -20,7 +20,7 @@
     "nominal_capacity_ah": 20.0,
     "true_c_th_j_k": 1200.0,
     "true_leakage_mv_hr": 3.2,
-    "characterized_timestamp": 1790940411.7193055,
+    "characterized_timestamp": 1790943296.44978,
     "notes": "Mildly cycled fleet retirement"
   },
   "CELL_3_DEGRADED": {
@@ -32,7 +32,7 @@
     "nominal_capacity_ah": 20.0,
     "true_c_th_j_k": 1200.0,
     "true_leakage_mv_hr": 4.5,
-    "characterized_timestamp": 1790940411.7229176,
+    "characterized_timestamp": 1790943296.4531567,
     "notes": "Candidate for 0.5C derating"
   },
   "CELL_4_DEFECTIVE": {
@@ -44,7 +44,7 @@
     "nominal_capacity_ah": 20.0,
     "true_c_th_j_k": 1200.0,
     "true_leakage_mv_hr": 22.0,
-    "characterized_timestamp": 1790940411.7233677,
+    "characterized_timestamp": 1790943296.45342,
     "notes": "Severely degraded with micro-short"
   },
   "CELL_5_NMC": {
@@ -56,7 +56,7 @@
     "nominal_capacity_ah": 24.0,
     "true_c_th_j_k": 850.0,
     "true_leakage_mv_hr": 1.5,
-    "characterized_timestamp": 1790940411.7236247,
+    "characterized_timestamp": 1790943296.4535716,
     "notes": "Tagless NMC cell"
   }
 }

@@ -1,35 +1,15 @@
 {
   "Known_LFP": {
     "n_trials": 50,
-    "n_unsafe": 19,
+    "n_unsafe": 11,
     "n_unsafe_accepted": 0,
     "far_percent": 0.0,
     "chemistry_accuracy_percent": 100.0,
     "abstention_rate_percent": 0.0,
     "false_confidence_percent": 0.0,
-    "mean_test_time_s": 0.01
-  },
-  "Known_NMC": {
-    "n_trials": 50,
-    "n_unsafe": 50,
-    "n_unsafe_accepted": 0,
-    "far_percent": 0.0,
-    "chemistry_accuracy_percent": 4.0,
-    "abstention_rate_percent": 96.0,
-    "false_confidence_percent": 0.0,
-    "mean_test_time_s": 0.0
-  },
-  "Unknown_Chemistry": {
-    "n_trials": 50,
-    "n_unsafe": 31,
-    "n_unsafe_accepted": 0,
-    "far_percent": 0.0,
-    "chemistry_accuracy_percent": 10.0,
-    "abstention_rate_percent": 56.0,
-    "false_confidence_percent": 36.0,
     "mean_test_time_s": 0.02
   },
-  "Wrong_Label_NMC_as_LFP": {
+  "Known_NMC": {
     "n_trials": 50,
     "n_unsafe": 50,
     "n_unsafe_accepted": 0,
@@ -39,14 +19,34 @@
     "false_confidence_percent": 0.0,
     "mean_test_time_s": 0.0
   },
-  "Mixed_50_50": {
+  "Unknown_Chemistry": {
     "n_trials": 50,
-    "n_unsafe": 34,
+    "n_unsafe": 24,
     "n_unsafe_accepted": 0,
     "far_percent": 0.0,
-    "chemistry_accuracy_percent": 10.0,
-    "abstention_rate_percent": 52.0,
-    "false_confidence_percent": 40.0,
+    "chemistry_accuracy_percent": 28.0,
+    "abstention_rate_percent": 64.0,
+    "false_confidence_percent": 18.0,
+    "mean_test_time_s": 0.02
+  },
+  "Wrong_Label_NMC_as_LFP": {
+    "n_trials": 50,
+    "n_unsafe": 50,
+    "n_unsafe_accepted": 0,
+    "far_percent": 0.0,
+    "chemistry_accuracy_percent": 0.0,
+    "abstention_rate_percent": 98.0,
+    "false_confidence_percent": 2.0,
+    "mean_test_time_s": 0.0
+  },
+  "Mixed_50_50": {
+    "n_trials": 50,
+    "n_unsafe": 29,
+    "n_unsafe_accepted": 0,
+    "far_percent": 0.0,
+    "chemistry_accuracy_percent": 20.0,
+    "abstention_rate_percent": 74.0,
+    "false_confidence_percent": 14.0,
     "mean_test_time_s": 0.02
   }
 }

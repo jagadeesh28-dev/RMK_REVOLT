@@ -49,13 +49,12 @@ class HardSafetyBarrier:
                 admissible.add("DERATE")
 
         elif chemistry_confidence_state == "PROBABLE":
-            # Direct OPERATE is FORBIDDEN.
-            # DERATE permitted only if marginal risk <= alpha
-            if risk_evaluation_derate["p_fail_marginal"] <= self.alpha:
-                admissible.add("DERATE")
+            # Direct OPERATE and DERATE are FORBIDDEN under chemistry uncertainty.
+            # Permitted actions are TEST and HOLD.
+            pass
 
         elif chemistry_confidence_state == "AMBIGUOUS":
-            # Neither OPERATE nor DERATE is permitted
+            # Neither OPERATE nor DERATE is permitted. Only TEST, HOLD, RETIRE.
             pass
 
         return admissible

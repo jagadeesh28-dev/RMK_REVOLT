@@ -118,9 +118,10 @@ class MockHermesHardware:
                 elif self.cell_states[i] == "DERATED":
                     eff_current = self.load_current_a * 0.50
 
-            # V_terminal = OCV - I * R0 + noise
+            # V_terminal = OCV - I * R0 - V_pol + noise
+            v_pol = (0.022 if self.chemistries[i] == "NMC" else 0.002) * (eff_current / 10.0)
             noise = np.random.normal(0, 0.001) # 1mV ADC noise
-            v_term = ocv - (eff_current * self.r0[i]) + noise
+            v_term = ocv - (eff_current * self.r0[i]) - v_pol + noise
             voltages.append(float(v_term))
 
             # Update thermal model: C_th * dT = I^2 * R0 * dt - h * (T - Tamb)

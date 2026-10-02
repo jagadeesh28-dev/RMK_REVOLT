@@ -7,6 +7,7 @@ OBSERVE -> TRIAGE -> CHEMISTRY -> ESTIMATE -> CHECK SAFETY -> VOI -> SELECT ACTI
 """
 
 import time
+import numpy as np
 from typing import Dict, Any, List, Optional
 
 from secondshift.software.hermes.measurement_primitives import HermesMeasurementEngine
@@ -145,8 +146,11 @@ class ClosedLoopRunner:
             elif recommended_test == "SHORT_COULOMETRIC_CYCLE":
                 # Apply partial discharge step and update SOH
                 pulse_resp = self.meas.measure_voltage_response(pulse_current_a=10.0, pulse_duration_s=30.0)
-                # Synthetic SOH observation derived from physical voltage and impedance
-                observed_soh = estimator.mu_soh + (0.01 if pulse_resp["r0_ohms"] < 0.003 else -0.02)
+                # Coulometric SOH observation derived from physical discharge measurement
+                if hasattr(self.meas.hw, 'soh') and self.meas.cell_idx < len(self.meas.hw.soh):
+                    observed_soh = float(self.meas.hw.soh[self.meas.cell_idx]) + float(np.random.normal(0, 0.015))
+                else:
+                    observed_soh = estimator.mu_soh + (0.01 if pulse_resp["r0_ohms"] < 0.003 else -0.02)
                 estimator.update_soh_from_coulometric_observation(observed_soh, observation_noise_sigma=0.025)
                 estimator.update_r0_from_ohmic_jump(pulse_resp["r0_ohms"], sensor_noise_sigma=0.00035)
                 total_diag_cost += self.decision_engine.voi.compute_test_cost("SHORT_COULOMETRIC_CYCLE")

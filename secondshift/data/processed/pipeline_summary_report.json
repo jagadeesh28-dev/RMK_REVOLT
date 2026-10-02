@@ -1,0 +1,41 @@
+{
+  "pipeline_timestamp_utc": "2026-10-02T12:15:01Z",
+  "total_execution_time_s": 4.5597755908966064,
+  "physical_benchmarks": {
+    "total_count": 14,
+    "passed_count": 14,
+    "pass_rate_pct": 100.0
+  },
+  "adversarial_attacks": {
+    "total_count": 11,
+    "passed_count": 11,
+    "pass_rate_pct": 100.0
+  },
+  "chemistry_cohorts": {
+    "Known_LFP": {
+      "far_percent": 5.263,
+      "abstention_rate_percent": 0.0,
+      "chemistry_accuracy_percent": 100.0
+    },
+    "Known_NMC": {
+      "far_percent": 0.0,
+      "abstention_rate_percent": 100.0,
+      "chemistry_accuracy_percent": 0.0
+    },
+    "Unknown_Chemistry": {
+      "far_percent": 0.0,
+      "abstention_rate_percent": 58.0,
+      "chemistry_accuracy_percent": 14.0
+    },
+    "Wrong_Label_NMC_as_LFP": {
+      "far_percent": 0.0,
+      "abstention_rate_percent": 100.0,
+      "chemistry_accuracy_percent": 0.0
+    },
+    "Mixed_50_50": {
+      "far_percent": 0.0,
+      "abstention_rate_percent": 52.0,
+      "chemistry_accuracy_percent": 10.0
+    }
+  }
+}
