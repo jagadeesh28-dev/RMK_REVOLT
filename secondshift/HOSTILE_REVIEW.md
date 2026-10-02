@@ -109,7 +109,7 @@ Inadmissible actions are assigned utility $-\infty$. Profit cannot override the 
 ---
 
 ### Q19: Do you claim to prevent thermal runaway if a lithium dendrite punctures a separator during second-life use?
-**Answer:** **Absolutely not.** We make **NO claim of thermal runaway prevention** under mechanical crushing, internal metallurgical dendrite punctures, or high-temperature external fires. SECONDShift prevents thermal runaway caused by **electrical overcharge, deep copper-dissolving overdischarge, excessive external load currents, and chemistry operating mismatch**. Internal short circuits that develop years later are the responsibility of the module BMS, not the intake qualification bench.
+**Answer:** **Absolutely not.** We make **NO claim of thermal runaway prevention** under mechanical crushing, internal metallurgical dendrite punctures, or high-temperature external fires. SECONDShift mitigates electrical abuse caused by **electrical overcharge, deep copper-dissolving overdischarge, excessive external load currents, and chemistry operating mismatch**. Internal short circuits that develop years later are the responsibility of the module BMS, not the intake qualification bench.
 
 ---
 

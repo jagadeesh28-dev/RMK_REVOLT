@@ -23,18 +23,19 @@ Second-life lithium-ion battery qualification is widely treated as a machine-lea
 - **Layer 3: HERMES (Hardware Execution & Independent Safety Platform):** A Safety Extra-Low Voltage ($<60\text{V}$ DC) testbed pairing an ESP32 microcontroller with **autonomous hardware analog window comparators (LM393)** and a **hardware watchdog supervisor (TPS3823)** that physically de-energize contactors independently of software.
 
 ### Primary Experimental Findings Across 12 Benchmark Specimens
-- **False Acceptance Rate (FAR):** **$0.00\%$** `[PHYSICAL]` (vs Baseline A: $42.86\%$, Baseline B: $114.29\%$, Baseline C: $114.29\%$).
-- **Safe Qualified Acceptance Rate (QAR):** **$80.00\%$** `[PHYSICAL]` (4 of 5 truly safe candidates qualified; proves safety is not achieved by trivial complete rejection).
-- **Mean Qualification Dwell Time:** **$12.50\text{ s}$** `[PHYSICAL]` (vs Baseline A: $800.0\text{ s}$, a **$98.4\%$ reduction**).
-- **Analog Hardware Trip Latency:** **$11.8\text{ ms}$** `[PHYSICAL]` (measured on Rigol DS1054Z oscilloscope).
-- **Single-Cell Commercial Value:** **+₹248.62 / cell** `[SIMULATED]` (+₹2,486.20 per 0.64 kWh 10S module `[THEORETICAL]`).
+- **False Acceptance Rate (FAR):** **$0.00\%$** `[SIMULATED]` (0 of 7 unsafe specimens accepted; Clopper-Pearson 95% one-sided UCB is **$34.82\%$**; vs Baseline A: $42.86\%$, Baselines B & C: $100.00\%$).
+- **Safe Qualified Acceptance Rate (QAR):** **$80.00\%$** `[SIMULATED]` (4 of 5 truly safe candidates qualified; proves safety is not achieved by trivial complete rejection).
+- **Classification Accuracy:** **$91.67\%$** vs Baseline A **$75.00\%$** `[SIMULATED]` (paired McNemar $p = 0.6250$, difference is **not statistically significant** on $N=12$).
+- **Mean Qualification Dwell Time:** **$311.7\text{ s}$** `[SIMULATED]` (vs Baseline A: $10,800.0\text{ s}$, a **$97.11\%$ reduction**, Wilcoxon $p = 0.000488 < 0.001$).
+- **Analog Hardware Trip Latency:** **$11.8\text{ ms}$** `[PHYSICAL]` (observed in external bench test on Rigol DS1054Z oscilloscope, $N=1$).
+- **Single-Cell Commercial Value:** **+₹248.62 / cell** `[THEORETICAL]` (+₹2,486.20 per 0.64 kWh 10S module).
 
 ---
 
 ## 2. Forensic Verification & Audit History
 
 In earlier stages of the project, preliminary simulation claims lacked strict empirical boundary definitions. During Phase 0, a forensic audit was executed, resulting in explicit corrections:
-1. *Correction of Overstated FAR Bound:* On a 12-specimen testbed ($N_{\text{unsafe}}=7$), observing zero false acceptances yields a Clopper-Pearson 95% one-sided upper confidence bound of **$34.82\%$** `[PHYSICAL]`. The $<1.0\%$ upper bound is satisfied across our pooled $N=300$ fleet simulation `[SIMULATED]`. All documentation now cleanly distinguishes small-sample physical testbed bounds from large-sample Monte Carlo bounds.
+1. *Correction of Overstated FAR Bound:* On a 12-specimen testbed ($N_{\text{unsafe}}=7$), observing zero false acceptances yields a Clopper-Pearson 95% one-sided upper confidence bound of **$34.82\%$** `[SIMULATED]`. To mathematically guarantee an upper bound $<1.0\%$ requires $N_{\text{unsafe}} \ge 299$ zero-failure trials. All documentation now cleanly distinguishes small-sample benchmark bounds from large-sample theoretical power requirements.
 2. *Correction of "Thermal Runaway Prevention" Claim:* SECONDShift implements **autonomous over-temperature cutoff** and **electrical overload mitigation** `[PHYSICAL]`. It does not prevent internal metallurgical shorts from mechanical crushing or internal fires.
 3. *Ablation of Non-Essential Features:* All proposed neural networks, cloud connectivity, digital twins, and mobile apps were permanently purged.
 
@@ -46,9 +47,9 @@ Seven falsifiable sub-hypotheses were formulated and evaluated:
 
 | ID | Hypothesis Statement | Rejection Criteria ($H_0$) | Result | Evidence Tier |
 | :--- | :--- | :--- | :---: | :---: |
-| **H1** | Hard safety barrier achieves $FAR < 1.0\%$ under state uncertainty | Rejection if $FAR \ge 1.0\%$ on $N \ge 300$ trials | **CONFIRMED** | `[SIMULATED]` |
+| **H1** | Hard safety barrier achieves $FAR < 1.0\%$ under state uncertainty | Rejection if $FAR \ge 1.0\%$ on $N \ge 300$ trials | **CONFIRMED (Sim)** | `[SIMULATED]` |
 | **H2** | Epistemic chemistry layer detects $\ge 90\%$ of mislabeled NMC | Rejection if detection accuracy $< 90\%$ | **CONFIRMED** ($98\%$) | `[INJECTED]` |
-| **H3** | Adaptive VOI reduces dwell time by $\ge 50\%$ vs Baseline A | Rejection if mean dwell time $> 400\text{ s}$ | **CONFIRMED** ($12.5\text{ s}$) | `[PHYSICAL]` |
+| **H3** | Adaptive VOI reduces dwell time by $\ge 50\%$ vs Baseline A | Rejection if mean dwell time $> 400\text{ s}$ | **CONFIRMED** ($311.7\text{ s}$) | `[SIMULATED]` |
 | **H4** | Analog hardware interlock trips in $<20\text{ ms}$ independent of MCU | Rejection if hardware latency $\ge 20.0\text{ ms}$ | **CONFIRMED** ($11.8\text{ ms}$) | `[PHYSICAL]` |
 | **H5** | Hardware trips safely during firmware hang with GPIO HIGH | Rejection if contactor remains energized $>250\text{ ms}$ | **CONFIRMED** ($194.2\text{ ms}$) | `[PHYSICAL]` |
 | **H6** | Conservative action probability monotonically increases with $\sigma$ | Rejection if $\partial P(\text{Conservative}) / \partial \sigma < 0$ | **CONFIRMED** | `[INJECTED]` |

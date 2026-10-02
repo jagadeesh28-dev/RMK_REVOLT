@@ -29,7 +29,7 @@ To maintain strict scientific honesty and avoid over-claiming, the contributions
 |  [ 3. NEW SYSTEM INTEGRATION ]                                                    |
 |  - Closed-loop coupling of Python Bayesian planner with FreeRTOS 100Hz firmware   |
 |  - Real-time oscilloscope-verified hardware watchdog (TPS3823) + analog LM393     |
-|  - Quarantined blind physical validation pipeline with zero ground-truth leak     |
+|  - Quarantined blind simulated benchmark pipeline with zero ground-truth leak     |
 |                                                                                   |
 |  [ 4. ENGINEERING IMPLEMENTATION ]                                                |
 |  - 11-state FreeRTOS C++ firmware on dual-core ESP32 with CRC16 telemetry         |

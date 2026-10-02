@@ -1,0 +1,7 @@
+# SECONDShift Reproducibility Environment Requirements
+# Python >= 3.9 (tested on 3.10.21)
+
+numpy>=1.22.0
+scipy>=1.9.0
+matplotlib>=3.5.0
+pytest>=7.0.0

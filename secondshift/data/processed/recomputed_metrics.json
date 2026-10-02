@@ -1,0 +1,202 @@
+{
+  "BASELINE_A": {
+    "confusion_matrix": {
+      "TP": 5,
+      "TN": 4,
+      "FP": 3,
+      "FN": 0,
+      "N_total": 12,
+      "N_positive_safe": 5,
+      "N_negative_unsafe": 7
+    },
+    "metrics": {
+      "Accuracy": 0.75,
+      "Accuracy_95CI": [
+        0.4281,
+        0.9451
+      ],
+      "Sensitivity_QAR": 1.0,
+      "Sensitivity_95CI": [
+        0.4782,
+        1.0
+      ],
+      "Specificity": 0.5714,
+      "Specificity_95CI": [
+        0.1841,
+        0.901
+      ],
+      "Precision_PPV": 0.625,
+      "Precision_95CI": [
+        0.2449,
+        0.9148
+      ],
+      "NPV": 1.0,
+      "NPV_95CI": [
+        0.3976,
+        1.0
+      ],
+      "FAR": 0.4286,
+      "FAR_95CI": [
+        0.099,
+        0.8159
+      ],
+      "FRR": 0.0,
+      "FRR_95CI": [
+        0.0,
+        0.5218
+      ],
+      "F1_Score": 0.7692,
+      "Balanced_Accuracy": 0.7857
+    }
+  },
+  "BASELINE_B": {
+    "confusion_matrix": {
+      "TP": 4,
+      "TN": 0,
+      "FP": 8,
+      "FN": 0,
+      "N_total": 12,
+      "N_positive_safe": 4,
+      "N_negative_unsafe": 8
+    },
+    "metrics": {
+      "Accuracy": 0.3333,
+      "Accuracy_95CI": [
+        0.0992,
+        0.6511
+      ],
+      "Sensitivity_QAR": 1.0,
+      "Sensitivity_95CI": [
+        0.3976,
+        1.0
+      ],
+      "Specificity": 0.0,
+      "Specificity_95CI": [
+        0.0,
+        0.3694
+      ],
+      "Precision_PPV": 0.3333,
+      "Precision_95CI": [
+        0.0992,
+        0.6511
+      ],
+      "NPV": 0.0,
+      "NPV_95CI": [
+        0.0,
+        0.0
+      ],
+      "FAR": 1.0,
+      "FAR_95CI": [
+        0.6306,
+        1.0
+      ],
+      "FRR": 0.0,
+      "FRR_95CI": [
+        0.0,
+        0.6024
+      ],
+      "F1_Score": 0.5,
+      "Balanced_Accuracy": 0.5
+    }
+  },
+  "BASELINE_C": {
+    "confusion_matrix": {
+      "TP": 4,
+      "TN": 0,
+      "FP": 8,
+      "FN": 0,
+      "N_total": 12,
+      "N_positive_safe": 4,
+      "N_negative_unsafe": 8
+    },
+    "metrics": {
+      "Accuracy": 0.3333,
+      "Accuracy_95CI": [
+        0.0992,
+        0.6511
+      ],
+      "Sensitivity_QAR": 1.0,
+      "Sensitivity_95CI": [
+        0.3976,
+        1.0
+      ],
+      "Specificity": 0.0,
+      "Specificity_95CI": [
+        0.0,
+        0.3694
+      ],
+      "Precision_PPV": 0.3333,
+      "Precision_95CI": [
+        0.0992,
+        0.6511
+      ],
+      "NPV": 0.0,
+      "NPV_95CI": [
+        0.0,
+        0.0
+      ],
+      "FAR": 1.0,
+      "FAR_95CI": [
+        0.6306,
+        1.0
+      ],
+      "FRR": 0.0,
+      "FRR_95CI": [
+        0.0,
+        0.6024
+      ],
+      "F1_Score": 0.5,
+      "Balanced_Accuracy": 0.5
+    }
+  },
+  "SECONDSHIFT": {
+    "confusion_matrix": {
+      "TP": 4,
+      "TN": 7,
+      "FP": 0,
+      "FN": 1,
+      "N_total": 12,
+      "N_positive_safe": 5,
+      "N_negative_unsafe": 7
+    },
+    "metrics": {
+      "Accuracy": 0.9167,
+      "Accuracy_95CI": [
+        0.6152,
+        0.9979
+      ],
+      "Sensitivity_QAR": 0.8,
+      "Sensitivity_95CI": [
+        0.2836,
+        0.9949
+      ],
+      "Specificity": 1.0,
+      "Specificity_95CI": [
+        0.5904,
+        1.0
+      ],
+      "Precision_PPV": 1.0,
+      "Precision_95CI": [
+        0.3976,
+        1.0
+      ],
+      "NPV": 0.875,
+      "NPV_95CI": [
+        0.4735,
+        0.9968
+      ],
+      "FAR": 0.0,
+      "FAR_95CI": [
+        0.0,
+        0.4096
+      ],
+      "FRR": 0.2,
+      "FRR_95CI": [
+        0.0051,
+        0.7164
+      ],
+      "F1_Score": 0.8889,
+      "Balanced_Accuracy": 0.9
+    }
+  }
+}

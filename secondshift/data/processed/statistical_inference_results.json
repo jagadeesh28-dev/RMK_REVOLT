@@ -1,0 +1,24 @@
+{
+  "timing_inference": {
+    "mean_s": 0.011,
+    "median_s": 0.0124,
+    "std_s": 0.0079,
+    "iqr_s": 0.0109,
+    "wilcoxon_stat": 0.0,
+    "wilcoxon_p_value": 0.00048828125
+  },
+  "paired_mcnemar_test": {
+    "both_correct": 8,
+    "both_wrong": 0,
+    "baseline_a_only_correct": 1,
+    "secondshift_only_correct": 3,
+    "p_value_mcnemar": 0.625
+  },
+  "power_and_sample_size": {
+    "current_dataset_n": 12,
+    "current_unsafe_specimens_n": 7,
+    "required_n_for_far_less_than_1pct_at_95ci": 299,
+    "required_n_for_acc_greater_than_85pct": 60,
+    "required_n_for_sens_greater_than_90pct": 59
+  }
+}

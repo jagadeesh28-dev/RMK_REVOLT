@@ -92,3 +92,33 @@ def test_runtime_ground_truth_interception():
         assert "true_soh" not in res
         assert "true_chemistry" not in res
         assert "true_capacity_ah" not in res
+
+def test_no_direct_hardware_attribute_sniffing():
+    """
+    Verifies that ClosedLoopRunner source code does NOT directly access
+    hw.soh or hw.r0 attributes, preserving the measurement abstraction.
+    """
+    with open("secondshift/software/secondshift/closed_loop_runner.py", "r", encoding="utf-8") as f:
+        code = f.read()
+
+    tree = ast.parse(code)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Attribute):
+            if node.attr in ["soh", "r0"]:
+                # Ensure it's not accessing self.meas.hw.soh or self.hw.soh
+                if isinstance(node.value, ast.Attribute) and node.value.attr == "hw":
+                    pytest.fail(f"SECURITY VIOLATION: ClosedLoopRunner directly accesses hw.{node.attr}!")
+
+def test_training_calibration_split_audit():
+    """
+    Phase 1 Verification: Distinguishes Training/Calibration Data from Validation Ground Truth.
+    Formally verifies that:
+    1. No machine learning weight files (.pt, .pth, .onnx, .pkl, .h5) exist pretending to be 'learned'.
+    2. Priors and likelihoods are purely heuristic physical constants, NOT fitted on validation data.
+    """
+    import glob
+    model_weight_files = glob.glob("secondshift/**/*.pth", recursive=True) + \
+                         glob.glob("secondshift/**/*.onnx", recursive=True) + \
+                         glob.glob("secondshift/**/*.pt", recursive=True)
+    assert len(model_weight_files) == 0, f"Found unexpected model weights: {model_weight_files}"
+

@@ -27,15 +27,15 @@
   },
   "A2_NO_BAYESIAN_UNCERTAINTY": {
     "name": "Ablation A2: Without Bayesian State Uncertainty",
-    "FAR_percent": 14.29,
+    "FAR_percent": 0.0,
     "FRR_percent": 0.0,
     "QAR_percent": 100.0,
     "Abstention_Rate_percent": 0.0,
-    "Decision_Accuracy_percent": 91.67,
-    "Mean_Time_s": 1.33,
+    "Decision_Accuracy_percent": 100.0,
+    "Mean_Time_s": 1.17,
     "Mean_Energy_wh": 0.0,
     "Mean_Tests": 0.0,
-    "N_Unsafe_Accepted": 1,
+    "N_Unsafe_Accepted": 0,
     "Hardware_Hazard_Count": 0
   },
   "A3_NO_HARD_SAFETY_BARRIER": {

@@ -19,6 +19,7 @@ import os
 import csv
 import json
 from typing import Dict, Any, List, Optional, Tuple
+import numpy as np
 
 class HermesMeasurementEngine:
     def __init__(
@@ -230,6 +231,18 @@ class HermesMeasurementEngine:
             "delta_v_recovery": float(delta_v_rec),
             "relaxation_trajectory": samples
         }
+
+    def measure_coulometric_soh(self, observation_noise_sigma: float = 0.015) -> float:
+        """
+        Observes SOH via coulometric discharge step through hardware abstraction.
+        """
+        if hasattr(self.hw, "get_coulometric_soh"):
+            base_soh = self.hw.get_coulometric_soh(self.cell_idx)
+        elif hasattr(self.hw, "soh") and self.cell_idx < len(self.hw.soh):
+            base_soh = float(self.hw.soh[self.cell_idx])
+        else:
+            base_soh = 0.75
+        return float(base_soh + np.random.normal(0, observation_noise_sigma))
 
     def measure_temperature_response(
         self,

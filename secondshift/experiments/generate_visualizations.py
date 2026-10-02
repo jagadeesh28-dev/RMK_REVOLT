@@ -79,8 +79,8 @@ def generate_all_figures():
     ax.axhline(2.00, color="red", ls="--", lw=1.5, label="Analog UVP Cutoff (2.00V)")
     ax.set_xlabel("Elapsed Time (s)")
     ax.set_ylabel("Voltage (V)")
-    ax.set_title("FIG-01: HERMES Terminal Voltage Transient During Adaptive Pulse")
-    add_evidence_tag(ax, "[PHYSICAL]")
+    ax.set_title("FIG-01: Terminal Voltage Transient During Diagnostic Pulse")
+    add_evidence_tag(ax, "[SIMULATED]")
     ax.legend(loc="lower left")
     plt.savefig(os.path.join(FIGURES_DIR, "fig_01.png"), dpi=200)
     plt.close()
@@ -91,7 +91,7 @@ def generate_all_figures():
     ax.set_xlabel("Elapsed Time (s)")
     ax.set_ylabel("Current (A)")
     ax.set_title("FIG-02: Programmable Electronic Load Current Profile")
-    add_evidence_tag(ax, "[PHYSICAL]")
+    add_evidence_tag(ax, "[SIMULATED]")
     ax.legend(loc="upper right")
     plt.savefig(os.path.join(FIGURES_DIR, "fig_02.png"), dpi=200)
     plt.close()
@@ -99,11 +99,11 @@ def generate_all_figures():
     # FIG-03: Cell Surface Temperature Response
     fig, ax = plt.subplots(figsize=(7, 3.8))
     ax.plot(t, temp, color="#2ca02c", lw=1.8, label="Surface Temperature (°C)")
-    ax.axhline(45.0, color="red", ls="--", lw=1.5, label="Stage 0 Triage Limit (45°C)")
+    ax.axhline(45.0, color="red", ls="--", label="Stage 0 Triage Limit (45°C)")
     ax.set_xlabel("Elapsed Time (s)")
     ax.set_ylabel("Temperature (°C)")
     ax.set_title("FIG-03: Cell Surface Thermal Response During Testing")
-    add_evidence_tag(ax, "[PHYSICAL]")
+    add_evidence_tag(ax, "[SIMULATED]")
     ax.legend(loc="lower right")
     plt.savefig(os.path.join(FIGURES_DIR, "fig_03.png"), dpi=200)
     plt.close()
@@ -118,7 +118,7 @@ def generate_all_figures():
     ax.set_xlabel("Relaxation Time (s)")
     ax.set_ylabel("Open-Circuit Voltage (V)")
     ax.set_title("FIG-04: Post-Pulse Relaxation Signature for Chemistry Disambiguation")
-    add_evidence_tag(ax, "[PHYSICAL]")
+    add_evidence_tag(ax, "[SIMULATED]")
     ax.legend(loc="center right")
     plt.savefig(os.path.join(FIGURES_DIR, "fig_04.png"), dpi=200)
     plt.close()
@@ -207,15 +207,23 @@ def generate_all_figures():
     plt.savefig(os.path.join(FIGURES_DIR, "fig_09.png"), dpi=200)
     plt.close()
 
-    # FIG-10: Qualification Dwell Time Benchmark
-    systems = ["Baseline A\n(Fixed OEM)", "Baseline B\n(Scalar)", "Baseline C\n(Uncertainty)", "SECONDShift\n(Proposed)"]
-    times = [800.0, 0.05, 95.0, 12.5]
+    # FIG-10: Qualification Dwell Time Benchmark (Audited N=12 Benchmark)
+    systems = ["Baseline A\n(Full OEM Cycler)", "Baseline B\n(Scalar SOH)", "Baseline C\n(Uncertainty)", "SECONDShift\n(Adaptive VOI)"]
+    times = [10800.0, 0.05, 0.05, 311.7]
     colors = ["#7f7f7f", "#d62728", "#ff7f0e", "#2ca02c"]
-    fig, ax = plt.subplots(figsize=(7, 3.8))
-    ax.bar(systems, times, color=colors, width=0.55)
-    ax.set_ylabel("Mean Qualification Time (s)")
-    ax.set_title("FIG-10: Mean Diagnostic Dwell Time Benchmark")
-    add_evidence_tag(ax, "[PHYSICAL]")
+    fig, ax = plt.subplots(figsize=(7.5, 4.0))
+    bars = ax.bar(systems, times, color=colors, width=0.55)
+    ax.set_yscale("log")
+    ax.set_ylabel("Mean Qualification Dwell Time (s) [Log Scale]")
+    ax.set_title("FIG-10: Mean Diagnostic Dwell Time Benchmark (N=12 Cohort)")
+    for bar in bars:
+        height = bar.get_height()
+        ax.annotate(f"{height:.1f}s",
+                    xy=(bar.get_x() + bar.get_width() / 2, height),
+                    xytext=(0, 3),  # 3 points vertical offset
+                    textcoords="offset points",
+                    ha="center", va="bottom", fontsize=8.5, fontweight="bold")
+    add_evidence_tag(ax, "[SIMULATED]")
     plt.savefig(os.path.join(FIGURES_DIR, "fig_10.png"), dpi=200)
     plt.close()
 
@@ -262,7 +270,7 @@ def generate_all_figures():
     ax.set_yticks([])
     ax.set_xlabel("Elapsed Time (s)")
     ax.set_title("FIG-13: SECONDShift Adaptive Qualification Execution Timeline")
-    add_evidence_tag(ax, "[PHYSICAL]")
+    add_evidence_tag(ax, "[SIMULATED]")
     plt.savefig(os.path.join(FIGURES_DIR, "fig_13.png"), dpi=200)
     plt.close()
 
@@ -281,7 +289,6 @@ def generate_all_figures():
     ax.set_xticks(x_scen)
     ax.set_xticklabels(scenarios)
     ax.set_ylabel("Net Economic Value / Module (INR)")
-    ax.set_title("FIG-14: Life-Cycle Net Commercial Value Across Market Regimes")
     ax.set_title("FIG-14: Life-Cycle Net Commercial Value Across Market Regimes")
     add_evidence_tag(ax, "[THEORETICAL]")
     ax.legend(loc="upper left")

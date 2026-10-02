@@ -48,6 +48,11 @@ class MockHermesHardware:
             return float(self.leakage_rates[idx])
         return 1.2
 
+    def get_coulometric_soh(self, idx: int) -> float:
+        if idx < len(self.soh):
+            return float(self.soh[idx])
+        return 0.75
+
     def feed_watchdog(self):
         self.last_wdt_time = time.monotonic()
         self.watchdog_healthy = True
