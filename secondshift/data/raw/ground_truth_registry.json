@@ -1,0 +1,62 @@
+{
+  "CELL_1_HEALTHY": {
+    "cell_id": "CELL_1_HEALTHY",
+    "true_chemistry": "LFP",
+    "true_soh": 0.94,
+    "true_capacity_ah": 18.799999999999997,
+    "true_r0_mohm": 1.9,
+    "nominal_capacity_ah": 20.0,
+    "true_c_th_j_k": 1200.0,
+    "true_leakage_mv_hr": 0.8,
+    "characterized_timestamp": 1790940411.7191503,
+    "notes": "Fresh grade-A LFP cell"
+  },
+  "CELL_2_MARGINAL": {
+    "cell_id": "CELL_2_MARGINAL",
+    "true_chemistry": "LFP",
+    "true_soh": 0.73,
+    "true_capacity_ah": 14.6,
+    "true_r0_mohm": 3.2,
+    "nominal_capacity_ah": 20.0,
+    "true_c_th_j_k": 1200.0,
+    "true_leakage_mv_hr": 3.2,
+    "characterized_timestamp": 1790940411.7193055,
+    "notes": "Mildly cycled fleet retirement"
+  },
+  "CELL_3_DEGRADED": {
+    "cell_id": "CELL_3_DEGRADED",
+    "true_chemistry": "LFP",
+    "true_soh": 0.67,
+    "true_capacity_ah": 13.4,
+    "true_r0_mohm": 4.4,
+    "nominal_capacity_ah": 20.0,
+    "true_c_th_j_k": 1200.0,
+    "true_leakage_mv_hr": 4.5,
+    "characterized_timestamp": 1790940411.7229176,
+    "notes": "Candidate for 0.5C derating"
+  },
+  "CELL_4_DEFECTIVE": {
+    "cell_id": "CELL_4_DEFECTIVE",
+    "true_chemistry": "LFP",
+    "true_soh": 0.48,
+    "true_capacity_ah": 9.6,
+    "true_r0_mohm": 18.5,
+    "nominal_capacity_ah": 20.0,
+    "true_c_th_j_k": 1200.0,
+    "true_leakage_mv_hr": 22.0,
+    "characterized_timestamp": 1790940411.7233677,
+    "notes": "Severely degraded with micro-short"
+  },
+  "CELL_5_NMC": {
+    "cell_id": "CELL_5_NMC",
+    "true_chemistry": "NMC",
+    "true_soh": 0.82,
+    "true_capacity_ah": 19.68,
+    "true_r0_mohm": 2.1,
+    "nominal_capacity_ah": 24.0,
+    "true_c_th_j_k": 850.0,
+    "true_leakage_mv_hr": 1.5,
+    "characterized_timestamp": 1790940411.7236247,
+    "notes": "Tagless NMC cell"
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "attack_id": "ATTACK_1_SOH_45_VS_65",
+    "name": "Degraded SOH 45% with Biased Prior 65%",
+    "true_state": "SOH=0.45, R0=3.0mOhm",
+    "injected_prior": "SOH=0.65+/-0.01, R0=3.0+/-0.1mOhm",
+    "final_decision": "RETIRE",
+    "final_reason": "Failed Stage 0 Deterministic Triage: TR-08: Micro-short hazard - Self-discharge dV/dt=22.0 mV/hr > 15.0 mV/hr",
+    "unsafe_operation_prevented": true,
+    "passed": true
+  },
+  {
+    "attack_id": "ATTACK_2_SOH_55_VS_75",
+    "name": "Depleted SOH 55% with Severely Biased Prior 75%",
+    "true_state": "SOH=0.55, R0=3.0mOhm",
+    "injected_prior": "SOH=0.75+/-0.01, R0=3.0+/-0.1mOhm",
+    "final_decision": "OPERATE",
+    "final_reason": "Known chemistry (99.8%), marginal failure risk 0.24% <= 1.0%, SOH=0.75 +/- 0.01. Testing no longer economically justified (VOI <= 0).",
+    "unsafe_operation_prevented": false,
+    "passed": false
+  },
+  {
+    "attack_id": "ATTACK_3_R0_85_VS_50",
+    "name": "High Impedance 85mOhm with Underestimated Prior 50mOhm",
+    "true_state": "SOH=0.85, R0=85.0mOhm",
+    "injected_prior": "SOH=0.85+/-0.02, R0=50.0+/-0.1mOhm",
+    "final_decision": "RETIRE",
+    "final_reason": "Cell violates safety barrier or cannot achieve positive operating utility. Routed to hydro-metallurgical recycling (salvage value: \u20b926.8).",
+    "unsafe_operation_prevented": true,
+    "passed": true
+  },
+  {
+    "attack_id": "ATTACK_4_R0_100_VS_60",
+    "name": "Extreme Impedance 100mOhm with Underestimated Prior 60mOhm",
+    "true_state": "SOH=0.85, R0=100.0mOhm",
+    "injected_prior": "SOH=0.85+/-0.02, R0=60.0+/-0.1mOhm",
+    "final_decision": "RETIRE",
+    "final_reason": "Cell violates safety barrier or cannot achieve positive operating utility. Routed to hydro-metallurgical recycling (salvage value: \u20b926.8).",
+    "unsafe_operation_prevented": true,
+    "passed": true
+  }
+]

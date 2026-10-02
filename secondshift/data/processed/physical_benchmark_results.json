@@ -1,0 +1,479 @@
+{
+  "EXP_1_HEALTHY_LFP": {
+    "objective": "Verify autonomous zero-waste qualification of fresh known LFP cell",
+    "ground_truth": {
+      "cell_id": "CELL_1_HEALTHY",
+      "true_chemistry": "LFP",
+      "true_soh": 0.94,
+      "true_capacity_ah": 18.799999999999997,
+      "true_r0_mohm": 1.9,
+      "nominal_capacity_ah": 20.0,
+      "true_c_th_j_k": 1200.0,
+      "true_leakage_mv_hr": 0.8,
+      "characterized_timestamp": 1790940411.7191503,
+      "notes": "Fresh grade-A LFP cell"
+    },
+    "result": {
+      "cell_id": "CELL_1_HEALTHY",
+      "final_decision": "OPERATE",
+      "final_reason": "Known chemistry (99.8%), marginal failure risk 0.24% <= 1.0%, SOH=0.92 +/- 0.03. Testing no longer economically justified (VOI <= 0).",
+      "final_soh_estimate": 0.92,
+      "final_soh_uncertainty": 0.03,
+      "final_r0_mohm": 1.9702999518707576,
+      "final_chemistry": "LFP",
+      "final_chem_confidence": "KNOWN",
+      "final_chem_posterior": {
+        "LFP": 0.9975548151319359,
+        "NMC": 0.0023645743766090334,
+        "UNKNOWN": 8.06104901116716e-05
+      },
+      "elapsed_time_s": 0.011024185999303882,
+      "total_diag_cost_inr": 1.5428666666666668,
+      "total_diag_energy_wh": 0.15,
+      "tests_executed_count": 1,
+      "trace": [
+        {
+          "stage": "STAGE_0_TRIAGE",
+          "status": "ACCEPT",
+          "reason": "All deterministic physical triage gates cleared.",
+          "v_rest": 3.290562904142747,
+          "t_rest": 25.0,
+          "drift_mv_hr": 1.2
+        },
+        {
+          "iteration": 0,
+          "stage": "DECISION_EVALUATION",
+          "decision": "TEST",
+          "recommended_test": "QUICK_PULSE_R0",
+          "decision_reason": "VOI of QUICK_PULSE_R0 is +\u20b9425.16 (EVSI=\u20b9426.70 > Cost=\u20b91.54); epistemic uncertainty reduction justifies diagnostic expense.",
+          "soh_estimate": "0.920 +/- 0.030",
+          "r0_mohm_estimate": "2.50 +/- 1.20",
+          "chemistry_confidence_state": "KNOWN",
+          "chemistry_posterior": {
+            "LFP": 0.9975548151319359,
+            "NMC": 0.0023645743766090334,
+            "UNKNOWN": 8.06104901116716e-05
+          },
+          "marginal_risk_operate": 0.20427883553494092
+        },
+        {
+          "iteration": 1,
+          "stage": "DECISION_EVALUATION",
+          "decision": "OPERATE",
+          "recommended_test": null,
+          "decision_reason": "Known chemistry (99.8%), marginal failure risk 0.24% <= 1.0%, SOH=0.92 +/- 0.03. Testing no longer economically justified (VOI <= 0).",
+          "soh_estimate": "0.920 +/- 0.030",
+          "r0_mohm_estimate": "1.97 +/- 0.34",
+          "chemistry_confidence_state": "KNOWN",
+          "chemistry_posterior": {
+            "LFP": 0.9975548151319359,
+            "NMC": 0.0023645743766090334,
+            "UNKNOWN": 8.06104901116716e-05
+          },
+          "marginal_risk_operate": 0.0024478267477133163
+        }
+      ]
+    },
+    "pass_criterion": "Final decision == OPERATE without unnecessary test delay",
+    "passed": true
+  },
+  "EXP_2_MARGINAL_LFP": {
+    "objective": "Verify VOI triggers diagnostic test on boundary cell and reduces uncertainty",
+    "ground_truth": {
+      "cell_id": "CELL_2_MARGINAL",
+      "true_chemistry": "LFP",
+      "true_soh": 0.73,
+      "true_capacity_ah": 14.6,
+      "true_r0_mohm": 3.2,
+      "nominal_capacity_ah": 20.0,
+      "true_c_th_j_k": 1200.0,
+      "true_leakage_mv_hr": 3.2,
+      "characterized_timestamp": 1790940411.7193055,
+      "notes": "Mildly cycled fleet retirement"
+    },
+    "result": {
+      "cell_id": "CELL_2_MARGINAL",
+      "final_decision": "DERATE",
+      "final_reason": "Cell cleared derated safety envelope (P_fail=0.41% <= 1.0%), but failed full-rate OPERATE barrier. Assigned to 0.5C derated operation.",
+      "final_soh_estimate": 0.7211764705882353,
+      "final_soh_uncertainty": 0.024253562503633298,
+      "final_r0_mohm": 3.0169249257022233,
+      "final_chemistry": "LFP",
+      "final_chem_confidence": "KNOWN",
+      "final_chem_posterior": {
+        "LFP": 0.9975548151319359,
+        "NMC": 0.0023645743766090334,
+        "UNKNOWN": 8.06104901116716e-05
+      },
+      "elapsed_time_s": 0.011168197999722906,
+      "total_diag_cost_inr": 13.0144,
+      "total_diag_energy_wh": 1.8,
+      "tests_executed_count": 1,
+      "trace": [
+        {
+          "stage": "STAGE_0_TRIAGE",
+          "status": "ACCEPT",
+          "reason": "All deterministic physical triage gates cleared.",
+          "v_rest": 3.2919717722516273,
+          "t_rest": 25.0,
+          "drift_mv_hr": 1.2
+        },
+        {
+          "iteration": 0,
+          "stage": "DECISION_EVALUATION",
+          "decision": "TEST",
+          "recommended_test": "SHORT_COULOMETRIC_CYCLE",
+          "decision_reason": "VOI of SHORT_COULOMETRIC_CYCLE is +\u20b9286.24 (EVSI=\u20b9299.25 > Cost=\u20b913.01); epistemic uncertainty reduction justifies diagnostic expense.",
+          "soh_estimate": "0.740 +/- 0.100",
+          "r0_mohm_estimate": "3.00 +/- 0.30",
+          "chemistry_confidence_state": "KNOWN",
+          "chemistry_posterior": {
+            "LFP": 0.9975548151319359,
+            "NMC": 0.0023645743766090334,
+            "UNKNOWN": 8.06104901116716e-05
+          },
+          "marginal_risk_operate": 0.37742713150752366
+        },
+        {
+          "iteration": 1,
+          "stage": "DECISION_EVALUATION",
+          "decision": "DERATE",
+          "recommended_test": null,
+          "decision_reason": "Cell cleared derated safety envelope (P_fail=0.41% <= 1.0%), but failed full-rate OPERATE barrier. Assigned to 0.5C derated operation.",
+          "soh_estimate": "0.721 +/- 0.024",
+          "r0_mohm_estimate": "3.02 +/- 0.23",
+          "chemistry_confidence_state": "KNOWN",
+          "chemistry_posterior": {
+            "LFP": 0.9975548151319359,
+            "NMC": 0.0023645743766090334,
+            "UNKNOWN": 8.06104901116716e-05
+          },
+          "marginal_risk_operate": 0.2069627651771071
+        }
+      ]
+    },
+    "pass_criterion": "Executes test (tests >= 1) and qualifies safely",
+    "passed": true
+  },
+  "EXP_3_HIGH_RESISTANCE": {
+    "objective": "Verify cell with elevated R0/aged SOH is assigned to DERATE instead of being junked",
+    "ground_truth": {
+      "cell_id": "CELL_3_DEGRADED",
+      "true_chemistry": "LFP",
+      "true_soh": 0.67,
+      "true_capacity_ah": 13.4,
+      "true_r0_mohm": 4.4,
+      "nominal_capacity_ah": 20.0,
+      "true_c_th_j_k": 1200.0,
+      "true_leakage_mv_hr": 4.5,
+      "characterized_timestamp": 1790940411.7229176,
+      "notes": "Candidate for 0.5C derating"
+    },
+    "result": {
+      "cell_id": "CELL_3_DEGRADED",
+      "final_decision": "DERATE",
+      "final_reason": "Cell cleared derated safety envelope (P_fail=0.29% <= 1.0%), but failed full-rate OPERATE barrier. Assigned to 0.5C derated operation.",
+      "final_soh_estimate": 0.69,
+      "final_soh_uncertainty": 0.012,
+      "final_r0_mohm": 4.2,
+      "final_chemistry": "LFP",
+      "final_chem_confidence": "KNOWN",
+      "final_chem_posterior": {
+        "LFP": 0.9975548151319359,
+        "NMC": 0.0023645743766090334,
+        "UNKNOWN": 8.06104901116716e-05
+      },
+      "elapsed_time_s": 0.00386175999938132,
+      "total_diag_cost_inr": 0.0,
+      "total_diag_energy_wh": 0.0,
+      "tests_executed_count": 0,
+      "trace": [
+        {
+          "stage": "STAGE_0_TRIAGE",
+          "status": "ACCEPT",
+          "reason": "All deterministic physical triage gates cleared.",
+          "v_rest": 3.2916189618574982,
+          "t_rest": 25.0,
+          "drift_mv_hr": 1.2
+        },
+        {
+          "iteration": 0,
+          "stage": "DECISION_EVALUATION",
+          "decision": "DERATE",
+          "recommended_test": null,
+          "decision_reason": "Cell cleared derated safety envelope (P_fail=0.29% <= 1.0%), but failed full-rate OPERATE barrier. Assigned to 0.5C derated operation.",
+          "soh_estimate": "0.690 +/- 0.012",
+          "r0_mohm_estimate": "4.20 +/- 0.10",
+          "chemistry_confidence_state": "KNOWN",
+          "chemistry_posterior": {
+            "LFP": 0.9975548151319359,
+            "NMC": 0.0023645743766090334,
+            "UNKNOWN": 8.06104901116716e-05
+          },
+          "marginal_risk_operate": 0.9999999999983984
+        }
+      ]
+    },
+    "pass_criterion": "Final decision == DERATE",
+    "passed": true
+  },
+  "EXP_4_HIGH_UNCERTAINTY": {
+    "objective": "Verify uncertainty shrinkage under multi-step characterization",
+    "ground_truth": {
+      "cell_id": "CELL_1_HEALTHY",
+      "true_chemistry": "LFP",
+      "true_soh": 0.94,
+      "true_capacity_ah": 18.799999999999997,
+      "true_r0_mohm": 1.9,
+      "nominal_capacity_ah": 20.0,
+      "true_c_th_j_k": 1200.0,
+      "true_leakage_mv_hr": 0.8,
+      "characterized_timestamp": 1790940411.7191503,
+      "notes": "Fresh grade-A LFP cell"
+    },
+    "result": {
+      "cell_id": "CELL_1_HEALTHY",
+      "final_decision": "OPERATE",
+      "final_reason": "Known chemistry (99.8%), marginal failure risk 0.26% <= 1.0%, SOH=0.79 +/- 0.02. Testing no longer economically justified (VOI <= 0).",
+      "final_soh_estimate": 0.7898107494322483,
+      "final_soh_uncertainty": 0.024762306829443793,
+      "final_r0_mohm": 2.171940467829991,
+      "final_chemistry": "LFP",
+      "final_chem_confidence": "KNOWN",
+      "final_chem_posterior": {
+        "LFP": 0.9975548151319359,
+        "NMC": 0.0023645743766090334,
+        "UNKNOWN": 8.06104901116716e-05
+      },
+      "elapsed_time_s": 0.011272245999862207,
+      "total_diag_cost_inr": 13.0144,
+      "total_diag_energy_wh": 1.8,
+      "tests_executed_count": 1,
+      "trace": [
+        {
+          "stage": "STAGE_0_TRIAGE",
+          "status": "ACCEPT",
+          "reason": "All deterministic physical triage gates cleared.",
+          "v_rest": 3.2905370019109563,
+          "t_rest": 25.0,
+          "drift_mv_hr": 1.2
+        },
+        {
+          "iteration": 0,
+          "stage": "DECISION_EVALUATION",
+          "decision": "TEST",
+          "recommended_test": "SHORT_COULOMETRIC_CYCLE",
+          "decision_reason": "VOI of SHORT_COULOMETRIC_CYCLE is +\u20b9380.01 (EVSI=\u20b9393.02 > Cost=\u20b913.01); epistemic uncertainty reduction justifies diagnostic expense.",
+          "soh_estimate": "0.780 +/- 0.180",
+          "r0_mohm_estimate": "2.00 +/- 0.30",
+          "chemistry_confidence_state": "KNOWN",
+          "chemistry_posterior": {
+            "LFP": 0.9975548151319359,
+            "NMC": 0.0023645743766090334,
+            "UNKNOWN": 8.06104901116716e-05
+          },
+          "marginal_risk_operate": 0.3300031177280996
+        },
+        {
+          "iteration": 1,
+          "stage": "DECISION_EVALUATION",
+          "decision": "OPERATE",
+          "recommended_test": null,
+          "decision_reason": "Known chemistry (99.8%), marginal failure risk 0.26% <= 1.0%, SOH=0.79 +/- 0.02. Testing no longer economically justified (VOI <= 0).",
+          "soh_estimate": "0.790 +/- 0.025",
+          "r0_mohm_estimate": "2.17 +/- 0.23",
+          "chemistry_confidence_state": "KNOWN",
+          "chemistry_posterior": {
+            "LFP": 0.9975548151319359,
+            "NMC": 0.0023645743766090334,
+            "UNKNOWN": 8.06104901116716e-05
+          },
+          "marginal_risk_operate": 0.0025882515100976566
+        }
+      ]
+    },
+    "pass_criterion": "Executes characterization and reduces sigma_SOH",
+    "passed": true
+  },
+  "EXP_5_UNKNOWN_CHEMISTRY": {
+    "objective": "Verify epistemic abstention (refusal to OPERATE when chemistry is not LFP)",
+    "ground_truth": {
+      "cell_id": "CELL_5_NMC",
+      "true_chemistry": "NMC",
+      "true_soh": 0.82,
+      "true_capacity_ah": 19.68,
+      "true_r0_mohm": 2.1,
+      "nominal_capacity_ah": 24.0,
+      "true_c_th_j_k": 850.0,
+      "true_leakage_mv_hr": 1.5,
+      "characterized_timestamp": 1790940411.7236247,
+      "notes": "Tagless NMC cell"
+    },
+    "result": {
+      "cell_id": "CELL_5_NMC",
+      "final_decision": "RETIRE",
+      "final_reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.753V > 3.75V (Electrolyte oxidation risk)",
+      "final_soh_estimate": 0.8,
+      "final_soh_uncertainty": 0.1,
+      "final_r0_mohm": 2.5,
+      "final_chemistry": "UNKNOWN",
+      "final_chem_confidence": "AMBIGUOUS",
+      "final_chem_posterior": {
+        "LFP": 0.333,
+        "NMC": 0.333,
+        "UNKNOWN": 0.334
+      },
+      "elapsed_time_s": 0.003482097999949474,
+      "total_diag_cost_inr": 0.0,
+      "total_diag_energy_wh": 0.0,
+      "tests_executed_count": 0,
+      "trace": [
+        {
+          "stage": "STAGE_0_TRIAGE",
+          "status": "REJECT",
+          "reason": "TR-04: Overcharge hazard - Voc=3.753V > 3.75V (Electrolyte oxidation risk)",
+          "v_rest": 3.7525595487972963,
+          "t_rest": 25.0,
+          "drift_mv_hr": 1.2
+        }
+      ]
+    },
+    "pass_criterion": "Final decision in {HOLD, RETIRE}; OPERATE strictly prohibited",
+    "passed": true
+  },
+  "EXP_6_WRONG_CHEM_LABEL": {
+    "objective": "Catch adversarial false label and prevent false acceptance",
+    "ground_truth": {
+      "cell_id": "CELL_5_NMC",
+      "true_chemistry": "NMC",
+      "true_soh": 0.82,
+      "true_capacity_ah": 19.68,
+      "true_r0_mohm": 2.1,
+      "nominal_capacity_ah": 24.0,
+      "true_c_th_j_k": 850.0,
+      "true_leakage_mv_hr": 1.5,
+      "characterized_timestamp": 1790940411.7236247,
+      "notes": "Tagless NMC cell"
+    },
+    "result": {
+      "cell_id": "CELL_5_NMC",
+      "final_decision": "RETIRE",
+      "final_reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.751V > 3.75V (Electrolyte oxidation risk)",
+      "final_soh_estimate": 0.85,
+      "final_soh_uncertainty": 0.03,
+      "final_r0_mohm": 2.5,
+      "final_chemistry": "UNKNOWN",
+      "final_chem_confidence": "AMBIGUOUS",
+      "final_chem_posterior": {
+        "LFP": 0.333,
+        "NMC": 0.333,
+        "UNKNOWN": 0.334
+      },
+      "elapsed_time_s": 0.003415506000237656,
+      "total_diag_cost_inr": 0.0,
+      "total_diag_energy_wh": 0.0,
+      "tests_executed_count": 0,
+      "trace": [
+        {
+          "stage": "STAGE_0_TRIAGE",
+          "status": "REJECT",
+          "reason": "TR-04: Overcharge hazard - Voc=3.751V > 3.75V (Electrolyte oxidation risk)",
+          "v_rest": 3.751018618309827,
+          "t_rest": 25.0,
+          "drift_mv_hr": 1.2
+        }
+      ]
+    },
+    "pass_criterion": "OPERATE is blocked despite malicious prior",
+    "passed": true
+  },
+  "EXP_7_OVERCONFIDENCE_ATTACK": {
+    "objective": "Verify safety barrier prevents unsafe operation under corrupted prior",
+    "ground_truth": {
+      "cell_id": "CELL_4_DEFECTIVE",
+      "true_chemistry": "LFP",
+      "true_soh": 0.48,
+      "true_capacity_ah": 9.6,
+      "true_r0_mohm": 18.5,
+      "nominal_capacity_ah": 20.0,
+      "true_c_th_j_k": 1200.0,
+      "true_leakage_mv_hr": 22.0,
+      "characterized_timestamp": 1790940411.7233677,
+      "notes": "Severely degraded with micro-short"
+    },
+    "result": {
+      "cell_id": "CELL_4_DEFECTIVE",
+      "final_decision": "RETIRE",
+      "final_reason": "Failed Stage 0 Deterministic Triage: TR-08: Micro-short hazard - Self-discharge dV/dt=22.0 mV/hr > 15.0 mV/hr",
+      "final_soh_estimate": 0.75,
+      "final_soh_uncertainty": 0.01,
+      "final_r0_mohm": 2.0,
+      "final_chemistry": "UNKNOWN",
+      "final_chem_confidence": "AMBIGUOUS",
+      "final_chem_posterior": {
+        "LFP": 0.333,
+        "NMC": 0.333,
+        "UNKNOWN": 0.334
+      },
+      "elapsed_time_s": 0.003390324999600125,
+      "total_diag_cost_inr": 0.0,
+      "total_diag_energy_wh": 0.0,
+      "tests_executed_count": 0,
+      "trace": [
+        {
+          "stage": "STAGE_0_TRIAGE",
+          "status": "REJECT",
+          "reason": "TR-08: Micro-short hazard - Self-discharge dV/dt=22.0 mV/hr > 15.0 mV/hr",
+          "v_rest": 3.290514540684746,
+          "t_rest": 25.0,
+          "drift_mv_hr": 22.0
+        }
+      ]
+    },
+    "pass_criterion": "Decision == RETIRE; OPERATE forbidden",
+    "passed": true
+  },
+  "EXP_8_INDEPENDENT_TRIP": {
+    "objective": "Verify autonomous hardware comparator trips contactor without software intervention",
+    "measured_trip": {
+      "voltages": [
+        1.8517888378645664
+      ],
+      "current": 0.0,
+      "temperatures": [
+        25.0
+      ],
+      "relay_enabled": false,
+      "hardware_tripped": true,
+      "trip_reason": "LM393_UVP_TRIP_CELL_0_V=1.852"
+    },
+    "pass_criterion": "hardware_tripped == True and relay_enabled == False",
+    "passed": true
+  },
+  "EXP_9_REPRODUCIBILITY": {
+    "objective": "Measure repeat measurement noise floor",
+    "v_samples": [
+      3.291407907250585,
+      3.2909098211717533,
+      3.2912040379156244,
+      3.293042437749243,
+      3.2912096197546346,
+      3.2894385963583925,
+      3.2921875044207183,
+      3.28953839315841,
+      3.2912915029547087,
+      3.291761068882708
+    ],
+    "v_std_v": 0.0010336306269197605,
+    "pass_criterion": "v_std < 3.0 mV",
+    "passed": true
+  },
+  "EXP_10_ADAPTIVE_VS_FIXED": {
+    "objective": "Demonstrate >= 50% diagnostic time reduction vs 800s OEM sequence",
+    "fixed_time_s": 800.0,
+    "adaptive_time_s": 0.011024185999303882,
+    "time_savings_pct": 99.99862197675009,
+    "pass_criterion": "time_savings_pct >= 50.0%",
+    "passed": true
+  }
+}

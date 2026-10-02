@@ -5,7 +5,7 @@ for each module, with explicit variance propagation across tests and operation.
 """
 
 import numpy as np
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Tuple
 
 class ModuleBelief:
     """
