@@ -14,8 +14,8 @@
     "n_unsafe": 50,
     "n_unsafe_accepted": 0,
     "far_percent": 0.0,
-    "chemistry_accuracy_percent": 6.0,
-    "abstention_rate_percent": 94.0,
+    "chemistry_accuracy_percent": 0.0,
+    "abstention_rate_percent": 100.0,
     "false_confidence_percent": 0.0,
     "mean_test_time_s": 0.0
   },
@@ -24,9 +24,9 @@
     "n_unsafe": 24,
     "n_unsafe_accepted": 0,
     "far_percent": 0.0,
-    "chemistry_accuracy_percent": 30.0,
-    "abstention_rate_percent": 68.0,
-    "false_confidence_percent": 16.0,
+    "chemistry_accuracy_percent": 32.0,
+    "abstention_rate_percent": 64.0,
+    "false_confidence_percent": 18.0,
     "mean_test_time_s": 0.02
   },
   "Wrong_Label_NMC_as_LFP": {
@@ -35,8 +35,8 @@
     "n_unsafe_accepted": 1,
     "far_percent": 2.0,
     "chemistry_accuracy_percent": 0.0,
-    "abstention_rate_percent": 96.0,
-    "false_confidence_percent": 4.0,
+    "abstention_rate_percent": 98.0,
+    "false_confidence_percent": 2.0,
     "mean_test_time_s": 0.01
   },
   "Mixed_50_50": {
@@ -44,9 +44,9 @@
     "n_unsafe": 29,
     "n_unsafe_accepted": 0,
     "far_percent": 0.0,
-    "chemistry_accuracy_percent": 18.0,
-    "abstention_rate_percent": 78.0,
-    "false_confidence_percent": 10.0,
+    "chemistry_accuracy_percent": 16.0,
+    "abstention_rate_percent": 76.0,
+    "false_confidence_percent": 12.0,
     "mean_test_time_s": 0.02
   }
 }

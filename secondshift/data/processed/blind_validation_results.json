@@ -1,5 +1,5 @@
 {
-  "execution_timestamp_utc": "2026-10-02T14:39:05Z",
+  "execution_timestamp_utc": "2026-10-02T14:42:12Z",
   "specimens_evaluated_count": 12,
   "specimen_records": [
     {
@@ -29,15 +29,15 @@
         },
         "SECONDSHIFT": {
           "decision": "OPERATE",
-          "time_s": 0.012292737999814562,
+          "time_s": 0.012785530001565348,
           "energy_wh": 1.8,
           "cost_inr": 13.0144,
           "tests": 1,
-          "final_soh_est": 0.9226733736980325,
+          "final_soh_est": 0.9290955404437213,
           "final_soh_sigma": 0.024474510493440127,
-          "final_r0_est": 2.056454015578307,
+          "final_r0_est": 2.196882691059451,
           "chem_confidence": "KNOWN",
-          "stopping_reason": "Known chemistry (99.8%), marginal failure risk 0.25% <= 1.0%, SOH=0.92 +/- 0.02. Testing no longer economically justified (VOI <= 0)."
+          "stopping_reason": "Known chemistry (99.8%), marginal failure risk 0.25% <= 1.0%, SOH=0.93 +/- 0.02. Testing no longer economically justified (VOI <= 0)."
         }
       }
     },
@@ -68,15 +68,15 @@
         },
         "SECONDSHIFT": {
           "decision": "OPERATE",
-          "time_s": 0.011789812000642996,
+          "time_s": 0.012602325001353165,
           "energy_wh": 1.8,
           "cost_inr": 13.0144,
           "tests": 1,
-          "final_soh_est": 0.8957425899667518,
+          "final_soh_est": 0.9118833942265464,
           "final_soh_sigma": 0.024474510493440127,
-          "final_r0_est": 2.2879670304805044,
+          "final_r0_est": 2.3758522973670746,
           "chem_confidence": "KNOWN",
-          "stopping_reason": "Known chemistry (99.8%), marginal failure risk 0.26% <= 1.0%, SOH=0.90 +/- 0.02. Testing no longer economically justified (VOI <= 0)."
+          "stopping_reason": "Known chemistry (99.8%), marginal failure risk 0.29% <= 1.0%, SOH=0.91 +/- 0.02. Testing no longer economically justified (VOI <= 0)."
         }
       }
     },
@@ -107,15 +107,15 @@
         },
         "SECONDSHIFT": {
           "decision": "OPERATE",
-          "time_s": 0.012198788997920929,
+          "time_s": 0.012657884999498492,
           "energy_wh": 1.8,
           "cost_inr": 13.0144,
           "tests": 1,
-          "final_soh_est": 0.8015054691619952,
+          "final_soh_est": 0.8169828432227838,
           "final_soh_sigma": 0.024474510493440127,
-          "final_r0_est": 2.6680709988082536,
+          "final_r0_est": 2.540205794351337,
           "chem_confidence": "KNOWN",
-          "stopping_reason": "Known chemistry (99.8%), marginal failure risk 0.91% <= 1.0%, SOH=0.80 +/- 0.02. Testing no longer economically justified (VOI <= 0)."
+          "stopping_reason": "Known chemistry (99.8%), marginal failure risk 0.46% <= 1.0%, SOH=0.82 +/- 0.02. Testing no longer economically justified (VOI <= 0)."
         }
       }
     },
@@ -145,16 +145,16 @@
           "tests": 1
         },
         "SECONDSHIFT": {
-          "decision": "DERATE",
-          "time_s": 0.012468059998354875,
+          "decision": "RETIRE",
+          "time_s": 0.012328894998063333,
           "energy_wh": 1.8,
           "cost_inr": 13.0144,
           "tests": 1,
-          "final_soh_est": 0.7418575673114517,
+          "final_soh_est": 0.7042657663937395,
           "final_soh_sigma": 0.024474510493440127,
-          "final_r0_est": 3.5259627845106394,
+          "final_r0_est": 3.083841832366694,
           "chem_confidence": "KNOWN",
-          "stopping_reason": "Cell cleared derated safety envelope (P_fail=0.27% <= 1.0%), but failed full-rate OPERATE barrier. Assigned to 0.5C derated operation."
+          "stopping_reason": "Cell violates safety barrier or cannot achieve positive operating utility. Routed to hydro-metallurgical recycling (salvage value: \u20b926.8)."
         }
       }
     },
@@ -185,13 +185,13 @@
         },
         "SECONDSHIFT": {
           "decision": "RETIRE",
-          "time_s": 0.01197844700072892,
+          "time_s": 0.0129958590005117,
           "energy_wh": 1.8,
           "cost_inr": 13.0144,
           "tests": 1,
-          "final_soh_est": 0.6996556065479907,
+          "final_soh_est": 0.6973011665158838,
           "final_soh_sigma": 0.024474510493440127,
-          "final_r0_est": 3.8780244227798133,
+          "final_r0_est": 3.902285753862057,
           "chem_confidence": "KNOWN",
           "stopping_reason": "Cell violates safety barrier or cannot achieve positive operating utility. Routed to hydro-metallurgical recycling (salvage value: \u20b926.8)."
         }
@@ -224,13 +224,13 @@
         },
         "SECONDSHIFT": {
           "decision": "RETIRE",
-          "time_s": 0.01207159200203023,
+          "time_s": 0.015062278998811962,
           "energy_wh": 1.8,
           "cost_inr": 13.0144,
           "tests": 1,
-          "final_soh_est": 0.7070256133665943,
+          "final_soh_est": 0.7308139200588355,
           "final_soh_sigma": 0.024474510493440127,
-          "final_r0_est": 5.716491038696959,
+          "final_r0_est": 5.955263924301104,
           "chem_confidence": "KNOWN",
           "stopping_reason": "Cell violates safety barrier or cannot achieve positive operating utility. Routed to hydro-metallurgical recycling (salvage value: \u20b926.8)."
         }
@@ -263,7 +263,7 @@
         },
         "SECONDSHIFT": {
           "decision": "RETIRE",
-          "time_s": 0.0034577999977045693,
+          "time_s": 0.003739081999810878,
           "energy_wh": 0.0,
           "cost_inr": 0.0,
           "tests": 0,
@@ -302,7 +302,7 @@
         },
         "SECONDSHIFT": {
           "decision": "RETIRE",
-          "time_s": 0.0035983300003863405,
+          "time_s": 0.003652995001175441,
           "energy_wh": 0.0,
           "cost_inr": 0.0,
           "tests": 0,
@@ -341,7 +341,7 @@
         },
         "SECONDSHIFT": {
           "decision": "RETIRE",
-          "time_s": 0.0036509159981505945,
+          "time_s": 0.0036393529990164097,
           "energy_wh": 0.0,
           "cost_inr": 0.0,
           "tests": 0,
@@ -349,7 +349,7 @@
           "final_soh_sigma": 0.12,
           "final_r0_est": 2.5,
           "chem_confidence": "AMBIGUOUS",
-          "stopping_reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.752V > 3.75V (Electrolyte oxidation risk)"
+          "stopping_reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.750V > 3.75V (Electrolyte oxidation risk)"
         }
       }
     },
@@ -380,7 +380,7 @@
         },
         "SECONDSHIFT": {
           "decision": "RETIRE",
-          "time_s": 0.003430878001381643,
+          "time_s": 0.003445941998506896,
           "energy_wh": 0.0,
           "cost_inr": 0.0,
           "tests": 0,
@@ -419,7 +419,7 @@
         },
         "SECONDSHIFT": {
           "decision": "RETIRE",
-          "time_s": 0.0035514019982656464,
+          "time_s": 0.0036570490010490175,
           "energy_wh": 0.0,
           "cost_inr": 0.0,
           "tests": 0,
@@ -427,7 +427,7 @@
           "final_soh_sigma": 0.12,
           "final_r0_est": 2.5,
           "chem_confidence": "AMBIGUOUS",
-          "stopping_reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.752V > 3.75V (Electrolyte oxidation risk)"
+          "stopping_reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.753V > 3.75V (Electrolyte oxidation risk)"
         }
       }
     },
@@ -458,7 +458,7 @@
         },
         "SECONDSHIFT": {
           "decision": "RETIRE",
-          "time_s": 0.029881439000746468,
+          "time_s": 0.030097691997070797,
           "energy_wh": 1.0499999999999998,
           "cost_inr": 10.8834,
           "tests": 3,
@@ -531,10 +531,10 @@
       "n_safe": 5,
       "n_unsafe": 7,
       "n_unsafe_accepted": 0,
-      "n_safe_qualified": 4,
+      "n_safe_qualified": 3,
       "FAR_percent": 0.0,
-      "FRR_percent": 20.0,
-      "QAR_percent": 80.0,
+      "FRR_percent": 40.0,
+      "QAR_percent": 60.0,
       "Abstention_Rate_percent": 0.0,
       "Mean_Diagnostic_Time_s": 0.01,
       "Median_Diagnostic_Time_s": 0.01,
@@ -542,7 +542,7 @@
       "Mean_Diagnostic_Energy_wh": 0.99,
       "Mean_Tests_Executed": 0.75,
       "Mean_Diagnostic_Cost_inr": 7.41,
-      "Decision_Accuracy_percent": 91.67
+      "Decision_Accuracy_percent": 83.33
     }
   }
 }

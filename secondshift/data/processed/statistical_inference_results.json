@@ -1,18 +1,18 @@
 {
   "timing_inference": {
-    "mean_s": 0.01,
-    "median_s": 0.0119,
-    "std_s": 0.0076,
-    "iqr_s": 0.0086,
+    "mean_s": 0.0106,
+    "median_s": 0.0125,
+    "std_s": 0.0078,
+    "iqr_s": 0.0092,
     "wilcoxon_stat": 0.0,
     "wilcoxon_p_value": 0.00048828125
   },
   "paired_mcnemar_test": {
-    "both_correct": 8,
+    "both_correct": 7,
     "both_wrong": 0,
-    "baseline_a_only_correct": 1,
+    "baseline_a_only_correct": 2,
     "secondshift_only_correct": 3,
-    "p_value_mcnemar": 0.625
+    "p_value_mcnemar": 1.0
   },
   "power_and_sample_size": {
     "current_dataset_n": 12,

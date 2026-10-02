@@ -151,24 +151,24 @@
   },
   "SECONDSHIFT": {
     "confusion_matrix": {
-      "TP": 4,
+      "TP": 3,
       "TN": 7,
       "FP": 0,
-      "FN": 1,
+      "FN": 2,
       "N_total": 12,
       "N_positive_safe": 5,
       "N_negative_unsafe": 7
     },
     "metrics": {
-      "Accuracy": 0.9167,
+      "Accuracy": 0.8333,
       "Accuracy_95CI": [
-        0.6152,
-        0.9979
+        0.5159,
+        0.9791
       ],
-      "Sensitivity_QAR": 0.8,
+      "Sensitivity_QAR": 0.6,
       "Sensitivity_95CI": [
-        0.2836,
-        0.9949
+        0.1466,
+        0.9473
       ],
       "Specificity": 1.0,
       "Specificity_95CI": [
@@ -177,26 +177,26 @@
       ],
       "Precision_PPV": 1.0,
       "Precision_95CI": [
-        0.3976,
+        0.2924,
         1.0
       ],
-      "NPV": 0.875,
+      "NPV": 0.7778,
       "NPV_95CI": [
-        0.4735,
-        0.9968
+        0.3999,
+        0.9719
       ],
       "FAR": 0.0,
       "FAR_95CI": [
         0.0,
         0.4096
       ],
-      "FRR": 0.2,
+      "FRR": 0.4,
       "FRR_95CI": [
-        0.0051,
-        0.7164
+        0.0527,
+        0.8534
       ],
-      "F1_Score": 0.8889,
-      "Balanced_Accuracy": 0.9
+      "F1_Score": 0.75,
+      "Balanced_Accuracy": 0.8
     }
   }
 }
