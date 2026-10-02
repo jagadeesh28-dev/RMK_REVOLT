@@ -1,0 +1,170 @@
+{
+  "PESSIMISTIC": {
+    "scenario_metadata": {
+      "energy_tariff_inr_kwh": 6.0,
+      "hazard_penalty_inr": 15000.0,
+      "salvage_tariff_inr_kwh": 800.0,
+      "second_life_cycles": 800,
+      "cell_nominal_kwh": 0.064,
+      "description": "Depressed power tariffs, aggressive liability penalties, weak raw material markets"
+    },
+    "systems": {
+      "BASELINE_A": {
+        "name": "Baseline A (Fixed OEM Sequence)",
+        "gross_second_life_revenue_inr": 251.9,
+        "salvage_value_inr": 51.2,
+        "expected_gross_revenue_inr": 101.17,
+        "expected_hazard_penalty_inr": 3750.25,
+        "testing_cost_inr": 150.13,
+        "net_value_per_specimen_inr": -3799.21,
+        "daily_throughput_cells": 35.0,
+        "daily_net_economic_value_inr": -134254.41
+      },
+      "BASELINE_B": {
+        "name": "Baseline B (Scalar SOH Threshold)",
+        "gross_second_life_revenue_inr": 251.9,
+        "salvage_value_inr": 51.2,
+        "expected_gross_revenue_inr": 134.35,
+        "expected_hazard_penalty_inr": 8750.0,
+        "testing_cost_inr": 0.0,
+        "net_value_per_specimen_inr": -8615.65,
+        "daily_throughput_cells": 1920.0,
+        "daily_net_economic_value_inr": -16542050.3
+      },
+      "BASELINE_C": {
+        "name": "Baseline C (Uncertainty Threshold)",
+        "gross_second_life_revenue_inr": 251.9,
+        "salvage_value_inr": 51.2,
+        "expected_gross_revenue_inr": 134.35,
+        "expected_hazard_penalty_inr": 8750.0,
+        "testing_cost_inr": 0.0,
+        "net_value_per_specimen_inr": -8615.65,
+        "daily_throughput_cells": 1920.0,
+        "daily_net_economic_value_inr": -16542050.3
+      },
+      "SECONDSHIFT": {
+        "name": "SECONDShift (Adaptive VOI + Barrier)",
+        "gross_second_life_revenue_inr": 251.9,
+        "salvage_value_inr": 51.2,
+        "expected_gross_revenue_inr": 118.1,
+        "expected_hazard_penalty_inr": 0.0,
+        "testing_cost_inr": 12.5,
+        "net_value_per_specimen_inr": 105.6,
+        "daily_throughput_cells": 1047.0,
+        "daily_net_economic_value_inr": 110591.83
+      }
+    }
+  },
+  "NOMINAL": {
+    "scenario_metadata": {
+      "energy_tariff_inr_kwh": 10.0,
+      "hazard_penalty_inr": 6000.0,
+      "salvage_tariff_inr_kwh": 1200.0,
+      "second_life_cycles": 1200,
+      "cell_nominal_kwh": 0.064,
+      "description": "Current Indian commercial C&I energy storage arbitrage, standard recycling scrap prices"
+    },
+    "systems": {
+      "BASELINE_A": {
+        "name": "Baseline A (Fixed OEM Sequence)",
+        "gross_second_life_revenue_inr": 629.76,
+        "salvage_value_inr": 76.8,
+        "expected_gross_revenue_inr": 227.33,
+        "expected_hazard_penalty_inr": 1500.1,
+        "testing_cost_inr": 150.22,
+        "net_value_per_specimen_inr": -1423.0,
+        "daily_throughput_cells": 35.0,
+        "daily_net_economic_value_inr": -50284.98
+      },
+      "BASELINE_B": {
+        "name": "Baseline B (Scalar SOH Threshold)",
+        "gross_second_life_revenue_inr": 629.76,
+        "salvage_value_inr": 76.8,
+        "expected_gross_revenue_inr": 335.87,
+        "expected_hazard_penalty_inr": 3500.0,
+        "testing_cost_inr": 0.0,
+        "net_value_per_specimen_inr": -3164.13,
+        "daily_throughput_cells": 1920.0,
+        "daily_net_economic_value_inr": -6075125.76
+      },
+      "BASELINE_C": {
+        "name": "Baseline C (Uncertainty Threshold)",
+        "gross_second_life_revenue_inr": 629.76,
+        "salvage_value_inr": 76.8,
+        "expected_gross_revenue_inr": 335.87,
+        "expected_hazard_penalty_inr": 3500.0,
+        "testing_cost_inr": 0.0,
+        "net_value_per_specimen_inr": -3164.13,
+        "daily_throughput_cells": 1920.0,
+        "daily_net_economic_value_inr": -6075125.76
+      },
+      "SECONDSHIFT": {
+        "name": "SECONDShift (Adaptive VOI + Barrier)",
+        "gross_second_life_revenue_inr": 629.76,
+        "salvage_value_inr": 76.8,
+        "expected_gross_revenue_inr": 261.12,
+        "expected_hazard_penalty_inr": 0.0,
+        "testing_cost_inr": 12.5,
+        "net_value_per_specimen_inr": 248.62,
+        "daily_throughput_cells": 1047.0,
+        "daily_net_economic_value_inr": 260370.33
+      }
+    }
+  },
+  "OPTIMISTIC": {
+    "scenario_metadata": {
+      "energy_tariff_inr_kwh": 14.0,
+      "hazard_penalty_inr": 3000.0,
+      "salvage_tariff_inr_kwh": 1600.0,
+      "second_life_cycles": 1500,
+      "cell_nominal_kwh": 0.064,
+      "description": "High peak-demand tariff shaving, premium repurposing market, strong lithium commodity prices"
+    },
+    "systems": {
+      "BASELINE_A": {
+        "name": "Baseline A (Fixed OEM Sequence)",
+        "gross_second_life_revenue_inr": 1102.08,
+        "salvage_value_inr": 102.4,
+        "expected_gross_revenue_inr": 381.83,
+        "expected_hazard_penalty_inr": 750.05,
+        "testing_cost_inr": 150.31,
+        "net_value_per_specimen_inr": -518.54,
+        "daily_throughput_cells": 35.0,
+        "daily_net_economic_value_inr": -18323.78
+      },
+      "BASELINE_B": {
+        "name": "Baseline B (Scalar SOH Threshold)",
+        "gross_second_life_revenue_inr": 1102.08,
+        "salvage_value_inr": 102.4,
+        "expected_gross_revenue_inr": 587.78,
+        "expected_hazard_penalty_inr": 1750.0,
+        "testing_cost_inr": 0.0,
+        "net_value_per_specimen_inr": -1162.22,
+        "daily_throughput_cells": 1920.0,
+        "daily_net_economic_value_inr": -2231470.08
+      },
+      "BASELINE_C": {
+        "name": "Baseline C (Uncertainty Threshold)",
+        "gross_second_life_revenue_inr": 1102.08,
+        "salvage_value_inr": 102.4,
+        "expected_gross_revenue_inr": 587.78,
+        "expected_hazard_penalty_inr": 1750.0,
+        "testing_cost_inr": 0.0,
+        "net_value_per_specimen_inr": -1162.22,
+        "daily_throughput_cells": 1920.0,
+        "daily_net_economic_value_inr": -2231470.08
+      },
+      "SECONDSHIFT": {
+        "name": "SECONDShift (Adaptive VOI + Barrier)",
+        "gross_second_life_revenue_inr": 1102.08,
+        "salvage_value_inr": 102.4,
+        "expected_gross_revenue_inr": 435.63,
+        "expected_hazard_penalty_inr": 0.0,
+        "testing_cost_inr": 12.5,
+        "net_value_per_specimen_inr": 423.12,
+        "daily_throughput_cells": 1047.0,
+        "daily_net_economic_value_inr": 443125.35
+      }
+    }
+  }
+}

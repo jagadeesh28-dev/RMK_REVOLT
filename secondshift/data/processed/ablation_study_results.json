@@ -1,0 +1,93 @@
+{
+  "A0_FULL_SYSTEM": {
+    "name": "Full SECONDShift (Proposed Architecture)",
+    "FAR_percent": 0.0,
+    "FRR_percent": 20.0,
+    "QAR_percent": 80.0,
+    "Abstention_Rate_percent": 0.0,
+    "Decision_Accuracy_percent": 91.67,
+    "Mean_Time_s": 0.01,
+    "Mean_Energy_wh": 0.99,
+    "Mean_Tests": 0.75,
+    "N_Unsafe_Accepted": 0,
+    "Hardware_Hazard_Count": 0
+  },
+  "A1_NO_CHEM_UNCERTAINTY": {
+    "name": "Ablation A1: Without Chemistry Uncertainty Layer",
+    "FAR_percent": 0.0,
+    "FRR_percent": 20.0,
+    "QAR_percent": 80.0,
+    "Abstention_Rate_percent": 0.0,
+    "Decision_Accuracy_percent": 91.67,
+    "Mean_Time_s": 0.01,
+    "Mean_Energy_wh": 1.05,
+    "Mean_Tests": 0.58,
+    "N_Unsafe_Accepted": 0,
+    "Hardware_Hazard_Count": 0
+  },
+  "A2_NO_BAYESIAN_UNCERTAINTY": {
+    "name": "Ablation A2: Without Bayesian State Uncertainty",
+    "FAR_percent": 14.29,
+    "FRR_percent": 0.0,
+    "QAR_percent": 100.0,
+    "Abstention_Rate_percent": 0.0,
+    "Decision_Accuracy_percent": 91.67,
+    "Mean_Time_s": 1.33,
+    "Mean_Energy_wh": 0.0,
+    "Mean_Tests": 0.0,
+    "N_Unsafe_Accepted": 1,
+    "Hardware_Hazard_Count": 0
+  },
+  "A3_NO_HARD_SAFETY_BARRIER": {
+    "name": "Ablation A3: Without Hard Safety Barrier",
+    "FAR_percent": 14.29,
+    "FRR_percent": 0.0,
+    "QAR_percent": 100.0,
+    "Abstention_Rate_percent": 0.0,
+    "Decision_Accuracy_percent": 91.67,
+    "Mean_Time_s": 1.17,
+    "Mean_Energy_wh": 0.0,
+    "Mean_Tests": 0.0,
+    "N_Unsafe_Accepted": 1,
+    "Hardware_Hazard_Count": 0
+  },
+  "A4_NO_VOI_FIXED_TESTS": {
+    "name": "Ablation A4: Without VOI (Fixed Tests)",
+    "FAR_percent": 0.0,
+    "FRR_percent": 20.0,
+    "QAR_percent": 80.0,
+    "Abstention_Rate_percent": 0.0,
+    "Decision_Accuracy_percent": 91.67,
+    "Mean_Time_s": 466.67,
+    "Mean_Energy_wh": 13.07,
+    "Mean_Tests": 2.33,
+    "N_Unsafe_Accepted": 0,
+    "Hardware_Hazard_Count": 0
+  },
+  "A5_NO_ABSTENTION": {
+    "name": "Ablation A5: Without Abstention (Forced Decisions)",
+    "FAR_percent": 0.0,
+    "FRR_percent": 20.0,
+    "QAR_percent": 80.0,
+    "Abstention_Rate_percent": 0.0,
+    "Decision_Accuracy_percent": 91.67,
+    "Mean_Time_s": 0.01,
+    "Mean_Energy_wh": 0.99,
+    "Mean_Tests": 0.75,
+    "N_Unsafe_Accepted": 0,
+    "Hardware_Hazard_Count": 0
+  },
+  "A6_NO_HARDWARE_SAFETY": {
+    "name": "Ablation A6: Without Independent Hardware Safety",
+    "FAR_percent": 0.0,
+    "FRR_percent": 20.0,
+    "QAR_percent": 80.0,
+    "Abstention_Rate_percent": 0.0,
+    "Decision_Accuracy_percent": 91.67,
+    "Mean_Time_s": 0.01,
+    "Mean_Energy_wh": 0.99,
+    "Mean_Tests": 0.75,
+    "N_Unsafe_Accepted": 0,
+    "Hardware_Hazard_Count": 1
+  }
+}

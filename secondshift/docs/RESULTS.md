@@ -81,7 +81,7 @@ A multi-parameter audit quantified discrepancies between ideal simulation models
 
 | Metric | Baseline A (Fixed OEM Sequence) | Baseline B (Scalar SOH Regression) | Baseline C (Uncertainty Threshold) | SECONDShift (Proposed) |
 | :--- | :--- | :--- | :--- | :--- |
-| **False Acceptance Rate (FAR)** | 0.0% | 16.4% (Unsafe) | 2.8% (Borderline) | **0.0% (Guaranteed)** |
+| **False Acceptance Rate (FAR)** | 0.0% | 16.4% (Unsafe) | 2.8% (Borderline) | **0.0% (Empirically Verified)** |
 | **Unnecessary Inspection Rate (UIR)** | 100.0% (Always tests) | 0.0% (Never tests) | 38.0% | **8.5% (Adaptive)** |
 | **Mean Qualification Time** | 800.0 s | 0.05 s | 240.0 s | **12.5 s (Healthy)** |
 | **Diagnostic Energy Consumed** | 22.4 Wh | 0.0 Wh | 6.8 Wh | **0.35 Wh** |

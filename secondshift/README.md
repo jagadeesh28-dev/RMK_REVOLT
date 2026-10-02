@@ -89,7 +89,7 @@ secondshift/
 | **Testing Energy Consumed** | 22.4 Wh | 0.0 Wh | **0.35 Wh** | Minimize |
 | **Net Economic Value / Specimen** | -₹450.0 | +₹820.0 | **+₹2,350.0** | Maximize |
 | **Hardware Comparator Trip Latency**| N/A | N/A | **11.8 ms** | $< 20.0\text{ ms}$ |
-| **Epistemic Abstention on Ambiguity**| No | No | **Guaranteed (`HOLD`)**| Strict Safety |
+| **Epistemic Abstention On Ambiguity**| No | No | **Enforced (`HOLD`)** | Strict Safety |
 
 ### Highlights:
 - **Software Overconfidence Attack Defeated:** When an adversarial prior ($\mu = 0.75, \sigma = 0.01$) is injected into a severely depleted $55\%$ SOH cell, physical loading collapses terminal voltage to $2.44\text{ V}$ in $40\text{ s}$, triggering the autonomous LM393 analog window comparator to disconnect the contactor in $<12\text{ ms}$.

@@ -1,0 +1,115 @@
+{
+  "manifest_schema_version": "1.0.0",
+  "project": "SECONDShift: Risk-Constrained Adaptive Qualification Under State and Model Uncertainty",
+  "institution": "RMK Engineering College / Team RMK REVOLT",
+  "execution_environment": {
+    "os": "Linux 6.6.137+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.6.137-1+rpt1 (2026-02-10) aarch64",
+    "python_interpreter": "/home/jagadeesh/miniconda3/envs/EB_2935/bin/python",
+    "python_version": "3.10.16",
+    "git_commit": "b6bf43cc769fd3f51498f0d1fcb41f13e14fef35",
+    "timestamp_utc": "2026-10-02T12:55:00Z"
+  },
+  "datasets": {
+    "ground_truth_registry": {
+      "path": "secondshift/data/raw/ground_truth_registry.json",
+      "format": "JSON",
+      "specimen_count": 12,
+      "quarantine_verified": true,
+      "validation_type": "HARDWARE-IN-THE-LOOP BENCH VALIDATION"
+    },
+    "processed_blind_validation": {
+      "path": "secondshift/data/processed/blind_validation_results.json",
+      "systems_compared": ["BASELINE_A", "BASELINE_B", "BASELINE_C", "SECONDSHIFT"]
+    },
+    "adversarial_overconfidence": {
+      "path": "secondshift/data/processed/overconfidence_attack_results.json",
+      "attacks_evaluated": 11,
+      "passed_count": 11
+    },
+    "chemistry_attacks": {
+      "path": "secondshift/data/processed/chemistry_attack_results.json",
+      "evaluation_cycles": 250,
+      "cohorts": ["Known_LFP", "Known_NMC", "Unknown_Chemistry", "Wrong_Label_NMC_as_LFP", "Mixed_50_50"]
+    },
+    "ablation_study": {
+      "path": "secondshift/data/processed/ablation_study_results.json",
+      "ablations_evaluated": ["A0_FULL_SYSTEM", "A1_NO_CHEM_UNCERTAINTY", "A2_NO_BAYESIAN_UNCERTAINTY", "A3_NO_HARD_SAFETY_BARRIER", "A4_NO_VOI_FIXED_TESTS", "A5_NO_ABSTENTION", "A6_NO_HARDWARE_SAFETY"]
+    },
+    "economic_sensitivity": {
+      "path": "secondshift/data/processed/economic_sensitivity_results.json",
+      "scenarios_modeled": ["PESSIMISTIC", "NOMINAL", "OPTIMISTIC"]
+    }
+  },
+  "benchmark_metrics_summary": {
+    "SECONDShift_Proposed": {
+      "FAR_percent": 0.00,
+      "FRR_percent": 20.00,
+      "QAR_percent": 80.00,
+      "Abstention_Rate_percent": 33.33,
+      "Decision_Accuracy_percent": 91.67,
+      "Mean_Diagnostic_Time_s": 12.50,
+      "Mean_Diagnostic_Energy_wh": 0.25,
+      "Nominal_Net_Value_per_Module_inr": 2486.20,
+      "Hardware_Safety_Interlock_Latency_ms": 11.8
+    },
+    "Baseline_A_Fixed_Sequence": {
+      "FAR_percent": 42.86,
+      "FRR_percent": 20.00,
+      "QAR_percent": 60.00,
+      "Decision_Accuracy_percent": 75.00,
+      "Mean_Diagnostic_Time_s": 800.00,
+      "Mean_Diagnostic_Energy_wh": 22.40,
+      "Nominal_Net_Value_per_Module_inr": -14230.00
+    },
+    "Baseline_B_Scalar_SOH": {
+      "FAR_percent": 114.29,
+      "FRR_percent": 0.00,
+      "QAR_percent": 100.00,
+      "Decision_Accuracy_percent": 33.33,
+      "Mean_Diagnostic_Time_s": 0.00,
+      "Mean_Diagnostic_Energy_wh": 0.00,
+      "Nominal_Net_Value_per_Module_inr": -31641.00
+    },
+    "Baseline_C_Uncertainty_Cutoff": {
+      "FAR_percent": 114.29,
+      "FRR_percent": 0.00,
+      "QAR_percent": 100.00,
+      "Decision_Accuracy_percent": 33.33,
+      "Mean_Diagnostic_Time_s": 0.00,
+      "Mean_Diagnostic_Energy_wh": 0.00,
+      "Nominal_Net_Value_per_Module_inr": -31641.00
+    }
+  },
+  "publication_figures_catalog": [
+    {"figure_id": "FIG-01", "file": "secondshift/docs/figures/fig_01.png", "title": "HERMES Terminal Voltage Transient During Adaptive Pulse", "evidence_tier": "PHYSICAL"},
+    {"figure_id": "FIG-02", "file": "secondshift/docs/figures/fig_02.png", "title": "Programmable Electronic Load Current Profile", "evidence_tier": "PHYSICAL"},
+    {"figure_id": "FIG-03", "file": "secondshift/docs/figures/fig_03.png", "title": "Cell Surface Thermal Response During Testing", "evidence_tier": "PHYSICAL"},
+    {"figure_id": "FIG-04", "file": "secondshift/docs/figures/fig_04.png", "title": "Post-Pulse Relaxation Signature for Chemistry Disambiguation", "evidence_tier": "PHYSICAL"},
+    {"figure_id": "FIG-05", "file": "secondshift/docs/figures/fig_05.png", "title": "Sequential Bayesian Posterior Distribution Updates", "evidence_tier": "SIMULATED"},
+    {"figure_id": "FIG-06", "file": "secondshift/docs/figures/fig_06.png", "title": "Epistemic Uncertainty Shrinkage Trajectory", "evidence_tier": "SIMULATED"},
+    {"figure_id": "FIG-07", "file": "secondshift/docs/figures/fig_07.png", "title": "Chemistry Disambiguation Trajectory", "evidence_tier": "SIMULATED"},
+    {"figure_id": "FIG-08", "file": "secondshift/docs/figures/fig_08.png", "title": "Risk-Constrained Safety Barrier Convergence", "evidence_tier": "THEORETICAL"},
+    {"figure_id": "FIG-09", "file": "secondshift/docs/figures/fig_09.png", "title": "EVSI vs Diagnostic Cost (Optimal Stopping Criterion)", "evidence_tier": "THEORETICAL"},
+    {"figure_id": "FIG-10", "file": "secondshift/docs/figures/fig_10.png", "title": "Mean Diagnostic Dwell Time Benchmark", "evidence_tier": "PHYSICAL"},
+    {"figure_id": "FIG-11", "file": "secondshift/docs/figures/fig_11.png", "title": "Asset Waste & Inspection Overhead Comparison", "evidence_tier": "INJECTED"},
+    {"figure_id": "FIG-12", "file": "secondshift/docs/figures/fig_12.png", "title": "Second-Life Usable Energy Retained (Safe Envelope)", "evidence_tier": "SIMULATED"},
+    {"figure_id": "FIG-13", "file": "secondshift/docs/figures/fig_13.png", "title": "SECONDShift Adaptive Qualification Execution Timeline", "evidence_tier": "PHYSICAL"},
+    {"figure_id": "FIG-14", "file": "secondshift/docs/figures/fig_14.png", "title": "Life-Cycle Net Commercial Value Across Market Regimes", "evidence_tier": "THEORETICAL"}
+  ],
+  "documentation_manifest": [
+    "secondshift/VALIDATION_AUDIT.md",
+    "secondshift/RESEARCH_HYPOTHESIS.md",
+    "secondshift/docs/STATISTICAL_VALIDATION.md",
+    "secondshift/docs/EVIDENCE_MATRIX.md",
+    "secondshift/docs/HARDWARE_SAFETY_EVIDENCE.md",
+    "secondshift/docs/ADVERSARIAL_VALIDATION.md",
+    "secondshift/docs/ADAPTIVE_DECISION_TRACES.md",
+    "secondshift/docs/ABLATION_STUDY.md",
+    "secondshift/docs/ECONOMIC_MODEL.md",
+    "secondshift/docs/LIMITATIONS.md",
+    "secondshift/FINAL_VALIDATION_REPORT.md",
+    "secondshift/HOSTILE_REVIEW.md",
+    "secondshift/NOVELTY_POSITIONING.md",
+    "secondshift/GO_NO_GO.md"
+  ]
+}

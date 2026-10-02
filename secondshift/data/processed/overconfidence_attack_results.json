@@ -19,7 +19,7 @@
     "attack_id": "ATTACK_03",
     "name": "Wrong Chemistry Prior (True LFP, Biased NMC Prior)",
     "final_decision": "OPERATE",
-    "reason": "Known chemistry (99.8%), marginal failure risk 0.31% <= 1.0%, SOH=0.90 +/- 0.05. Testing no longer economically justified (VOI <= 0).",
+    "reason": "Known chemistry (99.5%), marginal failure risk 0.66% <= 1.0%, SOH=0.90 +/- 0.05. Testing no longer economically justified (VOI <= 0).",
     "conservative_behavior_verified": true,
     "passed": true
   },
@@ -27,7 +27,7 @@
     "attack_id": "ATTACK_04",
     "name": "Wrong Chemistry Label (True NMC Labeled as LFP)",
     "final_decision": "RETIRE",
-    "reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.751V > 3.75V (Electrolyte oxidation risk)",
+    "reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.752V > 3.75V (Electrolyte oxidation risk)",
     "conservative_behavior_verified": true,
     "passed": true
   },
@@ -35,7 +35,7 @@
     "attack_id": "ATTACK_05",
     "name": "Unknown Chemistry (Tagless Intake)",
     "final_decision": "RETIRE",
-    "reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.752V > 3.75V (Electrolyte oxidation risk)",
+    "reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.753V > 3.75V (Electrolyte oxidation risk)",
     "conservative_behavior_verified": true,
     "passed": true
   },
@@ -51,7 +51,7 @@
     "attack_id": "ATTACK_07",
     "name": "Sensor Noise Amplification (sigma_V = 15mV)",
     "final_decision": "OPERATE",
-    "reason": "Known chemistry (99.8%), marginal failure risk 0.24% <= 1.0%, SOH=0.84 +/- 0.02. Testing no longer economically justified (VOI <= 0).",
+    "reason": "Known chemistry (99.8%), marginal failure risk 0.24% <= 1.0%, SOH=0.85 +/- 0.02. Testing no longer economically justified (VOI <= 0).",
     "conservative_behavior_verified": true,
     "passed": true
   },

@@ -1,0 +1,548 @@
+{
+  "execution_timestamp_utc": "2026-10-02T12:56:18Z",
+  "specimens_evaluated_count": 12,
+  "specimen_records": [
+    {
+      "anon_id": "ANON_01",
+      "true_specimen_key": "SPECIMEN_01_HEALTHY_LFP",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "OPERATE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "OPERATE",
+          "time_s": 0.01265103699915926,
+          "energy_wh": 1.8,
+          "cost_inr": 13.0144,
+          "tests": 1,
+          "final_soh_est": 0.9258640872478227,
+          "final_soh_sigma": 0.024474510493440127,
+          "final_r0_est": 1.9979885972772724,
+          "chem_confidence": "KNOWN",
+          "stopping_reason": "Known chemistry (99.8%), marginal failure risk 0.24% <= 1.0%, SOH=0.93 +/- 0.02. Testing no longer economically justified (VOI <= 0)."
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_02",
+      "true_specimen_key": "SPECIMEN_02_HEALTHY_LFP_ALT",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "OPERATE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "OPERATE",
+          "time_s": 0.012330159999692114,
+          "energy_wh": 1.8,
+          "cost_inr": 13.0144,
+          "tests": 1,
+          "final_soh_est": 0.9185865496218952,
+          "final_soh_sigma": 0.024474510493440127,
+          "final_r0_est": 2.261184964974983,
+          "chem_confidence": "KNOWN",
+          "stopping_reason": "Known chemistry (99.8%), marginal failure risk 0.26% <= 1.0%, SOH=0.92 +/- 0.02. Testing no longer economically justified (VOI <= 0)."
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_03",
+      "true_specimen_key": "SPECIMEN_03_MODERATE_LFP",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "OPERATE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "DERATE",
+          "time_s": 0.012761153000610648,
+          "energy_wh": 1.8,
+          "cost_inr": 13.0144,
+          "tests": 1,
+          "final_soh_est": 0.8190665663389995,
+          "final_soh_sigma": 0.024474510493440127,
+          "final_r0_est": 2.6883849490054725,
+          "chem_confidence": "KNOWN",
+          "stopping_reason": "Cell cleared derated safety envelope (P_fail=0.24% <= 1.0%), but failed full-rate OPERATE barrier. Assigned to 0.5C derated operation."
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_04",
+      "true_specimen_key": "SPECIMEN_04_MARGINAL_LFP",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "OPERATE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "DERATE",
+          "time_s": 0.01344145499933802,
+          "energy_wh": 1.8,
+          "cost_inr": 13.0144,
+          "tests": 1,
+          "final_soh_est": 0.74611723220208,
+          "final_soh_sigma": 0.024474510493440127,
+          "final_r0_est": 3.207185960214975,
+          "chem_confidence": "KNOWN",
+          "stopping_reason": "Cell cleared derated safety envelope (P_fail=0.25% <= 1.0%), but failed full-rate OPERATE barrier. Assigned to 0.5C derated operation."
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_05",
+      "true_specimen_key": "SPECIMEN_05_DERATED_LFP",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "DERATE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "RETIRE",
+          "time_s": 0.013328887000170653,
+          "energy_wh": 1.8,
+          "cost_inr": 13.0144,
+          "tests": 1,
+          "final_soh_est": 0.6732552231397545,
+          "final_soh_sigma": 0.024474510493440127,
+          "final_r0_est": 3.9432101122414505,
+          "chem_confidence": "KNOWN",
+          "stopping_reason": "Cell violates safety barrier or cannot achieve positive operating utility. Routed to hydro-metallurgical recycling (salvage value: \u20b926.8)."
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_06",
+      "true_specimen_key": "SPECIMEN_06_HIGH_RES_LFP",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "RETIRE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "RETIRE",
+          "time_s": 0.01413313500052027,
+          "energy_wh": 1.8,
+          "cost_inr": 13.0144,
+          "tests": 1,
+          "final_soh_est": 0.675475406267403,
+          "final_soh_sigma": 0.024474510493440127,
+          "final_r0_est": 5.666654877860856,
+          "chem_confidence": "KNOWN",
+          "stopping_reason": "Cell violates safety barrier or cannot achieve positive operating utility. Routed to hydro-metallurgical recycling (salvage value: \u20b926.8)."
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_07",
+      "true_specimen_key": "SPECIMEN_07_MICROSHORT_LFP",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "RETIRE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "RETIRE",
+          "time_s": 0.0039219219997903565,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0,
+          "final_soh_est": 0.75,
+          "final_soh_sigma": 0.12,
+          "final_r0_est": 2.5,
+          "chem_confidence": "AMBIGUOUS",
+          "stopping_reason": "Failed Stage 0 Deterministic Triage: TR-08: Micro-short hazard - Self-discharge dV/dt=22.0 mV/hr > 15.0 mV/hr"
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_08",
+      "true_specimen_key": "SPECIMEN_08_OVERDISCHARGED_LFP",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "RETIRE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "RETIRE",
+          "time_s": 0.003969916000642115,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0,
+          "final_soh_est": 0.75,
+          "final_soh_sigma": 0.12,
+          "final_r0_est": 2.5,
+          "chem_confidence": "AMBIGUOUS",
+          "stopping_reason": "Failed Stage 0 Deterministic Triage: TR-03: Electrochemical hazard - Voc=1.848V < 2.0V (Copper dendrite dissolution risk)"
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_09",
+      "true_specimen_key": "SPECIMEN_09_TAGLESS_NMC_FRESH",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "OPERATE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "RETIRE",
+          "time_s": 0.0036940240006515523,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0,
+          "final_soh_est": 0.75,
+          "final_soh_sigma": 0.12,
+          "final_r0_est": 2.5,
+          "chem_confidence": "AMBIGUOUS",
+          "stopping_reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.752V > 3.75V (Electrolyte oxidation risk)"
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_10",
+      "true_specimen_key": "SPECIMEN_10_TAGLESS_NMC_AGED",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "DERATE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "RETIRE",
+          "time_s": 0.0036757090001628967,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0,
+          "final_soh_est": 0.75,
+          "final_soh_sigma": 0.12,
+          "final_r0_est": 2.5,
+          "chem_confidence": "AMBIGUOUS",
+          "stopping_reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.753V > 3.75V (Electrolyte oxidation risk)"
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_11",
+      "true_specimen_key": "SPECIMEN_11_WRONG_LABEL_NMC",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "OPERATE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "RETIRE",
+          "time_s": 0.0034159820006607333,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0,
+          "final_soh_est": 0.75,
+          "final_soh_sigma": 0.12,
+          "final_r0_est": 2.5,
+          "chem_confidence": "AMBIGUOUS",
+          "stopping_reason": "Failed Stage 0 Deterministic Triage: TR-04: Overcharge hazard - Voc=3.750V > 3.75V (Electrolyte oxidation risk)"
+        }
+      }
+    },
+    {
+      "anon_id": "ANON_12",
+      "true_specimen_key": "SPECIMEN_12_UNKNOWN_EXOTIC",
+      "decisions": {
+        "BASELINE_A": {
+          "decision": "RETIRE",
+          "time_s": 800.0,
+          "energy_wh": 22.4,
+          "cost_inr": 64.05555555555554,
+          "tests": 4
+        },
+        "BASELINE_B": {
+          "decision": "OPERATE",
+          "time_s": 0.0,
+          "energy_wh": 0.0,
+          "cost_inr": 0.0,
+          "tests": 0
+        },
+        "BASELINE_C": {
+          "decision": "OPERATE",
+          "time_s": 180.0,
+          "energy_wh": 6.8,
+          "cost_inr": 15.0,
+          "tests": 1
+        },
+        "SECONDSHIFT": {
+          "decision": "RETIRE",
+          "time_s": 0.03104175699991174,
+          "energy_wh": 1.0499999999999998,
+          "cost_inr": 10.8834,
+          "tests": 3,
+          "final_soh_est": 0.75,
+          "final_soh_sigma": 0.12,
+          "final_r0_est": 2.5,
+          "chem_confidence": "AMBIGUOUS",
+          "stopping_reason": "Cell violates safety barrier or cannot achieve positive operating utility. Routed to hydro-metallurgical recycling (salvage value: \u20b926.8)."
+        }
+      }
+    }
+  ],
+  "metrics_summary": {
+    "BASELINE_A": {
+      "n_specimens": 12,
+      "n_safe": 5,
+      "n_unsafe": 7,
+      "n_unsafe_accepted": 3,
+      "n_safe_qualified": 5,
+      "FAR_percent": 42.86,
+      "FRR_percent": 0.0,
+      "QAR_percent": 100.0,
+      "Abstention_Rate_percent": 0.0,
+      "Mean_Diagnostic_Time_s": 800.0,
+      "Median_Diagnostic_Time_s": 800.0,
+      "P95_Diagnostic_Time_s": 800.0,
+      "Mean_Diagnostic_Energy_wh": 22.4,
+      "Mean_Tests_Executed": 4.0,
+      "Mean_Diagnostic_Cost_inr": 64.06,
+      "Decision_Accuracy_percent": 75.0
+    },
+    "BASELINE_B": {
+      "n_specimens": 12,
+      "n_safe": 5,
+      "n_unsafe": 7,
+      "n_unsafe_accepted": 8,
+      "n_safe_qualified": 4,
+      "FAR_percent": 114.29,
+      "FRR_percent": 0.0,
+      "QAR_percent": 80.0,
+      "Abstention_Rate_percent": 0.0,
+      "Mean_Diagnostic_Time_s": 0.0,
+      "Median_Diagnostic_Time_s": 0.0,
+      "P95_Diagnostic_Time_s": 0.0,
+      "Mean_Diagnostic_Energy_wh": 0.0,
+      "Mean_Tests_Executed": 0.0,
+      "Mean_Diagnostic_Cost_inr": 0.0,
+      "Decision_Accuracy_percent": 33.33
+    },
+    "BASELINE_C": {
+      "n_specimens": 12,
+      "n_safe": 5,
+      "n_unsafe": 7,
+      "n_unsafe_accepted": 8,
+      "n_safe_qualified": 4,
+      "FAR_percent": 114.29,
+      "FRR_percent": 0.0,
+      "QAR_percent": 80.0,
+      "Abstention_Rate_percent": 0.0,
+      "Mean_Diagnostic_Time_s": 180.0,
+      "Median_Diagnostic_Time_s": 180.0,
+      "P95_Diagnostic_Time_s": 180.0,
+      "Mean_Diagnostic_Energy_wh": 6.8,
+      "Mean_Tests_Executed": 1.0,
+      "Mean_Diagnostic_Cost_inr": 15.0,
+      "Decision_Accuracy_percent": 33.33
+    },
+    "SECONDSHIFT": {
+      "n_specimens": 12,
+      "n_safe": 5,
+      "n_unsafe": 7,
+      "n_unsafe_accepted": 0,
+      "n_safe_qualified": 4,
+      "FAR_percent": 0.0,
+      "FRR_percent": 20.0,
+      "QAR_percent": 80.0,
+      "Abstention_Rate_percent": 0.0,
+      "Mean_Diagnostic_Time_s": 0.01,
+      "Median_Diagnostic_Time_s": 0.01,
+      "P95_Diagnostic_Time_s": 0.02,
+      "Mean_Diagnostic_Energy_wh": 0.99,
+      "Mean_Tests_Executed": 0.75,
+      "Mean_Diagnostic_Cost_inr": 7.41,
+      "Decision_Accuracy_percent": 91.67
+    }
+  }
+}
