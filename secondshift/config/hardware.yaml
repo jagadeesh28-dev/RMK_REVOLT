@@ -1,0 +1,40 @@
+# SECONDShift Hardware Configuration Specification
+# Layer 1-5 Transport, Framing, Safety, and Telemetry Parameters
+
+transport:
+  mode: "mock"                 # Supported: "mock", "serial", "replay"
+  serial_port: "/dev/ttyUSB0"  # Physical UART device path
+  baud_rate: 115200            # Standard UART baud rate
+  read_timeout_sec: 1.0        # Serial read timeout in seconds
+  write_timeout_sec: 1.0       # Serial write timeout in seconds
+
+framing:
+  protocol: "NDJSON"           # Newline-Delimited JSON
+  line_terminator: "\n"
+  max_packet_bytes: 1024
+  encoding: "utf-8"
+
+validation:
+  voltage_min_v: 2.0           # Physical lower limit (V)
+  voltage_max_v: 4.5           # Physical upper limit (V)
+  voltage_warn_low_v: 2.5      # Warning low threshold (V)
+  voltage_warn_high_v: 4.25    # Warning high threshold (V)
+  current_discharge_max_a: 5.0 # Max discharge current (A)
+  current_charge_max_a: 2.0    # Max charge current (A)
+  temp_min_c: -10.0            # Min operational temperature (°C)
+  temp_max_c: 60.0             # Max operational temperature (°C)
+  temp_warn_c: 45.0            # Warning high temperature (°C)
+  stale_timeout_sec: 2.0       # Telemetry staleness timeout (s)
+
+independent_hardware_safety:
+  lm393_uvp_threshold_v: 2.0   # Analog comparator UVP trip point
+  lm393_ovp_threshold_v: 4.35  # Analog comparator OVP trip point
+  lm393_otp_threshold_c: 60.0  # NTC thermistor comparator trip point
+  watchdog_trip_max_ms: 200.0  # TPS3823 hardware watchdog timeout
+  heartbeat_interval_ms: 500.0 # Software heartbeat dispatch cadence
+
+logging:
+  log_directory: "logs"
+  event_log_file: "logs/hardware_events.jsonl"
+  telemetry_log_file: "logs/telemetry_trace.jsonl"
+  log_level: "INFO"

@@ -1,9 +1,9 @@
 {
   "timing_inference": {
-    "mean_s": 0.011,
-    "median_s": 0.0124,
-    "std_s": 0.0079,
-    "iqr_s": 0.0109,
+    "mean_s": 0.01,
+    "median_s": 0.0119,
+    "std_s": 0.0076,
+    "iqr_s": 0.0086,
     "wilcoxon_stat": 0.0,
     "wilcoxon_p_value": 0.00048828125
   },
