@@ -1,0 +1,51 @@
+{
+  "FULL": {
+    "far_percent": 0.0,
+    "uir_percent": 71.79,
+    "mean_diag_time_s": 127.5,
+    "usable_energy_kwh": 6.1,
+    "decision_efficiency": 0.6036
+  },
+  "NO_UNCERTAINTY": {
+    "far_percent": 0.0,
+    "uir_percent": 56.92,
+    "mean_diag_time_s": 8.1,
+    "usable_energy_kwh": 8.92,
+    "decision_efficiency": 10.5976
+  },
+  "NO_ADAPTIVE_TEST": {
+    "far_percent": 0.0,
+    "uir_percent": 62.05,
+    "mean_diag_time_s": 800.0,
+    "usable_energy_kwh": 7.99,
+    "decision_efficiency": 0.03
+  },
+  "NO_HERMES": {
+    "far_percent": 0.0,
+    "uir_percent": 96.92,
+    "mean_diag_time_s": 121.3,
+    "usable_energy_kwh": 0.91,
+    "decision_efficiency": 0.0969
+  },
+  "NO_OP_FEEDBACK": {
+    "far_percent": 0.0,
+    "uir_percent": 75.9,
+    "mean_diag_time_s": 103.7,
+    "usable_energy_kwh": 5.3,
+    "decision_efficiency": 0.7021
+  },
+  "NO_APP_CONTEXT": {
+    "far_percent": 0.0,
+    "uir_percent": 96.92,
+    "mean_diag_time_s": 20.3,
+    "usable_energy_kwh": 0.73,
+    "decision_efficiency": 0.5419
+  },
+  "NO_VOI": {
+    "far_percent": 0.0,
+    "uir_percent": 91.28,
+    "mean_diag_time_s": 20.0,
+    "usable_energy_kwh": 1.98,
+    "decision_efficiency": 0.8058
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "erds_1000_modules_wh_per_s": 0.0727944749284398,
+  "total_extra_energy_kwh": 9.451634624708621,
+  "total_extra_time_hours": 36.066666666666656,
+  "sweep_erds": [
+    {
+      "sigma_prior": 0.02,
+      "erds_wh_per_s": -0.6650733851840815,
+      "net_economic_delta_inr": 386.8672762561478
+    },
+    {
+      "sigma_prior": 0.04,
+      "erds_wh_per_s": -0.6045244389458232,
+      "net_economic_delta_inr": 746.1329775440129
+    },
+    {
+      "sigma_prior": 0.06,
+      "erds_wh_per_s": 0.0,
+      "net_economic_delta_inr": -34.44731710314497
+    },
+    {
+      "sigma_prior": 0.08,
+      "erds_wh_per_s": 0.19432469863195928,
+      "net_economic_delta_inr": 2.8830903018514817
+    },
+    {
+      "sigma_prior": 0.1,
+      "erds_wh_per_s": 0.05233895800704685,
+      "net_economic_delta_inr": -15.673624622233234
+    },
+    {
+      "sigma_prior": 0.12,
+      "erds_wh_per_s": 0.05203536349962902,
+      "net_economic_delta_inr": -14.177139460183659
+    },
+    {
+      "sigma_prior": 0.14,
+      "erds_wh_per_s": 0.04929116469256841,
+      "net_economic_delta_inr": -25.364507048136463
+    },
+    {
+      "sigma_prior": 0.16,
+      "erds_wh_per_s": 0.04405059768730964,
+      "net_economic_delta_inr": -28.48383837424814
+    },
+    {
+      "sigma_prior": 0.2,
+      "erds_wh_per_s": 0.04674762367680606,
+      "net_economic_delta_inr": -16.83907867221445
+    }
+  ]
+}

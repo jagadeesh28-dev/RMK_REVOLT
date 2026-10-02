@@ -1,0 +1,106 @@
+# RMK-REVOLT: System Configuration
+# EV Battery Circularity Challenge
+# Reproducible simulation & experimental parameters
+
+random_seed: 42
+
+simulation:
+  dt_seconds: 0.1
+  ambient_temperature_c: 25.0
+
+cell_nominal:
+  chemistry: "LFP"
+  nominal_voltage_v: 3.2
+  nominal_capacity_ah: 50.0  # 50 Ah nominal module
+  fresh_r0_mohm: 1.5         # 1.5 mOhm fresh ohmic resistance
+  fresh_r1_mohm: 1.0         # 1.0 mOhm diffusion resistance
+  c1_farad: 2000.0           # 2000 F diffusion capacitance (tau = 2.0 s)
+  c_thermal_j_per_k: 1200.0  # Thermal heat capacity (J/K)
+  h_cooling_w_per_k: 0.8     # Convective cooling coefficient (W/K)
+  v_max_v: 3.65              # Hard upper cutoff
+  v_min_v: 2.50              # Hard lower cutoff
+  t_max_c: 55.0              # Hard upper thermal limit
+
+sensor_noise:
+  voltage_sigma_v: 0.002     # 2 mV ADC noise (ADS1115 equivalent)
+  current_sigma_a: 0.05      # 50 mA shunt noise (INA226 equivalent)
+  temp_sigma_c: 0.25         # 0.25 C thermistor noise
+
+safety_limits:
+  voltage_ovp: 3.70
+  voltage_uvp: 2.30
+  current_ocp_a: 100.0
+  temp_otp_c: 60.0
+  max_leakage_mv_per_hr: 5.0
+  max_r0_mohm: 6.0           # 4x fresh R0 indicates severe degradation
+
+diagnostic_tests:
+  triage_quick_screening:
+    duration_s: 30
+    energy_cost_wh: 0.1
+    c_rate: 0.0
+    info_type: "safety_gate"
+    equipment_cost_inr: 50
+  rest_ocv_relaxation:
+    duration_s: 300
+    energy_cost_wh: 0.0
+    c_rate: 0.0
+    info_type: "soc_uncertainty_reduction"
+    equipment_cost_inr: 20
+  pulse_power_test:
+    duration_s: 60
+    energy_cost_wh: 2.5
+    c_rate: 1.0
+    info_type: "resistance_estimation"
+    equipment_cost_inr: 100
+  short_coulometric_cycle:
+    duration_s: 1800
+    energy_cost_wh: 45.0
+    c_rate: 0.5
+    info_type: "capacity_verification"
+    equipment_cost_inr: 300
+  thermal_recovery_step:
+    duration_s: 600
+    energy_cost_wh: 15.0
+    c_rate: 0.8
+    info_type: "thermal_impedance"
+    equipment_cost_inr: 150
+
+applications:
+  stationary_backup:
+    name: "Stationary Telecom Backup"
+    power_demand_w: 50.0
+    nominal_c_rate: 0.3
+    min_soh_threshold: 0.60
+    max_acceptable_r0_mohm: 4.5
+    max_allowable_uncertainty_sigma_soh: 0.05
+    safety_penalty_inr: 4000.0
+    energy_revenue_per_kwh_inr: 8.5
+    lifetime_cycles: 800
+  solar_storage:
+    name: "Residential Solar BESS"
+    power_demand_w: 100.0
+    nominal_c_rate: 0.5
+    min_soh_threshold: 0.70
+    max_acceptable_r0_mohm: 3.5
+    max_allowable_uncertainty_sigma_soh: 0.04
+    safety_penalty_inr: 6000.0
+    energy_revenue_per_kwh_inr: 10.0
+    lifetime_cycles: 1200
+  high_power_industrial:
+    name: "Light EV / Heavy Duty Buffer"
+    power_demand_w: 250.0
+    nominal_c_rate: 1.0
+    min_soh_threshold: 0.80
+    max_acceptable_r0_mohm: 2.5
+    max_allowable_uncertainty_sigma_soh: 0.03
+    safety_penalty_inr: 12000.0
+    energy_revenue_per_kwh_inr: 14.0
+    lifetime_cycles: 1500
+
+economic_parameters:
+  labor_rate_inr_per_hour: 250.0  # INR 250/hr skilled technician in India
+  electricity_cost_inr_per_kwh: 8.0
+  recycle_scrap_value_inr_per_kwh: 1200.0
+  repurposed_pack_value_inr_per_kwh: 6500.0
+  new_pack_cost_inr_per_kwh: 14000.0

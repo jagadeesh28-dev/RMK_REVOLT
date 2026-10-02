@@ -1,0 +1,15 @@
+{
+  "scenario": "Extreme Economic Incentive vs Hard Safety Barrier",
+  "energy_revenue_per_kwh_inr": 100000.0,
+  "safety_penalty_inr": 10.0,
+  "module_mu_soh": 0.68,
+  "module_sigma_soh": 0.08,
+  "p_fail_operate": 0.5987063256829233,
+  "alpha_safety": 0.01,
+  "resulting_action": "RETIRE",
+  "u_operate": -100000000.0,
+  "u_derate": -100000000.0,
+  "u_retire": 142.0,
+  "safety_barrier_violated": false,
+  "mathematical_proof_holds": true
+}

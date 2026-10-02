@@ -1,0 +1,58 @@
+{
+  "1_Fixed_Qualification": {
+    "mean_time_s": 800.0,
+    "mean_cost_inr": 185.832,
+    "far_percent": 0.0,
+    "uir_percent": 67.36526946107784,
+    "total_kwh": 5.943944307405761,
+    "mean_net_val_inr": -44.01929217781726
+  },
+  "2_Scalar_Threshold": {
+    "mean_time_s": 0.0,
+    "mean_cost_inr": 0.0,
+    "far_percent": 29.518072289156628,
+    "uir_percent": 22.75449101796407,
+    "total_kwh": 13.274345206586345,
+    "mean_net_val_inr": -310.6709150419278
+  },
+  "3_Uncertainty_Threshold": {
+    "mean_time_s": 61.6,
+    "mean_cost_inr": 25.559,
+    "far_percent": 0.0,
+    "uir_percent": 89.22155688622755,
+    "total_kwh": 2.0376817640964857,
+    "mean_net_val_inr": 41.015544560537876
+  },
+  "4_RC_VOI_Full_HardBarrier": {
+    "mean_time_s": 195.96,
+    "mean_cost_inr": 45.458,
+    "far_percent": 6.024096385542169,
+    "uir_percent": 47.30538922155689,
+    "total_kwh": 7.067156033153433,
+    "mean_net_val_inr": -14.215844537650948
+  },
+  "5_RC_VOI_No_App_Context": {
+    "mean_time_s": 196.6,
+    "mean_cost_inr": 45.182,
+    "far_percent": 3.717472118959108,
+    "uir_percent": 51.515151515151516,
+    "total_kwh": 4.562362428752465,
+    "mean_net_val_inr": -57.824999487718635
+  },
+  "6_RC_VOI_No_Derating": {
+    "mean_time_s": 195.96,
+    "mean_cost_inr": 45.458,
+    "far_percent": 6.024096385542169,
+    "uir_percent": 47.30538922155689,
+    "total_kwh": 7.067156033153433,
+    "mean_net_val_inr": -14.215844537650948
+  },
+  "7_RC_VOI_No_Hard_Barrier": {
+    "mean_time_s": 35.52,
+    "mean_cost_inr": 18.851,
+    "far_percent": 4.216867469879518,
+    "uir_percent": 82.93413173652695,
+    "total_kwh": 2.507121978712055,
+    "mean_net_val_inr": -30.710331177577356
+  }
+}

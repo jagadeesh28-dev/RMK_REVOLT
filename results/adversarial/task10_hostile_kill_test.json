@@ -1,0 +1,13 @@
+{
+  "regime_where_policy_c_wins": [
+    "Low Prior Uncertainty (sigma_prior <= 0.04): Policy C achieves equivalent safety with 5.7x lower test time.",
+    "Uniform Single-Source Fleet Decommissioning: No variance to resolve; VOI quadrature is computational deadweight.",
+    "Extreme Technician Wages (> INR 500/hr) on Low-Capacity Pouch Cells (< 10Ah): Diagnostic labor exceeds cell replacement value."
+  ],
+  "regime_where_rc_voi_is_mandatory": [
+    "Heterogeneous Multi-Source Inflow (sigma_prior >= 0.08): Policy C discards 53% to 78% of usable assets.",
+    "Mixed Unknown Chemistries: Flat plateau ambiguity requires targeted VOI diagnostic escalation.",
+    "High-Stakes Second-Life Deployments (Grid BESS): Safety penalties demand risk-constrained quadrature."
+  ],
+  "definitive_boundary_of_applicability": "RC-VOI is STRICTLY SUPERIOR when sigma_prior >= 0.06 and cell replacement value >= INR 500. Below sigma_prior = 0.04, Policy C MUST BE USED for economic efficiency."
+}

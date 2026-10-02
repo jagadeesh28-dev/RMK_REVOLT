@@ -1,0 +1,42 @@
+{
+  "1.00C": {
+    "c_rate": 1.0,
+    "current_a": 20.0,
+    "thermal_excursion_rate_percent": 0.0,
+    "undervoltage_cutoff_rate_percent": 100.0,
+    "combined_failure_rate_percent": 100.0,
+    "mean_peak_temp_c": 33.07419990673062,
+    "max_peak_temp_c": 33.647658773594934,
+    "total_delivered_wh": 18625.904335304367
+  },
+  "0.75C": {
+    "c_rate": 0.75,
+    "current_a": 15.0,
+    "thermal_excursion_rate_percent": 0.0,
+    "undervoltage_cutoff_rate_percent": 100.0,
+    "combined_failure_rate_percent": 100.0,
+    "mean_peak_temp_c": 32.110623044145505,
+    "max_peak_temp_c": 32.50411523732405,
+    "total_delivered_wh": 18955.323350169267
+  },
+  "0.50C": {
+    "c_rate": 0.5,
+    "current_a": 10.0,
+    "thermal_excursion_rate_percent": 0.0,
+    "undervoltage_cutoff_rate_percent": 100.0,
+    "combined_failure_rate_percent": 100.0,
+    "mean_peak_temp_c": 31.172197778264692,
+    "max_peak_temp_c": 31.42124014415657,
+    "total_delivered_wh": 19211.790008496577
+  },
+  "0.25C": {
+    "c_rate": 0.25,
+    "current_a": 5.0,
+    "thermal_excursion_rate_percent": 0.0,
+    "undervoltage_cutoff_rate_percent": 100.0,
+    "combined_failure_rate_percent": 100.0,
+    "mean_peak_temp_c": 30.378883981011864,
+    "max_peak_temp_c": 30.467608910630695,
+    "total_delivered_wh": 19391.801220776575
+  }
+}

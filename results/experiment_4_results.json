@@ -1,0 +1,25 @@
+{
+  "experiment": "E4_Safety_Dominance_Degraded_Detection",
+  "cohort_summary": {
+    "n_total": 400,
+    "n_healthy": 113,
+    "n_degraded": 287,
+    "far_percent": 0.0,
+    "frr_percent": 41.59,
+    "uir_percent": 41.59,
+    "derated_healthy_percent": 31.86,
+    "mean_diag_time_s": 302.6,
+    "mean_diag_energy_wh": 12.84,
+    "mean_diag_cost_inr": 65.52,
+    "mean_tests_per_module": 0.84,
+    "usable_energy_retained_kwh": 8.09,
+    "energy_retention_ratio_percent": 51.98,
+    "decision_efficiency": 0.2043,
+    "mean_z_calibration": -0.16,
+    "z_calibration_std": 1.111
+  },
+  "leakage_escape_rate_percent": 0.0,
+  "high_res_escape_rate_percent": 0.0,
+  "overall_far_percent": 0.0,
+  "safety_requirement_met": true
+}

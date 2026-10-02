@@ -1,0 +1,26 @@
+{
+  "RC_VOI_Original": {
+    "far_percent": 1.5151515151515151,
+    "uir_percent": 87.61194029850746,
+    "mean_time_s": 27.56,
+    "mean_cost_inr": 17.578,
+    "total_kwh": 3.6218057793917655,
+    "mean_net_value_inr": 12.025724463812283
+  },
+  "RC_VOI_HardBarrier": {
+    "far_percent": 3.6363636363636362,
+    "uir_percent": 50.14925373134328,
+    "mean_time_s": 187.48,
+    "mean_cost_inr": 44.138,
+    "total_kwh": 13.256594927969797,
+    "mean_net_value_inr": 27.067926691193087
+  },
+  "Policy_C": {
+    "far_percent": 0.0,
+    "uir_percent": 90.0,
+    "mean_time_s": 57.64,
+    "mean_cost_inr": 24.941,
+    "total_kwh": 3.8049603032611747,
+    "mean_net_value_inr": 39.022961861356315
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "experiment": "E1_Uncertainty_Action_Separation",
+  "module_a": {
+    "prior_soh": 0.72,
+    "sigma_soh": 0.02,
+    "baseline_b_action": "OPERATE",
+    "our_action": "DERATE",
+    "recommended_test": null,
+    "op_utilities": {
+      "OPERATE": 111.1433354295167,
+      "DERATE": 1006.3494439997241,
+      "BYPASS": -50.0,
+      "RETIRE": 142.0,
+      "ISOLATE": -100.0
+    },
+    "best_voi": 46.047900252224025
+  },
+  "module_b": {
+    "prior_soh": 0.72,
+    "sigma_soh": 0.12,
+    "baseline_b_action": "OPERATE",
+    "our_action": "TEST",
+    "recommended_test": "short_coulometric_cycle",
+    "op_utilities": {
+      "OPERATE": -2383.3751451263856,
+      "DERATE": 457.99241957785637,
+      "BYPASS": -50.0,
+      "RETIRE": 142.0,
+      "ISOLATE": -100.0
+    },
+    "best_voi": 169.53132100501546
+  },
+  "hypothesis_confirmed": true
+}

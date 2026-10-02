@@ -1,0 +1,86 @@
+[
+  {
+    "scenario_id": "ADV_01_EXTREME_NOISE",
+    "name": "10x ADC Noise (20 mV noise, 0.5A current noise)",
+    "fault_type": "Sensor Jitter",
+    "triage_status": "ACCEPT",
+    "final_action": "DERATE",
+    "hermes_final_state": "DERATED",
+    "safety_tripped": false,
+    "truly_compliant": true,
+    "safe_containment": true,
+    "verdict": "FAIL-SAFE CONTAINED"
+  },
+  {
+    "scenario_id": "ADV_02_THERMAL_DRIFT",
+    "name": "Extreme High Ambient Temperature (48 C)",
+    "fault_type": "Environmental Extreme",
+    "triage_status": "REJECT",
+    "final_action": "RETIRE",
+    "hermes_final_state": "ISOLATED",
+    "safety_tripped": false,
+    "truly_compliant": true,
+    "safe_containment": true,
+    "verdict": "FAIL-SAFE CONTAINED"
+  },
+  {
+    "scenario_id": "ADV_03_SENSOR_DROPOUT",
+    "name": "Voltage Sensor Disconnect (0.0V read)",
+    "fault_type": "Hardware Sensor Open-Circuit",
+    "triage_status": "REJECT",
+    "final_action": "RETIRE",
+    "hermes_final_state": "ISOLATED",
+    "safety_tripped": false,
+    "truly_compliant": false,
+    "safe_containment": true,
+    "verdict": "FAIL-SAFE CONTAINED"
+  },
+  {
+    "scenario_id": "ADV_04_MICRO_SHORT",
+    "name": "Internal Micro-Short Self-Discharge (0.5A)",
+    "fault_type": "Electrochemical Dendrite",
+    "triage_status": "ACCEPT",
+    "final_action": "DERATE",
+    "hermes_final_state": "DERATED",
+    "safety_tripped": false,
+    "truly_compliant": false,
+    "safe_containment": true,
+    "verdict": "FAIL-SAFE CONTAINED"
+  },
+  {
+    "scenario_id": "ADV_05_HIGH_IMPEDANCE",
+    "name": "Thermal Runaway Precursor (4x Nominal Resistance)",
+    "fault_type": "Contact / Delamination Fault",
+    "triage_status": "ACCEPT",
+    "final_action": "DERATE",
+    "hermes_final_state": "DERATED",
+    "safety_tripped": false,
+    "truly_compliant": false,
+    "safe_containment": true,
+    "verdict": "FAIL-SAFE CONTAINED"
+  },
+  {
+    "scenario_id": "ADV_06_GROSS_PRIOR_ERROR",
+    "name": "Fraudulent/Corrupted BMS History (True SOH 45%, Claimed 95%)",
+    "fault_type": "Adversarial History",
+    "triage_status": "ACCEPT",
+    "final_action": "RETIRE",
+    "hermes_final_state": "ISOLATED",
+    "safety_tripped": false,
+    "truly_compliant": false,
+    "safe_containment": true,
+    "verdict": "FAIL-SAFE CONTAINED"
+  },
+  {
+    "scenario_id": "ADV_07_SWITCH_FAILURE",
+    "name": "Switch Failure: MOSFET Stuck in Bypass",
+    "fault_type": "Actuator Hardware Fault",
+    "triage_status": "ACCEPT",
+    "final_action": "OPERATE",
+    "hermes_final_state": "ACTIVE",
+    "safety_tripped": false,
+    "truly_compliant": true,
+    "safe_containment": true,
+    "verdict": "FAIL-SAFE CONTAINED"
+  }
+]

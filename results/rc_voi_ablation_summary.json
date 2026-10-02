@@ -1,0 +1,42 @@
+{
+  "FULL_RC_VOI": {
+    "mean_time_s": 326.6,
+    "mean_cost_inr": 68.85,
+    "far_percent": 6.33,
+    "uir_percent": 9.89,
+    "total_kwh": 29.7,
+    "decision_efficiency": 0.067
+  },
+  "NO_UNCERTAINTY": {
+    "mean_time_s": 0.0,
+    "mean_cost_inr": 0.0,
+    "far_percent": 8.86,
+    "uir_percent": 1.9,
+    "total_kwh": 32.87,
+    "decision_efficiency": 32.867
+  },
+  "NO_TEST_COST": {
+    "mean_time_s": 377.0,
+    "mean_cost_inr": 51.87,
+    "far_percent": 6.33,
+    "uir_percent": 4.56,
+    "total_kwh": 31.62,
+    "decision_efficiency": 0.084
+  },
+  "NO_APP_CONTEXT": {
+    "mean_time_s": 327.48,
+    "mean_cost_inr": 67.07,
+    "far_percent": 1.27,
+    "uir_percent": 19.01,
+    "total_kwh": 23.79,
+    "decision_efficiency": 0.055
+  },
+  "NO_DERATING": {
+    "mean_time_s": 326.6,
+    "mean_cost_inr": 68.85,
+    "far_percent": 6.33,
+    "uir_percent": 24.33,
+    "total_kwh": 26.03,
+    "decision_efficiency": 0.059
+  }
+}

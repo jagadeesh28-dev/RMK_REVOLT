@@ -1,0 +1,32 @@
+{
+  "Example_1_Ambiguous_Module": {
+    "mu_soh": 0.73,
+    "sigma_soh": 0.1,
+    "evsi_inr": 569.9858214716546,
+    "test_cost_inr": 119.86666666666667,
+    "net_voi_inr": 450.11915480498794,
+    "resulting_action": "TEST",
+    "selected_test": "short_coulometric_cycle",
+    "rule": "EVSI > Test Cost -> TEST"
+  },
+  "Example_2_Healthy_Module": {
+    "mu_soh": 0.88,
+    "sigma_soh": 0.02,
+    "evsi_inr": 0.0,
+    "test_cost_inr": 119.86666666666667,
+    "net_voi_inr": -351.7085867114023,
+    "resulting_action": "TEST",
+    "selected_test": "pulse_power_test",
+    "rule": "EVSI < Test Cost -> OPERATE"
+  },
+  "Example_3_Severely_Degraded_Module": {
+    "mu_soh": 0.5,
+    "sigma_soh": 0.03,
+    "evsi_inr": 0.0,
+    "test_cost_inr": 119.86666666666667,
+    "net_voi_inr": -119.86666666666667,
+    "resulting_action": "RETIRE",
+    "selected_test": null,
+    "rule": "Safety Barrier Fails -> RETIRE regardless of EVSI"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "experiment": "E5_Controlled_Intervention_Information_Gain",
+  "n_trials": 50,
+  "mean_sigma_reduction_passive": 0.0,
+  "mean_sigma_reduction_intervention": 0.0954,
+  "t_statistic": Infinity,
+  "p_value": 0.0,
+  "statistically_meaningful": true,
+  "verdict": "SURVIVED"
+}

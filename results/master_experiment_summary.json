@@ -1,0 +1,11 @@
+{
+  "E3": {
+    "experiment": "E3_Unnecessary_Isolation_Reduction",
+    "threshold_baseline_uir_percent": 100.0,
+    "adaptive_system_uir_percent": 71.0,
+    "uir_reduction_points": 29.0,
+    "usable_energy_recovered_baseline_kwh": 0.0,
+    "usable_energy_recovered_adaptive_kwh": 9.2,
+    "additional_energy_saved_kwh": 9.2
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "MOD_HIGH_SOH": {
+    "description": "High quality retired module",
+    "decisions": {
+      "stationary_backup": {
+        "action": "OPERATE",
+        "recommended_test": null,
+        "op_utilities": {
+          "OPERATE": 824.8000000000001,
+          "DERATE": 663.6,
+          "BYPASS": -50.0,
+          "RETIRE": 142.0,
+          "ISOLATE": -100.0
+        },
+        "best_voi": -18.40088888890128
+      },
+      "solar_storage": {
+        "action": "OPERATE",
+        "recommended_test": null,
+        "op_utilities": {
+          "OPERATE": 1531.9956245510334,
+          "DERATE": 1193.9999999722097,
+          "BYPASS": -50.0,
+          "RETIRE": 142.0,
+          "ISOLATE": -100.0
+        },
+        "best_voi": -18.48471974730936
+      },
+      "high_power_industrial": {
+        "action": "DERATE",
+        "recommended_test": null,
+        "op_utilities": {
+          "OPERATE": 1369.9829356665912,
+          "DERATE": 2110.2996283136763,
+          "BYPASS": -50.0,
+          "RETIRE": 142.0,
+          "ISOLATE": -100.0
+        },
+        "best_voi": 249.58680738095424
+      }
+    }
+  },
+  "MOD_MID_SOH": {
+    "description": "Intermediate retired module",
+    "decisions": {
+      "stationary_backup": {
+        "action": "OPERATE",
+        "recommended_test": null,
+        "op_utilities": {
+          "OPERATE": 692.8409182708768,
+          "DERATE": 573.7529045308013,
+          "BYPASS": -50.0,
+          "RETIRE": 142.0,
+          "ISOLATE": -100.0
+        },
+        "best_voi": -19.07001240247863
+      },
+      "solar_storage": {
+        "action": "DERATE",
+        "recommended_test": null,
+        "op_utilities": {
+          "OPERATE": -530.8462287998179,
+          "DERATE": 964.9753562959268,
+          "BYPASS": -50.0,
+          "RETIRE": 142.0,
+          "ISOLATE": -100.0
+        },
+        "best_voi": -10.870115497598054
+      },
+      "high_power_industrial": {
+        "action": "TEST",
+        "recommended_test": "short_coulometric_cycle",
+        "op_utilities": {
+          "OPERATE": -12020.336098293757,
+          "DERATE": -450.9754347927276,
+          "BYPASS": -50.0,
+          "RETIRE": 142.0,
+          "ISOLATE": -100.0
+        },
+        "best_voi": 289.0344721384248
+      }
+    }
+  },
+  "MOD_LOW_SOH": {
+    "description": "Deeply aged retired module",
+    "decisions": {
+      "stationary_backup": {
+        "action": "DERATE",
+        "recommended_test": null,
+        "op_utilities": {
+          "OPERATE": -337.6062365562035,
+          "DERATE": 478.52120780504,
+          "BYPASS": -50.0,
+          "RETIRE": 142.0,
+          "ISOLATE": -100.0
+        },
+        "best_voi": -17.246678439643834
+      },
+      "solar_storage": {
+        "action": "RETIRE",
+        "recommended_test": null,
+        "op_utilities": {
+          "OPERATE": -6076.920323379532,
+          "DERATE": -204.72837165709285,
+          "BYPASS": -50.0,
+          "RETIRE": 142.0,
+          "ISOLATE": -100.0
+        },
+        "best_voi": 86.72131182043174
+      },
+      "high_power_industrial": {
+        "action": "RETIRE",
+        "recommended_test": null,
+        "op_utilities": {
+          "OPERATE": -12099.999999871534,
+          "DERATE": -1829.8107443337258,
+          "BYPASS": -50.0,
+          "RETIRE": 142.0,
+          "ISOLATE": -100.0
+        },
+        "best_voi": -18.40088888888889
+      }
+    }
+  }
+}
