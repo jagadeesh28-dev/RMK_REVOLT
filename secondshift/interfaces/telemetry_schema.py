@@ -91,42 +91,48 @@ class TelemetryFrame:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "TelemetryFrame":
         """Constructs a TelemetryFrame from a dictionary with permissive key mapping."""
+        def _first_present(*keys, default=None):
+            for k in keys:
+                if k in data and data[k] is not None:
+                    return data[k]
+            return default
+
         # Map common aliases from ESP32 or JSON formats
-        seq = data.get("sequence_number") or data.get("seq") or 0
-        ts = data.get("timestamp") or data.get("timestamp_s")
-        if ts is None and "timestamp_ms" in data:
+        seq = _first_present("sequence_number", "seq", default=0)
+        ts = _first_present("timestamp", "timestamp_s")
+        if ts is None and "timestamp_ms" in data and data["timestamp_ms"] is not None:
             ts = float(data["timestamp_ms"]) / 1000.0
         if ts is None:
             ts = time.time()
 
-        dev_id = str(data.get("device_id") or "SECONDShift-DEFAULT")
-        v = data.get("voltage_v") or data.get("voltage")
-        i = data.get("current_a") or data.get("current")
-        t = data.get("temperature_c") or data.get("temperature")
-        soc = data.get("estimated_soc") or data.get("soc")
+        dev_id = str(_first_present("device_id", default="SECONDShift-DEFAULT"))
+        v = _first_present("voltage_v", "voltage")
+        i = _first_present("current_a", "current")
+        t = _first_present("temperature_c", "temperature")
+        soc = _first_present("estimated_soc", "soc")
 
-        cell_v = data.get("cell_voltages_v") or data.get("cell_voltages") or []
+        cell_v = _first_present("cell_voltages_v", "cell_voltages", default=[])
         if isinstance(cell_v, (int, float)):
             cell_v = [float(cell_v)]
         else:
             cell_v = [float(x) for x in cell_v]
 
-        cell_t = data.get("cell_temperatures_c") or data.get("cell_temperatures") or []
+        cell_t = _first_present("cell_temperatures_c", "cell_temperatures", default=[])
         if isinstance(cell_t, (int, float)):
             cell_t = [float(cell_t)]
         else:
             cell_t = [float(x) for x in cell_t]
 
-        sensor_st = data.get("sensor_status") or {
+        sensor_st = _first_present("sensor_status", default={
             "voltage": SensorHealthStatus.OK.value,
             "current": SensorHealthStatus.OK.value,
             "temperature": SensorHealthStatus.OK.value
-        }
+        })
 
-        comm_st = data.get("communication_status") or CommunicationStatus.CONNECTED.value
-        calib_st = data.get("calibration_status") or CalibrationStatus.CALIBRATED.value
-        src = data.get("source") or TelemetrySource.MOCK_HARDWARE.value
-        q_flags = data.get("quality_flags") or [TelemetryQuality.VALID.value]
+        comm_st = _first_present("communication_status", default=CommunicationStatus.CONNECTED.value)
+        calib_st = _first_present("calibration_status", default=CalibrationStatus.CALIBRATED.value)
+        src = _first_present("source", default=TelemetrySource.MOCK_HARDWARE.value)
+        q_flags = _first_present("quality_flags", default=[TelemetryQuality.VALID.value])
 
         return cls(
             device_id=dev_id,

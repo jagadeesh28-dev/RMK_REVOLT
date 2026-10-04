@@ -57,7 +57,8 @@ class HILRunner:
         validator: Optional[TelemetryValidator] = None,
         actuation_policy: Optional[ActuationPolicy] = None,
         logger: Optional[EventLogger] = None,
-        app_config: Optional[Dict[str, Any]] = None
+        app_config: Optional[Dict[str, Any]] = None,
+        triage: Optional[TriageGate] = None
     ):
         self.hw = hardware
         self.validator = validator or TelemetryValidator()
@@ -66,7 +67,7 @@ class HILRunner:
         self.fsm = SystemStateMachine()
 
         # Research Engine instances (Hardware-Agnostic Core)
-        self.triage = TriageGate()
+        self.triage = triage or TriageGate()
         self.chem_engine = ChemistryDisambiguationEngine()
         self.decision_engine = SECONDShiftDecisionEngine(app_config)
 

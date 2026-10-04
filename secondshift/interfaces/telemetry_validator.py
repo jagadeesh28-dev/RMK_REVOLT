@@ -11,7 +11,7 @@ Invariants:
 
 import math
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import List, Dict, Any, Optional
 
 from .telemetry_schema import (
@@ -201,12 +201,12 @@ class TelemetryValidator:
         # 8. FINAL DECISION
         is_valid = len(errors) == 0
 
-        # Update quality flags in frame copy if valid
-        validated_frame = frame
+        # Create non-mutating copy of frame with updated quality flags
         if not is_valid:
-            validated_frame.quality_flags = list(set(frame.quality_flags + [quality]))
+            new_flags = list(set(frame.quality_flags + [quality]))
         else:
-            validated_frame.quality_flags = [TelemetryQuality.VALID.value]
+            new_flags = [TelemetryQuality.VALID.value]
+        validated_frame = replace(frame, quality_flags=new_flags)
 
         return TelemetryValidationResult(
             valid=is_valid,

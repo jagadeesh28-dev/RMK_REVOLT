@@ -20,7 +20,7 @@ class SECONDShiftDecisionEngine:
         app_config: Optional[Dict[str, Any]] = None,
         voi_engine: Optional[ValueOfInformationEngine] = None
     ):
-        self.config = app_config or {
+        DEFAULT_CONFIG = {
             "min_soh_threshold": 0.70,
             "derate_soh_threshold": 0.65,
             "max_acceptable_r0_mohm": 3.5,
@@ -31,6 +31,7 @@ class SECONDShiftDecisionEngine:
             "recycle_rate_inr_kwh": 1200.0,
             "alpha_safety": 0.01
         }
+        self.config = {**DEFAULT_CONFIG, **(app_config or {})}
         self.voi = voi_engine or ValueOfInformationEngine()
         self.model_evaluator = ModelUncertaintyEvaluator(
             min_soh_threshold=self.config["min_soh_threshold"],

@@ -27,6 +27,7 @@ try:
     from secondshift.interfaces.telemetry_schema import TelemetryFrame
     from secondshift.interfaces.telemetry_validator import TelemetryValidator
     from secondshift.interfaces.event_logger import EventLogger
+    from secondshift.software.triage.triage_gate import TriageGate
 except ImportError:
     from hardware.hil_runner import HILRunner
     from hardware.mock_hardware import MockHardware
@@ -35,6 +36,7 @@ except ImportError:
     from interfaces.telemetry_schema import TelemetryFrame
     from interfaces.telemetry_validator import TelemetryValidator
     from interfaces.event_logger import EventLogger
+    from software.triage.triage_gate import TriageGate
 
 
 def load_hardware_config(config_path: Optional[str] = None) -> Dict[str, Any]:
@@ -51,6 +53,40 @@ def load_hardware_config(config_path: Optional[str] = None) -> Dict[str, Any]:
             else:
                 return json.load(f)
     return {}
+
+
+def load_system_config(config_path: Optional[str] = None) -> Dict[str, Any]:
+    """Loads system configuration (config/default.yaml) if available."""
+    if not config_path:
+        candidate = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "config", "default.yaml"))
+        if os.path.exists(candidate):
+            config_path = candidate
+        else:
+            local_cand = os.path.join("config", "default.yaml")
+            if os.path.exists(local_cand):
+                config_path = local_cand
+
+    if config_path and os.path.exists(config_path):
+        with open(config_path, "r", encoding="utf-8") as f:
+            if yaml:
+                return yaml.safe_load(f) or {}
+            else:
+                return json.load(f)
+    return {}
+
+
+def extract_app_config(system_config: Dict[str, Any], application: str = "solar_storage") -> Dict[str, Any]:
+    """Extracts application profile and economic parameters for decision engine."""
+    if not system_config:
+        return {}
+    apps = system_config.get("applications", {})
+    app_cfg = dict(apps.get(application, {}))
+    econs = system_config.get("economic_parameters", {})
+    if "recycle_scrap_value_inr_per_kwh" in econs:
+        app_cfg["recycle_rate_inr_kwh"] = float(econs["recycle_scrap_value_inr_per_kwh"])
+    if "safety_limits" in system_config:
+        app_cfg.setdefault("alpha_safety", 0.01)
+    return app_cfg
 
 
 def create_hardware_adapter(mode: str, args: argparse.Namespace, config: Dict[str, Any]):
@@ -87,9 +123,26 @@ def create_hardware_adapter(mode: str, args: argparse.Namespace, config: Dict[st
 
 def run_qualification_cmd(args: argparse.Namespace) -> int:
     """Executes closed-loop qualification via HILRunner."""
-    config = load_hardware_config(args.config)
-    hw = create_hardware_adapter(args.mode, args, config)
-    runner = HILRunner(hardware=hw)
+    hw_config = load_hardware_config(args.config)
+    hw = create_hardware_adapter(args.mode, args, hw_config)
+
+    # Operational configuration path: CLI -> HILRunner -> TriageGate / DecisionEngine
+    sys_config_path = getattr(args, "system_config", None)
+    system_cfg = load_system_config(sys_config_path)
+    app_name = getattr(args, "application", "solar_storage")
+    app_config = extract_app_config(system_cfg, application=app_name) if system_cfg else None
+
+    triage = None
+    if system_cfg and "safety_limits" in system_cfg:
+        safety = system_cfg["safety_limits"]
+        triage = TriageGate(
+            v_min_reject=2.00,  # Retain electrochemical copper dissolution floor
+            v_max_reject=float(safety.get("voltage_ovp", 3.75)),
+            t_max_reject_c=float(safety.get("temp_otp_c", 45.0)),
+            max_leakage_mv_hr=float(safety.get("max_leakage_mv_per_hr", 15.0))
+        )
+
+    runner = HILRunner(hardware=hw, app_config=app_config, triage=triage)
 
     print(f"[SECONDShift CLI] Starting qualification...")
     print(f"  Specimen ID:  {args.cell_id}")
@@ -184,6 +237,8 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--baud", type=int, default=115200, help="Baud rate for serial mode")
     run_parser.add_argument("--replay-file", help="Path to telemetry trace file for replay mode")
     run_parser.add_argument("--config", help="Path to custom hardware.yaml configuration file")
+    run_parser.add_argument("--system-config", help="Path to custom default.yaml system configuration file")
+    run_parser.add_argument("--application", default="solar_storage", help="Target application profile from system configuration")
     run_parser.add_argument("--output", help="Path to save result JSON")
 
     # Mock hardware fault injection flags
