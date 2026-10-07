@@ -158,6 +158,23 @@ def run_qualification_cmd(args: argparse.Namespace) -> int:
         prior_r0_mohm=args.prior_r0,
         prior_sigma_r0_mohm=args.prior_sigma_r0
     )
+    try:
+        try:
+            from secondshift.software.ui.status_adapter import record_last_run
+        except ImportError:
+            from software.ui.status_adapter import record_last_run
+
+        record_last_run(
+            res,
+            runner.logger.get_events(),
+            getattr(args, "mode", None)
+        )
+
+    except Exception as exc:
+        print(
+            f"[WARN] Dashboard status snapshot not written: {exc}",
+            file=sys.stderr
+        )
 
     print("\n[SECONDShift CLI] Qualification Complete:")
     print(f"  Final Decision:   {res['final_decision']}")
