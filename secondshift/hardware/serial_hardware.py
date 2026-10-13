@@ -64,6 +64,7 @@ class SerialHardware(HardwareInterface):
 
         # Telemetry tracking & error counters
         self._last_seq: Optional[int] = None
+        self.console_messages = []
         self.stats = {
             "packets_received": 0,
             "packets_sent": 0,
@@ -71,6 +72,7 @@ class SerialHardware(HardwareInterface):
             "timeouts": 0,
             "duplicate_sequences": 0,
             "dropped_sequences": 0,
+            "sequence_regressions": 0,
             "reconnect_attempts": 0
         }
 
@@ -161,6 +163,11 @@ class SerialHardware(HardwareInterface):
             self.stats["timeouts"] += 1
             return None
 
+        # Handle non-JSON firmware console messages (boot banners, debug logs, CSV headers)
+        if not raw_line.startswith("{"):
+            self.console_messages.append(raw_line)
+            return None
+
         # Parse JSON
         try:
             payload = json.loads(raw_line)
@@ -179,8 +186,13 @@ class SerialHardware(HardwareInterface):
 
         self.stats["packets_received"] += 1
 
-        # Check sequence continuity
-        seq = payload.get("seq") or payload.get("sequence_number")
+        # Check sequence continuity across various firmware dialects
+        seq = (
+            payload.get("seq")
+            or payload.get("sequence_number")
+            or payload.get("sequence")
+            or payload.get("cycle_count")
+        )
         if seq is not None and isinstance(seq, int):
             if self._last_seq is not None:
                 if seq == self._last_seq:
@@ -188,6 +200,8 @@ class SerialHardware(HardwareInterface):
                 elif seq > self._last_seq + 1:
                     dropped = seq - (self._last_seq + 1)
                     self.stats["dropped_sequences"] += dropped
+                elif seq < self._last_seq:
+                    self.stats["sequence_regressions"] += 1
             self._last_seq = seq
 
         # Map to canonical TelemetryFrame
@@ -195,12 +209,49 @@ class SerialHardware(HardwareInterface):
         frame.source = TelemetrySource.REAL_HARDWARE.value
         return frame
 
-    def send_command(self, command: Dict[str, Any]) -> bool:
+    def send_command(self, command: Any) -> bool:
         if not self.is_connected():
             return False
 
         try:
-            serialized = json.dumps(command) + "\n"
+            if isinstance(command, str):
+                serialized = command.strip() + "\n"
+            elif hasattr(command, "requested_mode") and hasattr(command, "action"):
+                # Strongly typed CommandFrame
+                if command.action in ["EMERGENCY_ISOLATE", "RETIRE", "HOLD"]:
+                    serialized = "OFF\n"
+                elif command.requested_mode in ["ENABLE_LOAD", "EXECUTE_PULSE"]:
+                    serialized = "ON\n"
+                elif command.action == "STOP":
+                    serialized = "STOP\n"
+                elif command.action == "CLEAR":
+                    serialized = "CLEAR\n"
+                elif command.action == "STATUS":
+                    serialized = "STATUS\n"
+                else:
+                    serialized = json.dumps(command.to_dict()) + "\n"
+            elif isinstance(command, dict):
+                # If dictionary is an abstract CommandFrame dict with requested_mode
+                if "requested_mode" in command and "action" in command and "command" not in command:
+                    req_mode = command.get("requested_mode")
+                    act = command.get("action")
+                    if act in ["EMERGENCY_ISOLATE", "RETIRE", "HOLD"]:
+                        serialized = "OFF\n"
+                    elif req_mode in ["ENABLE_LOAD", "EXECUTE_PULSE"]:
+                        serialized = "ON\n"
+                    elif act == "STOP":
+                        serialized = "STOP\n"
+                    elif act == "CLEAR":
+                        serialized = "CLEAR\n"
+                    elif act == "STATUS":
+                        serialized = "STATUS\n"
+                    else:
+                        serialized = json.dumps(command) + "\n"
+                else:
+                    serialized = json.dumps(command) + "\n"
+            else:
+                serialized = str(command) + "\n"
+
             raw_bytes = serialized.encode("utf-8")
 
             if self._stream is not None:

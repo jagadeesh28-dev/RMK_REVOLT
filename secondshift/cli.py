@@ -24,6 +24,7 @@ try:
     from secondshift.hardware.mock_hardware import MockHardware
     from secondshift.hardware.serial_hardware import SerialHardware
     from secondshift.hardware.replay_hardware import ReplayHardware
+    from secondshift.hardware.wifi_hardware import WifiHardware
     from secondshift.interfaces.telemetry_schema import TelemetryFrame
     from secondshift.interfaces.telemetry_validator import TelemetryValidator
     from secondshift.interfaces.event_logger import EventLogger
@@ -33,6 +34,7 @@ except ImportError:
     from hardware.mock_hardware import MockHardware
     from hardware.serial_hardware import SerialHardware
     from hardware.replay_hardware import ReplayHardware
+    from hardware.wifi_hardware import WifiHardware
     from interfaces.telemetry_schema import TelemetryFrame
     from interfaces.telemetry_validator import TelemetryValidator
     from interfaces.event_logger import EventLogger
@@ -117,8 +119,11 @@ def create_hardware_adapter(mode: str, args: argparse.Namespace, config: Dict[st
         if not replay_file or not os.path.exists(replay_file):
             raise FileNotFoundError(f"Replay telemetry file '{replay_file}' not found.")
         return ReplayHardware(data_source=replay_file, realtime_replay=getattr(args, "realtime", False))
+    elif mode == "wifi":
+        device_id = getattr(args, "device_id", None) or getattr(args, "cell_id", "NEXUS-ESP32-01")
+        return WifiHardware(device_id=device_id)
     else:
-        raise ValueError(f"Unknown hardware mode: {mode}. Must be 'mock', 'serial', or 'replay'.")
+        raise ValueError(f"Unknown hardware mode: {mode}. Must be 'mock', 'serial', 'replay', or 'wifi'.")
 
 
 def run_qualification_cmd(args: argparse.Namespace) -> int:
@@ -217,7 +222,8 @@ def validate_telemetry_cmd(args: argparse.Namespace) -> int:
         try:
             payload = json.loads(line)
             frame = TelemetryFrame.from_dict(payload)
-            res = validator.validate_frame(frame)
+            allow_stale = getattr(args, "allow_stale", False) or getattr(args, "replay", False)
+            res = validator.validate_frame(frame, allow_stale_for_replay=allow_stale)
             if res.valid:
                 valid_count += 1
                 if not args.quiet:
@@ -243,7 +249,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     # 1. run command
     run_parser = subparsers.add_parser("run", help="Run qualification pipeline on a battery specimen")
-    run_parser.add_argument("--mode", choices=["mock", "serial", "replay"], default="mock", help="Hardware mode (mock, serial, replay)")
+    run_parser.add_argument("--mode", choices=["mock", "serial", "replay", "wifi"], default="mock", help="Hardware mode (mock, serial, replay, wifi)")
+    run_parser.add_argument("--device-id", default="NEXUS-ESP32-01", help="Device identifier for Wi-Fi hardware mode")
     run_parser.add_argument("--cell-id", default="SPECIMEN_01", help="Specimen identifier")
     run_parser.add_argument("--prior-source", default="KNOWN_LFP_FLEET", help="Prior model origin (KNOWN_LFP_FLEET, UNKNOWN, etc.)")
     run_parser.add_argument("--prior-soh", type=float, default=0.90, help="Initial prior SOH mean [0.0 - 1.0]")
@@ -271,6 +278,7 @@ def build_parser() -> argparse.ArgumentParser:
     # 2. validate-telemetry command
     val_parser = subparsers.add_parser("validate-telemetry", help="Validate telemetry frames offline or from stdin")
     val_parser.add_argument("--input", help="Path to NDJSON or JSON file containing telemetry frames")
+    val_parser.add_argument("--allow-stale", "--replay", dest="allow_stale", action="store_true", help="Permit historical timestamps for replay/offline validation")
     val_parser.add_argument("--quiet", action="store_true", help="Suppress per-frame passing messages")
     val_parser.set_defaults(func=validate_telemetry_cmd)
 

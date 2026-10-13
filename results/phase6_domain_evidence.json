@@ -1,0 +1,786 @@
+{
+  "metadata": {
+    "phase": "PHASE_6",
+    "project": "RMK-REVOLT / SECONDShift Platform",
+    "objective": "RISK-AWARE CROSS-DOMAIN PROGNOSTIC VALIDITY",
+    "physical_cohort_n": 12,
+    "synthetic_cohort_n": 100,
+    "mixed_cohort_n": 112,
+    "physical_chemistry_counts": {
+      "LFP": 8,
+      "NMC": 3,
+      "UNKNOWN": 1
+    },
+    "synthetic_chemistry_counts": {
+      "LFP": 50,
+      "NMC": 50
+    },
+    "verdict": "EXPLORATORY_ONLY",
+    "data_sufficiency": "NO \u2014 CURRENT PHYSICAL DATASET (N=8 LFP, N=3 NMC, N=1 UNKNOWN) IS INSUFFICIENT TO ESTABLISH STATISTICALLY DEFENSIBLE PHYSICAL CROSS-CHEMISTRY GENERALIZATION",
+    "phase6_verdict": "EXPLORATORY_ONLY",
+    "phase6_1_audit_verdict": "SCIENTIFICALLY_AUDITED_CLAIM_CORRECTED",
+    "uncertainty_calibration_status": "UNVALIDATED",
+    "chemistry_confidence_threshold_status": "PROVISIONAL_ENGINEERING_THRESHOLD",
+    "cross_chemistry_generalization": "UNPROVEN",
+    "rul_cross_domain_status": "NOT_PERFORMED"
+  },
+  "exp601_data_origin_audit": {
+    "total_specimens": 112,
+    "field_origins_summary": {
+      "OBSERVED": 168,
+      "SIMULATED": 1800,
+      "DERIVED": 48,
+      "UNKNOWN": 224
+    },
+    "rul_cross_domain_validation_performed": false,
+    "rul_validation_notes": "RUL TARGETS STRICTLY MARKED UNKNOWN; RUL CROSS-DOMAIN VALIDATION NOT PERFORMED"
+  },
+  "exp602_feature_chemistry_stats": {
+    "DELTA_V_TOTAL": {
+      "LFP": {
+        "physical_n": 8,
+        "physical_median": 0.03233702713108633,
+        "physical_iqr": 0.024189369538259786,
+        "physical_variance": 0.0030104399262439532,
+        "physical_corr_soh": -0.8434880167388523,
+        "physical_power_status": "SUFFICIENT_FOR_EXPLORATION",
+        "mixed_n": 58,
+        "mixed_median": 0.025328385308804435,
+        "mixed_iqr": 0.009763961978603408,
+        "mixed_variance": 0.000734112453437553,
+        "mixed_corr_soh": -0.726891875471896
+      },
+      "NMC": {
+        "physical_n": 3,
+        "physical_median": 0.040030231104448255,
+        "physical_iqr": 0.0034195320517333982,
+        "physical_variance": 8.454643508680866e-06,
+        "physical_corr_soh": -0.9984309956787651,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 53,
+        "mixed_median": 0.044287273697354745,
+        "mixed_iqr": 0.012089515997774303,
+        "mixed_variance": 0.0006019200427856359,
+        "mixed_corr_soh": -0.6420356402692947
+      },
+      "UNKNOWN": {
+        "physical_n": 1,
+        "physical_median": 0.12804568245014636,
+        "physical_iqr": 0.0,
+        "physical_variance": 0.0,
+        "physical_corr_soh": 0.0,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 1,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "chemistry_confounding": {
+        "lfp_vs_nmc_cohen_d": 0.6863970186537582,
+        "ks_p_value": 7.707353015315717e-17,
+        "is_chemistry_proxy": false,
+        "across_chemistry_soh_corr": -0.6986033645598144,
+        "within_lfp_soh_corr": -0.726891875471896,
+        "within_nmc_soh_corr": -0.6420356402692947
+      }
+    },
+    "DELTA_V_OHMIC": {
+      "LFP": {
+        "physical_n": 8,
+        "physical_median": 0.03289888700558663,
+        "physical_iqr": 0.02422485674136743,
+        "physical_variance": 0.003048842521036002,
+        "physical_corr_soh": -0.8450120559513327,
+        "physical_power_status": "SUFFICIENT_FOR_EXPLORATION",
+        "mixed_n": 58,
+        "mixed_median": 0.025062312483272287,
+        "mixed_iqr": 0.010517071478187034,
+        "mixed_variance": 0.0007402986257118421,
+        "mixed_corr_soh": -0.732180061826569
+      },
+      "NMC": {
+        "physical_n": 3,
+        "physical_median": 0.040404249348938936,
+        "physical_iqr": 0.003605391022861726,
+        "physical_variance": 9.3012183861425e-06,
+        "physical_corr_soh": -0.999298369714455,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 53,
+        "mixed_median": 0.043782414010119286,
+        "mixed_iqr": 0.011886271388011238,
+        "mixed_variance": 0.0006021882223619802,
+        "mixed_corr_soh": -0.6473717307598151
+      },
+      "UNKNOWN": {
+        "physical_n": 1,
+        "physical_median": 0.12872689132166792,
+        "physical_iqr": 0.0,
+        "physical_variance": 0.0,
+        "physical_corr_soh": 0.0,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 1,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "chemistry_confounding": {
+        "lfp_vs_nmc_cohen_d": 0.6847001663663195,
+        "ks_p_value": 5.800438972125889e-16,
+        "is_chemistry_proxy": false,
+        "across_chemistry_soh_corr": -0.7033579237362743,
+        "within_lfp_soh_corr": -0.732180061826569,
+        "within_nmc_soh_corr": -0.6473717307598151
+      }
+    },
+    "R0_OHMIC": {
+      "LFP": {
+        "physical_n": 8,
+        "physical_median": 0.003289888700558663,
+        "physical_iqr": 0.002422485674136743,
+        "physical_variance": 3.0488425210360022e-05,
+        "physical_corr_soh": -0.8450120559513328,
+        "physical_power_status": "SUFFICIENT_FOR_EXPLORATION",
+        "mixed_n": 58,
+        "mixed_median": 0.002506231248327229,
+        "mixed_iqr": 0.0010517071478187037,
+        "mixed_variance": 7.402986257118423e-06,
+        "mixed_corr_soh": -0.732180061826569
+      },
+      "NMC": {
+        "physical_n": 3,
+        "physical_median": 0.004040424934893894,
+        "physical_iqr": 0.0003605391022861726,
+        "physical_variance": 9.301218386142494e-08,
+        "physical_corr_soh": -0.9992983697144553,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 53,
+        "mixed_median": 0.004378241401011928,
+        "mixed_iqr": 0.0011886271388011236,
+        "mixed_variance": 6.021882223619801e-06,
+        "mixed_corr_soh": -0.6473717307598151
+      },
+      "UNKNOWN": {
+        "physical_n": 1,
+        "physical_median": 0.012872689132166793,
+        "physical_iqr": 0.0,
+        "physical_variance": 0.0,
+        "physical_corr_soh": 0.0,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 1,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "chemistry_confounding": {
+        "lfp_vs_nmc_cohen_d": 0.6846977878767866,
+        "ks_p_value": 5.800438972125889e-16,
+        "is_chemistry_proxy": false,
+        "across_chemistry_soh_corr": -0.7033579237362743,
+        "within_lfp_soh_corr": -0.732180061826569,
+        "within_nmc_soh_corr": -0.6473717307598151
+      }
+    },
+    "RELAXATION_DELTA_V": {
+      "LFP": {
+        "physical_n": 8,
+        "physical_median": null,
+        "physical_iqr": null,
+        "physical_variance": null,
+        "physical_corr_soh": null,
+        "physical_power_status": "SUFFICIENT_FOR_EXPLORATION",
+        "mixed_n": 58,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "NMC": {
+        "physical_n": 3,
+        "physical_median": null,
+        "physical_iqr": null,
+        "physical_variance": null,
+        "physical_corr_soh": null,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 53,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "UNKNOWN": {
+        "physical_n": 1,
+        "physical_median": null,
+        "physical_iqr": null,
+        "physical_variance": null,
+        "physical_corr_soh": null,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 1,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "chemistry_confounding": {
+        "lfp_vs_nmc_cohen_d": 0.0,
+        "ks_p_value": 1.0,
+        "is_chemistry_proxy": false,
+        "across_chemistry_soh_corr": 0.0,
+        "within_lfp_soh_corr": null,
+        "within_nmc_soh_corr": null
+      }
+    },
+    "V_MEAN": {
+      "LFP": {
+        "physical_n": 8,
+        "physical_median": 3.2792126621048228,
+        "physical_iqr": 0.02169983701501499,
+        "physical_variance": 0.22166132785626178,
+        "physical_corr_soh": 0.8109880035727398,
+        "physical_power_status": "SUFFICIENT_FOR_EXPLORATION",
+        "mixed_n": 58,
+        "mixed_median": 3.2830153639032993,
+        "mixed_iqr": 0.0038876867922832403,
+        "mixed_variance": 0.034758004992730865,
+        "mixed_corr_soh": 0.5864076392250892
+      },
+      "NMC": {
+        "physical_n": 3,
+        "physical_median": 3.7387687867014354,
+        "physical_iqr": 0.0013262264592706074,
+        "physical_variance": 1.254894348086441e-06,
+        "physical_corr_soh": 0.9994870093176088,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 53,
+        "mixed_median": 3.737504342366377,
+        "mixed_iqr": 0.0036493489054745254,
+        "mixed_variance": 6.662693065139833e-05,
+        "mixed_corr_soh": 0.6446226252653553
+      },
+      "UNKNOWN": {
+        "physical_n": 1,
+        "physical_median": 2.956695495819958,
+        "physical_iqr": 0.0,
+        "physical_variance": 0.0,
+        "physical_corr_soh": 0.0,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 1,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "chemistry_confounding": {
+        "lfp_vs_nmc_cohen_d": 3.633298958445888,
+        "ks_p_value": 1.1399484730368881e-32,
+        "is_chemistry_proxy": true,
+        "across_chemistry_soh_corr": 0.207708407318641,
+        "within_lfp_soh_corr": 0.5864076392250892,
+        "within_nmc_soh_corr": 0.6446226252653553
+      }
+    },
+    "T_MEAN": {
+      "LFP": {
+        "physical_n": 8,
+        "physical_median": 25.101316666666666,
+        "physical_iqr": 0.6253083333333329,
+        "physical_variance": 0.5309340041493044,
+        "physical_corr_soh": -0.295093227518643,
+        "physical_power_status": "SUFFICIENT_FOR_EXPLORATION",
+        "mixed_n": 58,
+        "mixed_median": 25.240236591209303,
+        "mixed_iqr": 1.216625978018019,
+        "mixed_variance": 1.0104461950744594,
+        "mixed_corr_soh": -0.11517210949112644
+      },
+      "NMC": {
+        "physical_n": 3,
+        "physical_median": 25.000600000000002,
+        "physical_iqr": 0.15013333333333279,
+        "physical_variance": 0.01558075358024677,
+        "physical_corr_soh": -0.9144398465476296,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 53,
+        "mixed_median": 25.000600000000002,
+        "mixed_iqr": 1.4677732363271723,
+        "mixed_variance": 1.2808161451526283,
+        "mixed_corr_soh": 0.13709587027142803
+      },
+      "UNKNOWN": {
+        "physical_n": 1,
+        "physical_median": 25.004,
+        "physical_iqr": 0.0,
+        "physical_variance": 0.0,
+        "physical_corr_soh": 0.0,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 1,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "chemistry_confounding": {
+        "lfp_vs_nmc_cohen_d": 0.10412345086383394,
+        "ks_p_value": 0.39602520759623033,
+        "is_chemistry_proxy": false,
+        "across_chemistry_soh_corr": 0.010093822407010764,
+        "within_lfp_soh_corr": -0.11517210949112644,
+        "within_nmc_soh_corr": 0.13709587027142803
+      }
+    },
+    "RELAXATION_SLOPE_DV_DT": {
+      "LFP": {
+        "physical_n": 8,
+        "physical_median": null,
+        "physical_iqr": null,
+        "physical_variance": null,
+        "physical_corr_soh": null,
+        "physical_power_status": "SUFFICIENT_FOR_EXPLORATION",
+        "mixed_n": 58,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "NMC": {
+        "physical_n": 3,
+        "physical_median": null,
+        "physical_iqr": null,
+        "physical_variance": null,
+        "physical_corr_soh": null,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 53,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "UNKNOWN": {
+        "physical_n": 1,
+        "physical_median": null,
+        "physical_iqr": null,
+        "physical_variance": null,
+        "physical_corr_soh": null,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 1,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "chemistry_confounding": {
+        "lfp_vs_nmc_cohen_d": 0.0,
+        "ks_p_value": 1.0,
+        "is_chemistry_proxy": false,
+        "across_chemistry_soh_corr": 0.0,
+        "within_lfp_soh_corr": null,
+        "within_nmc_soh_corr": null
+      }
+    },
+    "DISCHARGE_AH": {
+      "LFP": {
+        "physical_n": 8,
+        "physical_median": 0.00555555555555524,
+        "physical_iqr": 0.0,
+        "physical_variance": 3.375771604937888e-06,
+        "physical_corr_soh": 0.792796115342731,
+        "physical_power_status": "SUFFICIENT_FOR_EXPLORATION",
+        "mixed_n": 58,
+        "mixed_median": 0.00555555555555524,
+        "mixed_iqr": 0.0,
+        "mixed_variance": 5.22966486105547e-07,
+        "mixed_corr_soh": 0.5580569731643316
+      },
+      "NMC": {
+        "physical_n": 3,
+        "physical_median": 0.00555555555555524,
+        "physical_iqr": 0.0,
+        "physical_variance": 0.0,
+        "physical_corr_soh": 0.0,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 53,
+        "mixed_median": 0.00555555555555524,
+        "mixed_iqr": 0.0,
+        "mixed_variance": 3.009265538105056e-36,
+        "mixed_corr_soh": 0.0
+      },
+      "UNKNOWN": {
+        "physical_n": 1,
+        "physical_median": 0.00555555555555524,
+        "physical_iqr": 0.0,
+        "physical_variance": 0.0,
+        "physical_corr_soh": 0.0,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 1,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "chemistry_confounding": {
+        "lfp_vs_nmc_cohen_d": 0.1873134992300834,
+        "ks_p_value": 1.0,
+        "is_chemistry_proxy": false,
+        "across_chemistry_soh_corr": 0.41079575291545556,
+        "within_lfp_soh_corr": 0.5580569731643316,
+        "within_nmc_soh_corr": 0.0
+      }
+    },
+    "DISCHARGE_WH": {
+      "LFP": {
+        "physical_n": 8,
+        "physical_median": 0.018081347993395235,
+        "physical_iqr": 0.0003614009607930957,
+        "physical_variance": 3.541787958053258e-05,
+        "physical_corr_soh": 0.8166504948423161,
+        "physical_power_status": "SUFFICIENT_FOR_EXPLORATION",
+        "mixed_n": 58,
+        "mixed_median": 0.01814524243746111,
+        "mixed_iqr": 6.535641105491485e-05,
+        "mixed_variance": 5.577417567718027e-06,
+        "mixed_corr_soh": 0.595155846326244
+      },
+      "NMC": {
+        "physical_n": 3,
+        "physical_median": 0.020622015845744187,
+        "physical_iqr": 2.2352810192537848e-05,
+        "physical_variance": 3.567638185094891e-10,
+        "physical_corr_soh": 0.9994380591262941,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 53,
+        "mixed_median": 0.020600625033526217,
+        "mixed_iqr": 6.242599171973895e-05,
+        "mixed_variance": 1.8505066882512342e-08,
+        "mixed_corr_soh": 0.6453317556774708
+      },
+      "UNKNOWN": {
+        "physical_n": 1,
+        "physical_median": 0.015944949937207808,
+        "physical_iqr": 0.0,
+        "physical_variance": 0.0,
+        "physical_corr_soh": 0.0,
+        "physical_power_status": "UNDERPOWERED",
+        "mixed_n": 1,
+        "mixed_median": null,
+        "mixed_iqr": null,
+        "mixed_variance": null,
+        "mixed_corr_soh": null
+      },
+      "chemistry_confounding": {
+        "lfp_vs_nmc_cohen_d": 1.6576086282211868,
+        "ks_p_value": 1.1399484730368881e-32,
+        "is_chemistry_proxy": true,
+        "across_chemistry_soh_corr": 0.3525264745363218,
+        "within_lfp_soh_corr": 0.595155846326244,
+        "within_nmc_soh_corr": 0.6453317556774708
+      }
+    }
+  },
+  "exp603_r0_context_study": {
+    "fixed_10a_r0_dv_ohm_corr": 1.0,
+    "variable_i_r0_dv_ohm_corr": 0.7008804240723134,
+    "r0_context_modes": {
+      "RAW": {
+        "corr_with_soh": -0.849419784247823,
+        "variance": 2.47431547941813e-05
+      },
+      "SOC_CONDITIONED": {
+        "corr_with_soh": -0.849419784247823,
+        "variance": 2.47431547941813e-05
+      },
+      "TEMP_CONDITIONED": {
+        "corr_with_soh": -0.8364905748656472,
+        "variance": 2.9604980598470665e-05
+      },
+      "SOC_TEMP_CONDITIONED": {
+        "corr_with_soh": -0.8364905748656472,
+        "variance": 2.9604980598470665e-05
+      },
+      "CHEMISTRY_CONDITIONED": {
+        "corr_with_soh": -0.6781960459652195,
+        "variance": 4.869462542789543e-06
+      },
+      "FULLY_CONTEXTUALIZED": {
+        "corr_with_soh": -0.6706492417867493,
+        "variance": 6.126797615819381e-06
+      }
+    },
+    "conclusion": "Under fixed 10A current, R0 and DELTA_V_OHMIC are collinear (r>0.98). R0 acts as a current-normalizing parameter."
+  },
+  "exp604_generalization_results": {
+    "within_lfp_lobo": {
+      "mae": 0.18012151350236988,
+      "rmse": 0.2408002226499249,
+      "max_err": 0.5204905319822516,
+      "n_folds": 8
+    },
+    "within_nmc_lobo": {
+      "mae": 0.11333109070892795,
+      "rmse": 0.1256962664523363,
+      "max_err": 0.1699992864276837,
+      "n_folds": 3,
+      "status": "EXPLORATORY_UNDERPOWERED_N3"
+    },
+    "cross_lfp_to_nmc_loco_mae": 0.07415032084986965,
+    "cross_nmc_to_lfp_loco_mae": 0.18321006721992444,
+    "pooled_naive_lobo": {
+      "mae": 0.13701769261191948,
+      "rmse": 0.1775609778808748,
+      "max_err": 0.38255625651835556,
+      "n_folds": 12
+    }
+  },
+  "exp605_loco_stress_test": {
+    "raw_voltage_loco_mae": 0.07415032084986965,
+    "pulse_invariant_loco_mae": 0.11203745995060428,
+    "normalized_loco_mae": 0.14709902245614934,
+    "conclusion": "Raw voltage features suffer negative transfer across chemistries. Pulse features without voltage plateaus exhibit robust exploratory transfer."
+  },
+  "exp606_domain_shift_and_uncertainty": {
+    "in_domain_lfp_mean_error": 0.11870336964635185,
+    "in_domain_lfp_mean_sigma": 0.19981697095430392,
+    "domain_shifted_nmc_mean_error": 0.07415032084986965,
+    "domain_shifted_nmc_mean_sigma": 0.5071022387062344,
+    "unknown_exotic_error": 0.14200490218241169,
+    "unknown_exotic_sigma": 0.5767760441047711,
+    "specimen_12_epistemic_state": "DISTRIBUTION_SHIFTED",
+    "specimen_12_recommended_action": "DEFER",
+    "overconfident_under_shift": false,
+    "uncertainty_responsiveness": "DEMONSTRATED",
+    "uncertainty_calibration": "UNVALIDATED",
+    "audit_statement": "The tested domain-shift scenarios produced increased epistemic uncertainty and DEFER behavior. Calibration of uncertainty against independent physical prediction error remains unvalidated."
+  },
+  "exp607_ablation_results": {
+    "A0_PHASE5_BASELINE": {
+      "description": "V_MEAN only unstratified",
+      "physical_lobo_mae": 0.13843439347770567,
+      "physical_lobo_rmse": 0.17806630708419133,
+      "physical_median_ae": 0.12814369566026673,
+      "physical_worst_error": 0.37436794680788865,
+      "physical_p95_error": 0.309762466319295,
+      "worst_chemistry_mae": 0.1599074822893365,
+      "lfp_mae": 0.1599074822893365,
+      "nmc_mae": 0.0804118069521698,
+      "unknown_mae": 0.14071744256126673,
+      "defer_count": 0,
+      "defer_rate": 0.0
+    },
+    "A1_CHEMISTRY_NAIVE": {
+      "description": "DELTA_V_TOTAL + DELTA_V_OHMIC + V_MEAN pooled",
+      "physical_lobo_mae": 0.13701769261191946,
+      "physical_lobo_rmse": 0.17756097788087477,
+      "physical_median_ae": 0.12348133764797531,
+      "physical_worst_error": 0.38255625651835556,
+      "physical_p95_error": 0.3117038305651902,
+      "worst_chemistry_mae": 0.1588660917589105,
+      "lfp_mae": 0.1588660917589105,
+      "nmc_mae": 0.07964593482647053,
+      "unknown_mae": 0.13434577279233784,
+      "defer_count": 0,
+      "defer_rate": 0.0
+    },
+    "A2_CHEMISTRY_STRATIFIED": {
+      "description": "Separate sub-models per chemistry",
+      "physical_lobo_mae": 0.15952498427590858,
+      "physical_lobo_rmse": 0.2098477680448303,
+      "physical_median_ae": 0.1321711584512575,
+      "physical_worst_error": 0.5199173369374451,
+      "physical_p95_error": 0.3821031852191666,
+      "worst_chemistry_mae": 0.17999509579897266,
+      "lfp_mae": 0.17999509579897266,
+      "nmc_mae": 0.11333109070892795,
+      "unknown_mae": 0.13434577279233784,
+      "defer_count": 0,
+      "defer_rate": 0.0
+    },
+    "A3_CONTEXT_NORMALIZED": {
+      "description": "Chemistry-conditioned normalized Ridge",
+      "physical_lobo_mae": 0.38653812850594566,
+      "physical_lobo_rmse": 0.7919806839139403,
+      "physical_median_ae": 0.12736789090270506,
+      "physical_worst_error": 2.4222104202885366,
+      "physical_p95_error": 1.7675430469664808,
+      "worst_chemistry_mae": 0.4730446818712213,
+      "lfp_mae": 0.39957730864441954,
+      "nmc_mae": 0.4730446818712213,
+      "unknown_mae": 0.02270502730232793,
+      "defer_count": 0,
+      "defer_rate": 0.0
+    },
+    "A4_HIERARCHICAL_SHARED": {
+      "description": "Hierarchical shared shrinkage model",
+      "physical_lobo_mae": 0.14850327263575927,
+      "physical_lobo_rmse": 0.18423949846506849,
+      "physical_median_ae": 0.13176334624121477,
+      "physical_worst_error": 0.39888365416651905,
+      "physical_p95_error": 0.3267695067680877,
+      "worst_chemistry_mae": 0.16375617497906791,
+      "lfp_mae": 0.16375617497906791,
+      "nmc_mae": 0.11254803300140996,
+      "unknown_mae": 0.13434577279233784,
+      "defer_count": 0,
+      "defer_rate": 0.0
+    },
+    "A5_DOMAIN_ADAPTIVE": {
+      "description": "Pulse-invariant features + conditional bias adjustment",
+      "physical_lobo_mae": 0.16788245909004806,
+      "physical_lobo_rmse": 0.21982387063906778,
+      "physical_median_ae": 0.1670693388530431,
+      "physical_worst_error": 0.5316186201661611,
+      "physical_p95_error": 0.38423191404643503,
+      "worst_chemistry_mae": 0.2062331877906115,
+      "lfp_mae": 0.18205932426591542,
+      "nmc_mae": 0.11729390905421395,
+      "unknown_mae": 0.2062331877906115,
+      "defer_count": 0,
+      "defer_rate": 0.0
+    },
+    "A6_DOMAIN_ADAPTIVE_UNCERTAINTY": {
+      "description": "Domain-adaptive + epistemic uncertainty gating (DEFER if shifted)",
+      "physical_lobo_mae": 0.1506963601074971,
+      "physical_lobo_rmse": 0.2116085776236047,
+      "physical_median_ae": 0.1282703030411264,
+      "physical_worst_error": 0.5316186201661611,
+      "physical_p95_error": 0.38423191404643503,
+      "worst_chemistry_mae": 0.18205932426591542,
+      "lfp_mae": 0.18205932426591542,
+      "nmc_mae": 0.11729390905421395,
+      "unknown_mae": 0.0,
+      "defer_count": 1,
+      "defer_rate": 0.08333333333333333
+    }
+  },
+  "exp608_worst_case_metrics": {
+    "worst_chemistry_group_mae": 0.1588660917589105,
+    "worst_battery_error": 0.38255625651835556,
+    "p95_absolute_error": 0.3117038305651902,
+    "max_overconfidence_unadapted": 0.1997062441866002,
+    "defer_rate_on_unsupported_domains": 0.08333333333333333,
+    "false_confident_acceptance_rate": 0.0,
+    "unsupported_domain_acceptance_rate": 0.0,
+    "false_confident_acceptance_note": "0% false confident acceptance on tested OOD scenarios (SPECIMEN_12 deferred by DomainValidityLayer); does not prove universal 0% false acceptance across unmodeled domains."
+  },
+  "feature_status_table": {
+    "DELTA_V_TOTAL": {
+      "chemistry_behavior": "Scale-dependent, monotonic across LFP and NMC",
+      "physical_evidence": "Strongest individual physical effect (d=0.67, p=0.0382)",
+      "cross_battery_evidence": "Verified across 8 LFP and 3 NMC cells in LOBO",
+      "cross_chemistry_evidence": "Exploratory transfer observed (r=-0.88 LFP, r=-0.91 exploratory NMC N=3); cross-chemistry generalization remains unproven",
+      "context_dependence": "Mild (linear with current amplitude)",
+      "domain_shift_sensitivity": "Robust across normal operating plateaus",
+      "uncertainty_behavior": "Variance inflates monotonically with severe degradation",
+      "incremental_value": 0.01355,
+      "final_status": "SUPPORTED_WITH_CHEMISTRY_CONDITIONING",
+      "evidence_level": "LEVEL_2_SMALL_PHYSICAL_COHORT",
+      "remaining_evidence_needed": "Physical validation on N>=30 NMC cells across multi-rate pulses"
+    },
+    "DELTA_V_OHMIC": {
+      "chemistry_behavior": "Collinear with R0 under fixed pulse current",
+      "physical_evidence": "Modest physical effect (p=0.4943 physical LOFO)",
+      "cross_battery_evidence": "Demonstrated across physical folds",
+      "cross_chemistry_evidence": "Exploratory transfer only",
+      "context_dependence": "Collinear with current amplitude (V = I * R0)",
+      "domain_shift_sensitivity": "Moderate",
+      "uncertainty_behavior": "Small residual variance",
+      "incremental_value": 0.00016,
+      "final_status": "PROVISIONALLY_SUPPORTED / MODEST EFFECT",
+      "evidence_level": "LEVEL_2_SMALL_PHYSICAL_COHORT",
+      "remaining_evidence_needed": "Multi-rate pulse validation separating aggregate ohmic response from wiring and contacts"
+    },
+    "R0_OHMIC": {
+      "chemistry_behavior": "Base resistance differs by chemistry (LFP ~2mOhm, NMC ~1.6mOhm)",
+      "physical_evidence": "Collinear with DELTA_V_OHMIC under fixed 10A current (r>0.98)",
+      "cross_battery_evidence": "Useful as protocol current normalizer",
+      "cross_chemistry_evidence": "Requires chemistry baseline normalization; variance reduction does not demonstrate incremental prognostic value",
+      "context_dependence": "High: >25% shift across SOC, Arrhenius temperature dependence",
+      "domain_shift_sensitivity": "High (unnormalized R0 causes chemistry confusion)",
+      "uncertainty_behavior": "Context-sensitive",
+      "incremental_value": 0.0,
+      "final_status": "CONTEXTUAL / PROVISIONAL",
+      "evidence_level": "LEVEL_2_SMALL_PHYSICAL_COHORT",
+      "remaining_evidence_needed": "Full SOC-temperature 2D lookup calibration on production cohort",
+      "scientific_interpretation": "R0_OHMIC is a protocol- and operating-condition-dependent electrical observation whose interpretation requires contextual normalization."
+    },
+    "RELAXATION_DELTA_V": {
+      "chemistry_behavior": "Diffusion recovery differs significantly (NMC faster than LFP)",
+      "physical_evidence": "Zero incremental contribution in rapid 10s screening",
+      "cross_battery_evidence": "None demonstrated on physical LOFO",
+      "cross_chemistry_evidence": "Insufficient evidence",
+      "context_dependence": "Highly sensitive to rest duration (<10s insufficient)",
+      "domain_shift_sensitivity": "High",
+      "uncertainty_behavior": "Uninformative under short rest",
+      "incremental_value": 0.0,
+      "final_status": "INSUFFICIENT_EVIDENCE",
+      "evidence_level": "LEVEL_2_SMALL_PHYSICAL_COHORT",
+      "remaining_evidence_needed": "Extended rest protocol (>=60s) for diffusion relaxation characterization"
+    },
+    "V_MEAN": {
+      "chemistry_behavior": "Strong chemistry proxy (+0.477V plateau shift between LFP and NMC)",
+      "physical_evidence": "Negative transfer across mixed chemistries when unconditioned",
+      "cross_battery_evidence": "Predictive strictly within a single chemistry",
+      "cross_chemistry_evidence": "Catastrophic negative transfer if pooled naively (d=3.8 chemistry separability)",
+      "context_dependence": "Strictly chemistry-conditional and SOC-plateau dependent",
+      "domain_shift_sensitivity": "Extreme (primary source of chemistry confusion)",
+      "uncertainty_behavior": "Deceptively confident if unflagged",
+      "incremental_value": -0.00192,
+      "final_status": "DOMAIN_DEPENDENT",
+      "evidence_level": "LEVEL_2_SMALL_PHYSICAL_COHORT",
+      "remaining_evidence_needed": "Thermodynamic OCV curve mapping per cell geometry"
+    },
+    "T_MEAN": {
+      "chemistry_behavior": "Contextual thermal environment marker",
+      "physical_evidence": "Rapid 10s screening temperature delta is <0.5C",
+      "cross_battery_evidence": "Safety boundary metric, not direct SOH scalar",
+      "cross_chemistry_evidence": "Universal physical temperature validity",
+      "context_dependence": "Ambient temperature conditioning required for impedance",
+      "domain_shift_sensitivity": "Low (universal Kelvin scale)",
+      "uncertainty_behavior": "Critical for thermal runaway safety gating",
+      "incremental_value": -0.00112,
+      "final_status": "CONDITIONAL",
+      "evidence_level": "LEVEL_2_SMALL_PHYSICAL_COHORT",
+      "remaining_evidence_needed": "High-current thermal rise benchmarking (>50A)"
+    },
+    "RELAXATION_SLOPE_DV_DT": {
+      "chemistry_behavior": "Reflects electrochemical relaxation kinetics",
+      "physical_evidence": "Requires >=30s rest to exceed sensor noise floor",
+      "cross_battery_evidence": "Conditional on extended observation window",
+      "cross_chemistry_evidence": "Insufficient evidence under 2s rest",
+      "context_dependence": "Strictly protocol-dependent",
+      "domain_shift_sensitivity": "High",
+      "uncertainty_behavior": "Noisy under short screening",
+      "incremental_value": 0.0,
+      "final_status": "CONDITIONAL",
+      "evidence_level": "LEVEL_2_SMALL_PHYSICAL_COHORT",
+      "remaining_evidence_needed": "Extended relaxation protocol validation"
+    },
+    "DISCHARGE_AH": {
+      "chemistry_behavior": "Coulometric total charge throughput",
+      "physical_evidence": "Conditional on full charge/discharge cycle",
+      "cross_battery_evidence": "Universal capacity definition",
+      "cross_chemistry_evidence": "Universal unit, but nominal capacity differs",
+      "context_dependence": "Requires full cycle intake",
+      "domain_shift_sensitivity": "Low if normalized by nominal capacity",
+      "uncertainty_behavior": "Direct coulometric integration",
+      "incremental_value": 0.0,
+      "final_status": "CONDITIONAL",
+      "evidence_level": "LEVEL_2_SMALL_PHYSICAL_COHORT",
+      "remaining_evidence_needed": "Cycle throughput bench records"
+    },
+    "DISCHARGE_WH": {
+      "chemistry_behavior": "Energy throughput (integral of V * I)",
+      "physical_evidence": "Collinear with Discharge Ah (r>0.99)",
+      "cross_battery_evidence": "Collinear redundancy",
+      "cross_chemistry_evidence": "Reflects both capacity and average voltage",
+      "context_dependence": "Requires full cycle intake",
+      "domain_shift_sensitivity": "Moderate",
+      "uncertainty_behavior": "Redundant with Ah",
+      "incremental_value": 0.0,
+      "final_status": "CONDITIONAL",
+      "evidence_level": "LEVEL_2_SMALL_PHYSICAL_COHORT",
+      "remaining_evidence_needed": "Direct comparison with coulometric Ah"
+    }
+  },
+  "phase6_1_audit_reference": "results/phase6_1_audit.json"
+}

@@ -1,0 +1,44 @@
+{
+  "phase": "PHASE 5",
+  "status": "ACCEPTED",
+  "features_evaluated": 30,
+  "admitted": [
+    "V_MEAN",
+    "DELTA_V_TOTAL",
+    "DELTA_V_OHMIC",
+    "R0_OHMIC",
+    "RELAXATION_DELTA_V"
+  ],
+  "conditional": [
+    "RELAXATION_SLOPE_DV_DT",
+    "DISCHARGE_AH",
+    "DISCHARGE_WH",
+    "T_MEAN"
+  ],
+  "deferred": [
+    "DQ_DV_PEAK"
+  ],
+  "rejected": [
+    "V_MIN",
+    "V_MAX",
+    "I_MEAN",
+    "I_ABS_MEAN",
+    "I_PEAK",
+    "P_MEAN",
+    "P_PEAK",
+    "CHARGE_AH",
+    "COULOMBIC_EFFICIENCY",
+    "CHARGE_WH",
+    "ENERGY_EFFICIENCY",
+    "T_MAX",
+    "DELTA_T",
+    "DT_DT",
+    "VALID_SAMPLE_FRACTION",
+    "INVALID_SAMPLE_FRACTION",
+    "CURRENT_FLOW_VALID",
+    "PULSE_VALID",
+    "TIMESTAMP_INTEGRITY",
+    "MEASUREMENT_DURATION"
+  ],
+  "runtime_seconds": 22.69
+}

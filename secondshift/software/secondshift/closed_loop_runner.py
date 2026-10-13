@@ -57,6 +57,9 @@ class ClosedLoopRunner:
             ambient_temp_c=ambient_temp_c,
             leakage_rate_mv_hr=rest_data["drift_mv_hr"]
         )
+        if rest_data.get("hardware_tripped", False):
+            triage_status = "REJECT"
+            triage_reason = f"HARDWARE_TRIP_DETECTED: {rest_data.get('trip_reason', 'PROTECTION_CHAIN_TRIPPED')}"
 
         trace.append({
             "stage": "STAGE_0_TRIAGE",
@@ -137,24 +140,58 @@ class ClosedLoopRunner:
             if recommended_test == "CHEM_DISAMBIG_PULSE":
                 # Apply 10A 15s pulse and observe slope
                 pulse_resp = self.meas.measure_voltage_response(pulse_current_a=10.0, pulse_duration_s=15.0)
-                slope = pulse_resp["delta_v_total"]
-                chem_post = self.chem_engine.update_from_pulse_slope(slope, 10.0, 15.0, chem_post)
-                conf_state, best_chem, conf_score = self.chem_engine.get_confidence_state(chem_post)
+                if pulse_resp.get("pulse_valid", False) and pulse_resp.get("admissible_for_chemistry", False):
+                    slope = pulse_resp["delta_v_total"]
+                    chem_post = self.chem_engine.update_from_pulse_slope(slope, 10.0, 15.0, chem_post)
+                    conf_state, best_chem, conf_score = self.chem_engine.get_confidence_state(chem_post)
+                else:
+                    # Invalid physical pulse: Chemistry engine MUST NOT consume invalid pulse evidence
+                    trace.append({
+                        "stage": "INVALID_MEASUREMENT_REJECTED",
+                        "test": "CHEM_DISAMBIG_PULSE",
+                        "reason_codes": pulse_resp.get("reason_codes", []),
+                        "pulse_valid": False,
+                        "admissible_for_chemistry": False
+                    })
+                    if pulse_resp.get("hardware_tripped", False):
+                        triage_status = "REJECT"
                 total_diag_cost += self.decision_engine.voi.compute_test_cost("CHEM_DISAMBIG_PULSE")
                 total_diag_energy += 0.35
 
             elif recommended_test == "SHORT_COULOMETRIC_CYCLE":
                 # Apply partial discharge step and update SOH via hardware abstraction
                 pulse_resp = self.meas.measure_voltage_response(pulse_current_a=10.0, pulse_duration_s=30.0)
-                observed_soh = self.meas.measure_coulometric_soh(observation_noise_sigma=0.015)
-                estimator.update_soh_from_coulometric_observation(observed_soh, observation_noise_sigma=0.025)
-                estimator.update_r0_from_ohmic_jump(pulse_resp["r0_ohms"], sensor_noise_sigma=0.00035)
+                if pulse_resp.get("pulse_valid", False) and pulse_resp.get("admissible_for_r0", False) and pulse_resp.get("r0_ohms") is not None:
+                    observed_soh = self.meas.measure_coulometric_soh(observation_noise_sigma=0.015)
+                    estimator.update_soh_from_coulometric_observation(observed_soh, observation_noise_sigma=0.025)
+                    estimator.update_r0_from_ohmic_jump(pulse_resp["r0_ohms"], sensor_noise_sigma=0.00035)
+                else:
+                    trace.append({
+                        "stage": "INVALID_MEASUREMENT_REJECTED",
+                        "test": "SHORT_COULOMETRIC_CYCLE",
+                        "reason_codes": pulse_resp.get("reason_codes", []),
+                        "pulse_valid": False,
+                        "admissible_for_r0": False
+                    })
+                    if pulse_resp.get("hardware_tripped", False):
+                        triage_status = "REJECT"
                 total_diag_cost += self.decision_engine.voi.compute_test_cost("SHORT_COULOMETRIC_CYCLE")
                 total_diag_energy += 1.80
 
             elif recommended_test == "QUICK_PULSE_R0":
                 pulse_resp = self.meas.measure_voltage_response(pulse_current_a=10.0, pulse_duration_s=5.0)
-                estimator.update_r0_from_ohmic_jump(pulse_resp["r0_ohms"], sensor_noise_sigma=0.00035)
+                if pulse_resp.get("pulse_valid", False) and pulse_resp.get("admissible_for_r0", False) and pulse_resp.get("r0_ohms") is not None:
+                    estimator.update_r0_from_ohmic_jump(pulse_resp["r0_ohms"], sensor_noise_sigma=0.00035)
+                else:
+                    trace.append({
+                        "stage": "INVALID_MEASUREMENT_REJECTED",
+                        "test": "QUICK_PULSE_R0",
+                        "reason_codes": pulse_resp.get("reason_codes", []),
+                        "pulse_valid": False,
+                        "admissible_for_r0": False
+                    })
+                    if pulse_resp.get("hardware_tripped", False):
+                        triage_status = "REJECT"
                 total_diag_cost += self.decision_engine.voi.compute_test_cost("QUICK_PULSE_R0")
                 total_diag_energy += 0.15
 

@@ -24,3 +24,12 @@ env/
 # OS Specific
 .DS_Store
 Thumbs.db
+
+# Secrets & Private Network Configuration
+secrets.h
+*/secrets.h
+**/*secrets.h
+.env
+*.env
+.env.*
+

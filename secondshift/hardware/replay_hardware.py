@@ -70,12 +70,12 @@ class ReplayHardware(HardwareInterface):
         ext = os.path.splitext(path)[1].lower()
         if ext == ".csv":
             self._load_csv(path)
-        elif ext == ".jsonl":
+        elif ext in (".jsonl", ".ndjson"):
             self._load_jsonl(path)
         elif ext == ".json":
             self._load_json(path)
         else:
-            raise ValueError(f"Unsupported replay file format: {ext} (supported: .csv, .json, .jsonl)")
+            raise ValueError(f"Unsupported replay file format: {ext} (supported: .csv, .json, .jsonl, .ndjson)")
 
     def _load_csv(self, path: str):
         with open(path, mode="r", encoding="utf-8") as f:

@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-08T18:01:52Z",
+  "source": "secondshift_cli",
+  "mode": "replay",
+  "cell_id": "SPECIMEN_01",
+  "battery": {
+    "battery_id": "SPECIMEN_01",
+    "cell_id": "SPECIMEN_01",
+    "declared_chemistry": "UNKNOWN",
+    "nominal_voltage": null,
+    "nominal_capacity_ah": null,
+    "data_source": "secondshift_cli",
+    "software_version": "SECONDShift-v2.0",
+    "configuration_version": "2.0.0"
+  },
+  "session": {
+    "session_id": null,
+    "protocol_id": null,
+    "status": "COMPLETED",
+    "current_segment": null,
+    "segment_status": null,
+    "overall_data_status": null,
+    "elapsed_time_s": 0.0022041797637939453,
+    "next_expected_action": "NONE"
+  },
+  "decision": {
+    "final_decision": "OPERATE",
+    "actuation_intent": "ENABLE_LOAD",
+    "reason": "Known chemistry (99.8%), marginal failure risk 0.38% <= 1.0%, SOH=0.90 +/- 0.04. Testing no longer economically justified (VOI <= 0).",
+    "system_state": "OPERATE",
+    "safety_tripped": false,
+    "command_id": "1f387393",
+    "tests_executed_count": 0,
+    "elapsed_time_s": 0.0022041797637939453
+  },
+  "operational_decision": {
+    "decision": "OPERATE",
+    "reason": "Known chemistry (99.8%), marginal failure risk 0.38% <= 1.0%, SOH=0.90 +/- 0.04. Testing no longer economically justified (VOI <= 0)."
+  },
+  "information_action": {
+    "action": "NO_TEST",
+    "recommended_test": null
+  },
+  "epistemic": {
+    "epistemic_state": "SUPPORTED_HEALTHY",
+    "reason_codes": [
+      "Known chemistry (99.8%), marginal failure risk 0.38% <= 1.0%, SOH=0.90 +/- 0.04. Testing no longer economically justified (VOI <= 0)."
+    ]
+  },
+  "bayesian": {
+    "soh_estimate": 0.9,
+    "soh_uncertainty": 0.04,
+    "r0_mohm": 2.0
+  },
+  "prognostics": {
+    "rul_cycles": null,
+    "rul_uncertainty": null,
+    "rul_status": "NOT YET IMPLEMENTED",
+    "explanation": "RUL prognostics models scheduled for future phases; interface placeholder active"
+  },
+  "chemistry": {
+    "declared_chemistry": "UNKNOWN",
+    "final_chemistry": "LFP",
+    "inferred_chemistry": "LFP",
+    "final_chem_confidence": "KNOWN",
+    "confidence_state": "KNOWN",
+    "confidence_score": null,
+    "posterior": null
+  },
+  "telemetry": {
+    "voltage_v": 3.324,
+    "current_a": 0.0,
+    "power_w": 0.0,
+    "temperature_c": 28.2,
+    "sequence_number": 1,
+    "frame_timestamp": 1728410001.0,
+    "is_valid": true,
+    "quality": "VALID",
+    "errors": [],
+    "warnings": [],
+    "hardware_state": null
+  },
+  "data_quality": {
+    "sensor_valid": true,
+    "telemetry_valid": true,
+    "event_valid": true,
+    "inference_admissible": true,
+    "current_flow_valid": null,
+    "pulse_valid": null,
+    "quality_state": "VALID",
+    "reasons": [],
+    "delta_v_total": null,
+    "delta_v_ohmic": null
+  },
+  "nexus_hardware": {
+    "device_id": "SPECIMEN_01",
+    "wifi_status": "CONNECTED",
+    "backend_connection": "CONNECTED",
+    "telemetry_state": "LIVE",
+    "telemetry_age_s": null,
+    "sequence": 1,
+    "packet_loss_gaps": 0,
+    "wifi_rssi_dbm": null,
+    "reconnect_count": 0
+  },
+  "safety_barrier": {
+    "status": "CLEAR",
+    "safety_tripped": false,
+    "active_constraints": [
+      "LM393_HARDWARE_LIMIT",
+      "THERMAL_SNAP_OTP",
+      "CELL_VOLTAGE_WINDOW",
+      "CONTACTOR_INTERLOCK"
+    ],
+    "trip_reason": null,
+    "voltage_limits": {
+      "min_v": 2.0,
+      "max_v": 3.75
+    },
+    "current_limits": {
+      "min_a": -50.0,
+      "max_a": 50.0
+    },
+    "temperature_limits": {
+      "max_c": 45.0
+    }
+  },
+  "explanation": {
+    "summary": "Specimen validated healthy: Observations align with calibrated parameters within safe operating bounds.",
+    "reasons": [
+      "Known chemistry (99.8%), marginal failure risk 0.38% <= 1.0%, SOH=0.90 +/- 0.04. Testing no longer economically justified (VOI <= 0)."
+    ]
+  },
+  "decision_trace": [
+    {
+      "stage": "STAGE_0_TRIAGE",
+      "decision": "ACCEPT",
+      "reason": "All deterministic physical triage gates cleared.",
+      "marginal_risk": null,
+      "soh_estimate": null,
+      "soh_uncertainty": null,
+      "r0_mohm": null
+    },
+    {
+      "stage": "LOOP_ITERATION_0",
+      "decision": "OPERATE",
+      "reason": "Known chemistry (99.8%), marginal failure risk 0.38% <= 1.0%, SOH=0.90 +/- 0.04. Testing no longer economically justified (VOI <= 0).",
+      "marginal_risk": 0.003792067712762079,
+      "soh_estimate": 0.9,
+      "soh_uncertainty": 0.04,
+      "r0_mohm": 2.0
+    }
+  ]
+}

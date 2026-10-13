@@ -21,19 +21,24 @@ import json
 from typing import Dict, Any, List, Optional, Tuple
 import numpy as np
 
+from secondshift.interfaces.telemetry_validator import TelemetryValidator
+from secondshift.interfaces.data_quality_schema import PulseValidationRecord, DataQualityRecord
+
 class HermesMeasurementEngine:
     def __init__(
         self,
         hardware_interface: Any,
         data_log_path: str = "secondshift/data/raw/hermes_telemetry.csv",
         active_cell_idx: int = 0,
-        sim_mode: bool = True
+        sim_mode: bool = True,
+        validator: Optional[TelemetryValidator] = None
     ):
         self.hw = hardware_interface
         self.log_path = data_log_path
         self.cell_idx = active_cell_idx
         self.sim_mode = sim_mode
         self._sim_clock = 0.0
+        self.validator = validator or TelemetryValidator(i_min_pulse_a=1.0)
         self._init_csv_log()
 
     def _sleep(self, duration_s: float):
@@ -133,7 +138,9 @@ class HermesMeasurementEngine:
             "v_start": float(v_start),
             "drift_mv_hr": float(drift_mv_hr),
             "temperature_c": float(samples[-1][2]),
-            "duration_s": float(time.monotonic() - start_mono)
+            "duration_s": float(time.monotonic() - start_mono),
+            "hardware_tripped": bool(getattr(self.hw, "hardware_tripped", False)),
+            "trip_reason": getattr(self.hw, "trip_reason", None)
         }
 
     def perform_current_pulse(
@@ -147,12 +154,12 @@ class HermesMeasurementEngine:
         """
         self.hw.set_cell_state(self.cell_idx, "ACTIVE")
         self.hw.set_load_current(current_a)
-        start_mono = time.monotonic()
+        start_mono = self._sim_clock if self.sim_mode else time.monotonic()
         records = []
 
         n_steps = 5 if self.sim_mode else int(max(1, duration_s / dt_sample_s))
         for step in range(n_steps):
-            now = time.monotonic()
+            now = self._sim_clock if self.sim_mode else time.monotonic()
             raw = self.hw.read_sensors()
             v = raw["voltages"][self.cell_idx]
             i = raw["current"]
@@ -177,27 +184,70 @@ class HermesMeasurementEngine:
         pulse_duration_s: float = 10.0
     ) -> Dict[str, Any]:
         """
-        Executes a current pulse to calculate immediate Ohmic jump R0 and polarization drop.
+        Executes a diagnostic current pulse, validates current flow feasibility,
+        and computes internal resistance R0 and total polarization response delta_v.
+
+        Strict Scientific Admissibility:
+        - If current does not flow (|I| < I_MIN), pulse_valid is FALSE.
+        - If hardware trips or contactor opens, pulse_valid is FALSE.
+        - If pulse is invalid, r0_ohms is NONE and must NOT be used for downstream estimation.
+        - delta_v_total is 0.0 and inadmissible for chemistry classification.
         """
         v_pre = self.measure_voltage()
+        pre_sample = {
+            "voltage": float(v_pre),
+            "current": 0.0,
+            "t_rel": 0.0,
+            "timestamp": time.monotonic()
+        }
         pulse_data = self.perform_current_pulse(pulse_current_a, pulse_duration_s, dt_sample_s=0.05)
-        
-        # Immediate Ohmic step within first 100ms
-        v_immediate = pulse_data[1]["voltage"] if len(pulse_data) > 1 else pulse_data[0]["voltage"]
-        delta_v_ohmic = abs(v_pre - v_immediate)
-        i_actual = max(abs(pulse_data[1]["current"]), 0.5)
-        r0_est = delta_v_ohmic / i_actual
 
-        v_end = pulse_data[-1]["voltage"]
-        delta_v_total = abs(v_pre - v_end)
+        hw_tripped = bool(getattr(self.hw, "hardware_tripped", False))
+        contactor_open = bool(
+            (not getattr(self.hw, "relay_enabled", True))
+            or getattr(self.hw, "contactor_open", False)
+        )
+
+        val_rec: PulseValidationRecord = self.validator.validate_diagnostic_pulse(
+            pre_pulse_sample=pre_sample,
+            pulse_samples=pulse_data,
+            hardware_tripped=hw_tripped,
+            contactor_open=contactor_open,
+            required_i_min_a=self.validator.i_min_pulse
+        )
+
+        v_end = pulse_data[-1]["voltage"] if pulse_data else v_pre
+        v_immediate = pulse_data[1]["voltage"] if len(pulse_data) > 1 else (pulse_data[0]["voltage"] if pulse_data else v_pre)
+
+        if val_rec.pulse_valid:
+            i_actual = val_rec.mean_pulse_current_a
+            r0_est = val_rec.delta_v_ohmic / i_actual
+            r0_ohms = float(r0_est)
+            delta_v_total = float(val_rec.delta_v_total)
+        else:
+            # DO NOT silently calculate R0 or delta_v from invalid pulse
+            # UNKNOWN / INVALID != ZERO (Correction A)
+            r0_ohms = None
+            delta_v_total = None
 
         return {
             "v_pre": float(v_pre),
             "v_immediate": float(v_immediate),
             "v_end": float(v_end),
-            "r0_ohms": float(r0_est),
-            "delta_v_total": float(delta_v_total),
-            "pulse_data": pulse_data
+            "r0_ohms": r0_ohms,
+            "delta_v_total": float(delta_v_total) if delta_v_total is not None else None,
+            "pulse_data": pulse_data,
+            "pulse_valid": val_rec.pulse_valid,
+            "admissible_for_r0": val_rec.admissible_for_r0,
+            "admissible_for_chemistry": val_rec.admissible_for_chemistry,
+            "configured_i_min": val_rec.configured_i_min,
+            "observed_current": val_rec.mean_pulse_current_a,
+            "current_margin": val_rec.current_margin_a,
+            "hardware_tripped": val_rec.hardware_tripped,
+            "contactor_open": val_rec.contactor_open,
+            "reason_codes": [rc.value for rc in val_rec.reason_codes],
+            "validation_record": val_rec,
+            "validation_details": val_rec.details
         }
 
     def measure_relaxation(
@@ -235,9 +285,23 @@ class HermesMeasurementEngine:
     def measure_coulometric_soh(self, observation_noise_sigma: float = 0.015) -> float:
         """
         Observes SOH via coulometric discharge step through hardware abstraction.
+
+        Epistemic Classification:
+        - PHYSICAL MEASUREMENT: In physical hardware mode (sim_mode=False), reads coulometric
+          hardware register. Raises if hardware does not provide it.
+        - SIMULATED SENSOR: In simulation mode (sim_mode=True), invokes hardware emulator's
+          coulometric model with added observation noise.
+        - GROUND-TRUTH ORACLE: Production inference MUST NEVER query ground truth oracles directly.
         """
+        if not self.sim_mode:
+            if hasattr(self.hw, "get_coulometric_soh"):
+                return float(self.hw.get_coulometric_soh(self.cell_idx))
+            raise NotImplementedError("Physical hardware interface does not provide coulometric SOH register.")
+
         if hasattr(self.hw, "get_coulometric_soh"):
             base_soh = self.hw.get_coulometric_soh(self.cell_idx)
+        elif hasattr(self.hw, "simulated_sensor_soh"):
+            base_soh = self.hw.simulated_sensor_soh(self.cell_idx)
         elif hasattr(self.hw, "soh") and self.cell_idx < len(self.hw.soh):
             base_soh = float(self.hw.soh[self.cell_idx])
         else:

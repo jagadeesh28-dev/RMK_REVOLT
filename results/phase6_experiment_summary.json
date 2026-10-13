@@ -1,0 +1,8 @@
+{
+  "verdict": "EXPLORATORY_ONLY",
+  "data_sufficiency": "NO \u2014 CURRENT PHYSICAL DATASET (N=8 LFP, N=3 NMC, N=1 UNKNOWN) IS INSUFFICIENT TO ESTABLISH STATISTICALLY DEFENSIBLE PHYSICAL CROSS-CHEMISTRY GENERALIZATION",
+  "physical_lobo_mae_best": 0.1506963601074971,
+  "worst_chemistry_mae_naive": 0.1588660917589105,
+  "worst_chemistry_mae_adaptive": 0.18205932426591542,
+  "specimen_12_deferred": true
+}

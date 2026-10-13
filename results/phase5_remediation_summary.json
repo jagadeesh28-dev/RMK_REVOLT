@@ -1,0 +1,28 @@
+{
+  "phase": "PHASE 5.1 EVIDENCE FREEZE CORRECTION",
+  "status": "SCIENTIFICALLY_FROZEN_EVIDENCE_BASELINE",
+  "cohort": {
+    "real_physical_n": 12,
+    "synthetic_n": 100,
+    "total_computational_n": 112
+  },
+  "nested_validation": {
+    "mixed_naive_lobo_mae": 0.0973,
+    "mixed_nested_lobo_mae": 0.0949,
+    "mixed_selection_bias": -0.0024,
+    "real_naive_lobo_mae": 0.1647,
+    "real_nested_lobo_mae": 0.1686,
+    "real_selection_bias": 0.0039
+  },
+  "counts": {
+    "total_cataloged": 30,
+    "provisionally_supported": 1,
+    "provisionally_supported_modest_effect": 1,
+    "contextual_provisional": 1,
+    "insufficient_incremental_evidence": 1,
+    "conditional": 5,
+    "deferred": 1,
+    "rejected": 20
+  },
+  "runtime_seconds": 1.68
+}
