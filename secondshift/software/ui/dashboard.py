@@ -33,6 +33,11 @@ except ImportError:
     import status_adapter
 
 try:
+    from secondshift.software.ui.session_history import SessionHistory
+except ImportError:
+    from session_history import SessionHistory
+
+try:
     from secondshift.hardware.telemetry_ingest import TelemetryIngestEngine
 except ImportError:
     try:
@@ -47,6 +52,8 @@ DEFAULT_PORT = 8088
 PROCESSED_DATA_DIR = status_adapter.PROCESSED_DATA_DIR
 STATUS_PATH = status_adapter.DEFAULT_STATUS_PATH
 BENCHMARK_PATH = PROCESSED_DATA_DIR + "/physical_benchmark_results.json"
+HISTORY_PATH = os.path.join(PROCESSED_DATA_DIR, "dashboard_session_history.json")
+SESSION_HISTORY = SessionHistory(HISTORY_PATH)
 
 BENCHMARK_TITLE = "Historical Recorded Qualification Results"
 BENCHMARK_NOTICE = "These are recorded benchmark scenarios, not live physical hardware validation."
@@ -318,9 +325,1264 @@ body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.45 var(--sans)}
   .vc{border-right:0;border-bottom:1px solid var(--ln)}
   .dduo{grid-template-columns:minmax(0,1fr)}
 }
+
+/* NEXUS instrument-grade redesign: presentation-only overrides */
+:root{
+  --bg:#E8E2D9;--pn:#f7f4ef;--hd:#ded7cc;--ln:#b7b0a3;--fg:#292722;--mut:#625d54;
+  --cy:#D97706;--cyd:#9a4d00;--cys:#f6e7d2;--ok:#16803c;--warn:#b7791f;--bad:#DC2626;
+  --pur:#65584b;--neutral:#8b857b;--dark:#302e29;--dark2:#24231f;
+  --mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+  --sans:"Source Sans 3","Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+  --display:"DIN 2014","Arial Narrow","Roboto Condensed",var(--sans);
+}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font:14px/1.45 var(--sans);letter-spacing:.005em}
+button{font-family:var(--sans)}
+.top{background:var(--dark);border-top:4px solid var(--cy);box-shadow:0 2px 0 rgba(48,46,41,.16)}
+.ttl{padding:13px 22px;gap:8px 16px;min-height:66px}
+.logo{font:800 20px/1 var(--display);letter-spacing:.045em}
+.logo b{color:#f3b35f}
+.ttl2{font:700 10px/1.2 var(--mono);letter-spacing:.12em;color:#c4bdb1}
+.chip{font:600 10px/1.4 var(--mono);border-color:#686257;padding:4px 8px;border-radius:2px}
+.live{font:700 10px/1.2 var(--mono);letter-spacing:.06em}
+.led{width:8px;height:8px}
+.strip{grid-template-columns:repeat(auto-fit,minmax(125px,1fr));background:var(--dark2);border-top:1px solid #514b40}
+.sc{padding:9px 16px;border-right:1px solid #403d35}
+.sl{font:700 9px/1.3 var(--mono);letter-spacing:.1em;color:#aaa295}
+.sv{font:700 12px/1.5 var(--mono);color:#f5f1e9}
+.sv.na{color:#a29b8f}
+.shell{grid-template-columns:202px minmax(0,1fr);min-height:calc(100vh - 125px)}
+.rail{background:#d4cdc1;border-right:1px solid #aaa295;padding:16px 0}
+.rail .grp{font:700 9px/1.3 var(--mono);letter-spacing:.14em;color:#756e63;padding:7px 18px 10px}
+.nv{gap:10px;font:700 11px/1.2 var(--display);letter-spacing:.065em;color:#514c43;border-left:4px solid transparent;padding:13px 17px;transition:background .18s,color .18s,border-color .18s}
+.nv svg{width:15px;height:15px}
+.nv:hover{background:#e6dfd4;color:#26241f}
+.nv[aria-selected="true"]{color:#713900;background:#f4e3ca;border-left-color:var(--cy);box-shadow:inset 3px 0 0 rgba(217,119,6,.08)}
+.nv:focus-visible,.tab:focus-visible{outline:2px solid var(--cyd);outline-offset:-2px}
+.main{padding:22px 24px 26px;min-width:0;max-width:1800px;width:100%;margin:0 auto}
+.alarm{margin:0 0 16px;padding:13px 16px;background:#fff0ed;border:1px solid var(--bad);border-left:6px solid var(--bad);border-radius:3px;color:#5a1a14}
+.alarm .a1{font:800 20px/1.2 var(--display);letter-spacing:.04em}
+.alarm .a2{font:12px/1.5 var(--mono);margin-top:5px}
+.verdict{border:1px solid #bcb4a7;border-top:4px solid var(--accent,var(--neutral));border-radius:3px;background:var(--pn);box-shadow:0 2px 5px rgba(48,40,30,.05)}
+.vc{padding:15px 17px;border-right:1px solid #ddd6cb;position:relative}
+.vc .l{font:700 9px/1.3 var(--mono);letter-spacing:.1em;color:#71695e}
+.vc .big{font:800 21px/1.2 var(--display);letter-spacing:.025em;margin-top:6px}
+.vc .sub{font:600 10px/1.4 var(--mono);margin-top:5px;color:#746d62}
+.exp-box{background:#f7f3ec;border:1px solid #c9c0b3;border-left:5px solid var(--accent,var(--cy));border-radius:3px;padding:14px 17px;box-shadow:none}
+.exp-h{margin-bottom:7px;gap:12px}
+.exp-h .l{font:700 10px/1.3 var(--mono);letter-spacing:.08em;color:#625b50}
+.exp-tag{font:700 9px/1.4 var(--mono);padding:3px 7px;border-radius:2px;background:#f4e3ca;color:#7c4205}
+.exp-txt{font:600 13px/1.55 var(--sans);color:#302d27;margin-bottom:4px}
+.exp-reasons{gap:6px;margin-top:9px}
+.exp-pill{font:700 9px/1.5 var(--mono);padding:3px 8px;border-radius:2px;background:#ece6dc;border:1px solid #d3c9bb;color:#62594e}
+.tiles{gap:12px}
+.tile{background:#f8f5f0;border:1px solid #bdb5a8;border-radius:3px;padding:14px 16px;box-shadow:0 2px 5px rgba(48,40,30,.045);position:relative;overflow:hidden}
+.tile:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#c9c1b5}
+.tile:first-child:before{background:var(--cy)}
+.tile .th{align-items:center;gap:8px}
+.tile .l{font:700 9px/1.4 var(--mono);letter-spacing:.08em;color:#655e53}
+.vchip{font:700 9px/1.4 var(--mono);padding:2px 6px;border-radius:2px;border-color:#c8bfb2}
+.tile .n{font:600 30px/1.15 var(--mono);margin-top:10px;color:#292722;letter-spacing:-.04em}
+.tile .n .u{font-size:13px;color:#8b4b08;margin-left:5px;letter-spacing:0}
+.tag-cls{padding:2px 5px;font:700 8px/1.4 var(--mono);letter-spacing:.06em;border-radius:2px}
+.tag-a{background:#dceee0;color:#176b31;border:1px solid #a8cdb0}
+.tag-b{background:#f7e8c7;color:#80500d;border:1px solid #e4c68b}
+.tag-c{background:#e5e1da;color:#5e5a52;border:1px dashed #a7a094}
+.tag-u{background:#fbe2de;color:#9f2822;border:1px solid #e7aaa4}
+.ov{gap:16px;align-items:start}
+.col{gap:16px}
+.pn{background:var(--pn);border:1px solid #bdb5a8;border-radius:3px;box-shadow:0 2px 5px rgba(48,40,30,.045)}
+.pn>h2{margin:0;padding:10px 14px;background:#e3ddd3;border-bottom:1px solid #c7bfb2;font:700 11px/1.35 var(--display);letter-spacing:.085em;color:#4e493f;align-items:center}
+.pn>h2 .tag{color:#8b4b08;font:700 9px/1.3 var(--mono);letter-spacing:.035em;text-align:right}
+.pb{padding:15px 16px}
+.t{gap:7px 14px;font:12px/1.45 var(--mono);margin-top:2px}
+.t .k{color:#756d62;font-size:9px;letter-spacing:.055em;font-weight:600}
+.t .v{text-align:right;overflow-wrap:anywhere;font-size:11px;color:#302d27}
+.t hr{border-top:1px solid #d9d1c5;margin:5px 0}
+.note{font:11px/1.55 var(--sans);color:#72695e;margin:11px 0 0}
+.sbig{gap:12px;padding:11px 13px;border:1px solid #c9c0b3;border-left:5px solid var(--accent);border-radius:3px;background:#eee8df;margin-bottom:12px}
+.sbig .led{width:11px;height:11px}
+.sbig .sv2{font:800 19px/1.15 var(--display);letter-spacing:.035em}
+.sbig .sl{font-size:9px;color:#746b60}
+.sbig.trip{background:#fff0ed;border-color:var(--bad)}
+.stg{gap:9px;margin-bottom:13px}
+.stage{border:1px solid #c9c0b3;border-top:3px solid var(--accent);border-radius:3px;background:#eee8df;padding:9px 10px;min-width:100px}
+.stage:not(:last-child)::after{right:-8px;color:#8b8377}
+.stage .sn{font:700 9px/1.35 var(--mono);letter-spacing:.025em}
+.stage .ss{font:11px/1.4 var(--sans);color:#6c6459;margin-top:4px}
+.stage.hw{border:2px solid #48443b;border-top:4px solid var(--accent)}
+.stage .hwt{background:#48443b}
+.dduo{gap:10px;margin-bottom:10px}
+.dbig{border:1px solid #c9c0b3;border-left:4px solid var(--accent);border-radius:3px;background:#eee8df;padding:10px 12px}
+.dbig .l{font:700 9px/1.3 var(--mono);letter-spacing:.07em;color:#71695e}
+.dbig .d{font:800 20px/1.2 var(--display);letter-spacing:.02em;margin-top:5px}
+.dbig .veto{font:700 10px/1.4 var(--mono);margin-top:5px}
+.why{margin-top:11px;padding:10px 11px;border:1px solid #d1c8bc;border-radius:3px;background:#f0ebe3;font:12px/1.5 var(--sans)}
+.why .l{font:700 9px/1.3 var(--mono);letter-spacing:.09em;color:#746b60;margin-bottom:4px}
+.bars{gap:13px;margin-top:15px}
+.bh{font:700 9px/1.4 var(--mono);letter-spacing:.055em;color:#71695e}
+.trk{height:9px;background:#e6e0d6;border:1px solid #c8c0b4;border-radius:2px;margin-top:5px}
+.fill{background:var(--cy);transition:width .25s ease}
+.fill.risk{background:#c78324}
+.band{background:rgba(217,119,6,.18);border-color:#b76a08}
+.tabs{border-bottom:1px solid #c8c0b4;background:#e5dfd5}
+.tab{font:700 10px/1.2 var(--mono);letter-spacing:.04em;color:#6a6257;padding:13px 16px;transition:color .18s,background .18s}
+.tab:hover{color:#302d27;background:#eee8df}
+.tab[aria-selected="true"]{color:#7d4105;background:#f8f5f0;box-shadow:inset 0 -3px 0 var(--cy)}
+.gbox{min-height:360px;background-color:#f8f5f0;background-image:linear-gradient(#e8e1d7 1px,transparent 1px),linear-gradient(90deg,#e8e1d7 1px,transparent 1px);background-size:36px 36px;padding:18px}
+.gmsg .g1{font:700 12px/1.5 var(--mono);letter-spacing:.04em;color:#8d5b16}
+.gmsg .g2{font:12px/1.6 var(--sans);color:#746b60;margin-top:8px}
+.gmsg .g3{font:700 22px/1.25 var(--mono);color:#9a4d00;margin-top:12px}
+.chart .gl{stroke:#e4ddd2}.chart .ax{stroke:#91897d}.chart .ln{stroke:var(--cy);stroke-width:2.4}.chart .pt{fill:#9a4d00}
+.chart text{font:10px var(--mono);fill:#71695e}.chart text.vl{fill:#302d27}
+.gfoot{padding:10px 15px;border-top:1px solid #d1c8bc;font:10px/1.5 var(--mono);color:#71695e;background:#e9e3d9}
+.tl li{border-left-color:#d1c8bc;padding:0 0 16px 23px}
+.tl li::before{width:9px;height:9px;left:-6px;top:4px;border:2px solid var(--pn);box-shadow:0 0 0 1px var(--accent,var(--neutral))}
+.tl .st{font:700 9px/1.4 var(--mono);letter-spacing:.07em;color:#756d62}
+.tl .dc{font:700 15px/1.4 var(--display);color:var(--accent,var(--fg))}
+.tl .meta{font:10px/1.5 var(--mono);color:#756d62}
+.tl .rs{font:13px/1.5 var(--sans);margin-top:4px}
+.trace-empty-box{background:#eee8df;border:1px solid #c9c0b3;border-left:4px solid var(--warn);border-radius:3px;padding:16px 18px}
+.trace-empty-title{font:800 14px/1.35 var(--display);color:#302d27;letter-spacing:.04em}
+.trace-empty-desc{font:13px/1.55 var(--sans);color:#4e493f;margin-top:7px}
+.teg-item{background:#f8f5f0;border:1px solid #d1c8bc;border-radius:3px;padding:10px 12px;font:11px/1.5 var(--sans)}
+.teg-l{color:#756d62;font-size:9px;font-weight:700;letter-spacing:.07em}
+.teg-v{font-weight:700;color:#302d27;margin-top:4px}
+.hist-box{background:#f6f2eb;border:1px dashed #a9a092;border-left:4px solid #80796e;border-radius:3px;padding:14px 16px;margin-bottom:18px}
+.hist-title{font:800 12px/1.4 var(--display);color:#403c34;letter-spacing:.055em}
+.hist-sub{font:11px/1.5 var(--mono);color:#756d62;margin-top:5px}
+.hist{border:1px dashed #a9a092}
+.hist>h2{background:repeating-linear-gradient(135deg,#e9e3d9,#e9e3d9 8px,#e2dbd0 8px,#e2dbd0 16px)}
+.bsum{font:11px/1.5 var(--mono);color:#71695e;margin:7px 0 10px}
+.bm{border:1px solid #d0c7ba;border-radius:3px;margin-bottom:6px;background:#f8f5f0}
+.bm summary{padding:10px 12px;gap:12px}
+.bm summary:hover{background:#f5e7d5}
+.bid{font:700 11px/1.4 var(--mono);color:#403c34}
+.bobj{font-size:12px}
+.bdec{font:600 10px/1.4 var(--mono)}
+.pill{padding:2px 7px;font:700 9px/1.5 var(--mono);border-radius:2px}
+.bbody{padding:8px 12px 12px;border-top:1px solid #ded6ca;gap:6px 14px;font-size:12px}
+.bbody .k{font:700 9px/1.5 var(--mono);letter-spacing:.06em;color:#756d62}
+.bbody pre{font:11px/1.5 var(--mono);color:#625b50}
+.foot{border-top:1px solid #b7b0a3;background:#d7d0c4;padding:9px 22px}
+.foot p{font:10px/1.4 var(--mono);color:#625b50}
+button:focus-visible,summary:focus-visible{outline:2px solid #9a4d00;outline-offset:2px}
+@media (max-width:1100px){
+ .main{padding:16px}
+ .shell{grid-template-columns:1fr}
+ .rail{display:flex;overflow-x:auto;padding:0;border-right:0;border-bottom:1px solid #aaa295}
+ .rail .grp{display:none}
+ .nv{width:auto;white-space:nowrap;border-left:0;border-bottom:3px solid transparent;padding:12px 15px}
+ .nv[aria-selected="true"]{border-bottom-color:var(--cy);box-shadow:none}
+}
+@media (max-width:800px){
+ .ttl{padding:12px 14px}
+ .main{padding:12px}
+ .verdict{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .ov{gap:12px}.col{gap:12px}
+}
+@media (max-width:550px){
+ .verdict,.tiles{grid-template-columns:minmax(0,1fr)}
+ .vc{border-right:0;border-bottom:1px solid #ddd6cb;padding:12px 14px}
+ .dduo{grid-template-columns:minmax(0,1fr)}
+ .bm summary{grid-template-columns:minmax(0,1fr) auto;gap:6px}
+ .bobj{grid-column:1/-1;grid-row:2}
+ .bdec{grid-column:1;grid-row:3}
+ .pill{grid-column:2;grid-row:3}
+ .gbox{padding:8px;min-height:300px}
+}
+@media (prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+
+
+/* NEXUS HMI WORKSPACE — structural redesign, not palette-only overrides */
+:root{
+ --hmi-ink:#292722;--hmi-panel:#f5f1e9;--hmi-rule:#b8afa1;--hmi-amber:#d97706;
+ --hmi-green:#16803c;--hmi-muted:#70685d;--hmi-black:#24231f;
+}
+body{font-size:13px;background:#dcd5ca;letter-spacing:0}
+.top{position:relative}
+.ttl{padding:12px 20px;min-height:70px}
+.logo{font-size:21px}
+.strip{grid-template-columns:repeat(8,minmax(105px,1fr))}
+.shell{grid-template-columns:174px minmax(0,1fr);min-height:calc(100vh - 125px)}
+.rail{background:#c9c1b5;padding:18px 0}
+.rail .grp{padding:8px 16px 14px}
+.nv{padding:14px 14px;font-size:11px}
+.main{padding:20px 22px 30px;max-width:none}
+.ov{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:16px;align-items:start}
+#verdict{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:0;border-top:3px solid var(--accent,var(--neutral));border-bottom:1px solid var(--hmi-rule);border-radius:0;box-shadow:none;background:#e6dfd4}
+.vc{padding:13px 16px;border-right:1px solid #c9c0b3}
+.vc .big{font-size:19px}
+#exp-box{grid-column:1/-1;border:0;border-left:4px solid var(--accent,var(--hmi-amber));border-radius:0;box-shadow:none;padding:14px 17px;background:#f5f1e9}
+.exp-h .l{font-size:10px}
+.exp-txt{font-size:14px}
+.instrument-bank{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.instrument{position:relative;min-width:0;background:#f5f1e9;border:1px solid #b8afa1;border-top:3px solid #8d8578;padding:12px 13px 10px;overflow:hidden}
+.instrument-voltage{border-top-color:var(--hmi-amber)}
+.instrument-head{display:flex;align-items:center;gap:8px;min-width:0}
+.inst-index{font:700 10px var(--mono);color:#a35a09;border:1px solid #d7b78e;padding:3px 5px}
+.inst-label{font:700 10px var(--mono);letter-spacing:.08em;color:#5e584f;flex:1}
+.instrument-face{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:128px;margin-top:8px;padding:20px 4px 8px}
+.dial-markers{position:absolute;top:0;width:118px;height:62px;border:8px solid #d9d1c5;border-bottom:0;border-radius:118px 118px 0 0;opacity:.95}
+.dial-markers:after{content:"";position:absolute;left:50%;bottom:-1px;width:2px;height:18px;background:var(--hmi-amber);transform-origin:bottom center;transform:rotate(24deg)}
+.instrument .n{position:relative;z-index:1;font:700 clamp(25px,2.2vw,36px)/1.1 var(--mono);letter-spacing:-.055em;text-align:center;margin-top:30px;color:#292722;overflow-wrap:anywhere}
+.instrument .n.na{color:#8b857b}
+.instrument .unit{font:700 9px var(--mono);letter-spacing:.18em;color:#8a5a20;margin-top:5px}
+.instrument-foot{border-top:1px solid #ddd5c9;padding-top:8px;font:700 9px var(--mono);letter-spacing:.06em;color:#776f63}
+.live-mark{display:inline-block;width:6px;height:6px;border-radius:50%;background:#16803c;margin-right:5px}
+.signal-path{grid-column:1/-1;background:#302e29;color:#f5f1e9;padding:13px 16px 16px;border-left:4px solid var(--hmi-amber)}
+.signal-title{display:flex;justify-content:space-between;gap:12px;font:700 9px var(--mono);letter-spacing:.1em;color:#c5bbae;margin-bottom:13px}
+.signal-nodes{display:flex;align-items:stretch;gap:8px}
+.signal-node{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;border:1px solid #635c50;background:#39362f;padding:10px}
+.signal-node-core{border-color:#d97706;background:#413729}
+.node-index{font:700 9px var(--mono);color:#f3b35f}
+.signal-node strong{font:700 10px var(--mono);letter-spacing:.025em;overflow-wrap:anywhere}
+.signal-node small{font:11px var(--sans);color:#c4bdb1;overflow-wrap:anywhere}
+.signal-link{width:18px;flex:none;align-self:center;height:1px;background:#a59a87;position:relative}
+.signal-link:after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-top:1px solid #a59a87;border-right:1px solid #a59a87;transform:rotate(45deg)}
+.ov>.col{display:grid;gap:12px;min-width:0}
+.pn{border-radius:0;box-shadow:none;border:1px solid #b8afa1;background:#f5f1e9}
+.pn>h2{background:#ded7cc;padding:10px 13px;border-bottom:1px solid #b8afa1;font-size:10px}
+.pb{padding:13px 14px}
+.t{gap:8px 12px}
+.t .k{font-size:9px}
+.t .v{font-size:11px}
+.pn.safe{border-top:3px solid var(--accent,var(--hmi-green))}
+.sbig{border-radius:0}
+.stage,.dbig,.why,.trace-empty-box,.teg-item,.hist-box{border-radius:0}
+#ws-trend,#ws-trace,#ws-bench{border-radius:0;box-shadow:none}
+#ws-trend>h2,#ws-trace>h2,#ws-bench>h2{padding:12px 15px;background:#ded7cc}
+.bm{border-radius:0}
+.bm summary{padding:10px 12px}
+.foot{margin-top:0}
+@media(max-width:1200px){
+ .shell{grid-template-columns:1fr}
+ .rail{display:flex;overflow-x:auto;padding:0;border-right:0;border-bottom:1px solid #aaa295}
+ .rail .grp{display:none}
+ .nv{width:auto;white-space:nowrap;border-left:0;border-bottom:3px solid transparent}
+ .nv[aria-selected="true"]{border-bottom-color:var(--hmi-amber);box-shadow:none}
+ .ov{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:800px){
+ .main{padding:12px}
+ .instrument-bank{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .signal-nodes{flex-wrap:wrap}
+ .signal-node{flex:1 1 35%}
+ .signal-link{display:none}
+ .strip{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:520px){
+ .instrument-bank{grid-template-columns:minmax(0,1fr)}
+ #verdict{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .signal-node{flex-basis:100%}
+ .signal-title{flex-direction:column}
+}
+
+
+/* NEXUS UI CLEANUP — readable typography and hidden panels */
+
+/* Hide the requested panels without deleting their DOM elements */
+.signal-path,
+#pn-nexus-hw,
+#pn-decision {
+    display: none !important;
+}
+
+/* Improve readability while preserving the existing visual design */
+body {
+    font-size: 16px;
+}
+
+/* Navigation and general labels */
+.nv {
+    font-size: 13px;
+}
+
+.pn > h2 {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.t .k {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.t .v {
+    font-size: 15px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* Overview and decision explanation */
+.vc .l,
+.exp-h .l {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.vc .big {
+    font-size: 22px;
+}
+
+.exp-txt {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Battery instrument headings, units and supporting text */
+.inst-index,
+.inst-label {
+    font-size: 12px;
+}
+
+.instrument .unit,
+.instrument-foot {
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* Supporting text and secondary panels */
+.note,
+.bobj,
+.bbody {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.bm summary {
+    font-size: 14px;
+}
+
+/* Keep text readable on smaller screens */
+@media (max-width: 550px) {
+    .t .k {
+        font-size: 12px;
+    }
+
+    .t .v {
+        font-size: 14px;
+    }
+
+    .exp-txt {
+        font-size: 15px;
+    }
+}
+
+
+/* Battery intake screen: Part 1 */
+.intake-screen{display:none;position:fixed;inset:0;z-index:9999;
+  align-items:center;justify-content:center;overflow-y:auto;
+  padding:24px;background:#dcd5ca;color:#292722}
+body.intake-mode header.top,body.intake-mode .shell,
+body.intake-mode footer.foot{display:none!important}
+body.intake-mode .intake-screen{display:flex}
+.intake-card{width:min(680px,100%);background:#f5f1e9;
+  border:1px solid #b8afa1;border-top:4px solid #d97706;
+  padding:clamp(22px,4vw,40px);box-shadow:0 12px 36px #29272218}
+.intake-eyebrow{font:700 11px/1.5 monospace;letter-spacing:.12em;
+  color:#a35a09;margin-bottom:10px}
+.intake-card h1{font-size:clamp(25px,4vw,36px);margin:0 0 8px}
+.intake-intro{font-size:14px;line-height:1.6;color:#70685d;margin:0 0 25px}
+.intake-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.intake-field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.intake-field label{font:700 11px/1.5 monospace;letter-spacing:.04em}
+.intake-field input{box-sizing:border-box;width:100%;min-width:0;
+  border:1px solid #b8afa1;border-radius:2px;background:#fffdf9;
+  color:#292722;padding:12px;font:15px/1.4 inherit}
+.intake-field input:focus{outline:2px solid #d97706;outline-offset:1px}
+.intake-help{font-size:11px;color:#70685d}
+.intake-submit{width:100%;margin-top:24px;padding:14px 18px;
+  border:0;border-radius:2px;background:#292722;color:#fff;
+  font:700 12px/1.5 monospace;letter-spacing:.08em;cursor:pointer}
+.intake-submit:hover{background:#a35a09}
+.intake-footnote{font-size:11px;color:#70685d;line-height:1.5;margin:14px 0 0}
+@media(max-width:550px){
+  .intake-grid{grid-template-columns:1fr}
+  .intake-screen{padding:12px}
+}
+
+
+/* NEXUS battery intake visual enhancements */
+.intake-card{position:relative;max-width:820px;overflow:hidden}
+.intake-brand{display:flex;align-items:center;justify-content:space-between;
+  gap:20px;border-bottom:1px solid #d4cabc;padding-bottom:20px;margin-bottom:22px}
+.intake-brand-name{font:800 clamp(38px,6vw,58px)/1 monospace;
+  letter-spacing:-.07em;color:#292722}
+.intake-brand-name span{color:#d97706}
+.intake-brand-sub{font:700 10px/1.6 monospace;letter-spacing:.13em;
+  color:#70685d;margin-top:8px}
+.intake-battery-art{width:112px;min-width:88px;height:104px;color:#a35a09}
+.intake-section-label{font:700 10px/1.5 monospace;letter-spacing:.1em;
+  color:#a35a09;margin-bottom:8px}
+.intake-field select{box-sizing:border-box;width:100%;min-width:0;
+  border:1px solid #b8afa1;border-radius:2px;background:#fffdf9;
+  color:#292722;padding:12px;font:14px/1.4 inherit}
+.intake-field select:focus{outline:2px solid #d97706;outline-offset:1px}
+.intake-submit{transition:background .15s ease,transform .15s ease}
+.intake-submit:hover{transform:translateY(-1px)}
+.intake-card:before{content:"";position:absolute;top:0;right:0;width:90px;
+  height:4px;background:#d97706}
+@media(max-width:550px){
+  .intake-brand{align-items:flex-start}
+  .intake-battery-art{width:78px;height:80px;min-width:70px}
+}
+
+
+/* NEXUS_SOFT_OLIVE_HMI_V1
+   Visual-only overrides: rounded panels, softer palette, readable type.
+*/
+:root {
+  --hmi-page: #eeeedf;
+  --hmi-surface: #fbf8e9;
+  --hmi-surface-alt: #f4f0d9;
+  --hmi-yellow: #e7df9b;
+  --hmi-yellow-soft: #f1e9b9;
+  --hmi-olive: #aab58a;
+  --hmi-olive-dark: #66764d;
+  --hmi-olive-pale: #dce3c8;
+  --hmi-text: #34382c;
+  --hmi-muted-text: #686c5b;
+  --hmi-border: #d1d0b8;
+  --hmi-shadow: 0 3px 12px rgba(58, 62, 43, 0.07);
+}
+
+/* Page and overall surfaces */
+body {
+  background: var(--hmi-page) !important;
+  color: var(--hmi-text);
+  font-size: 15px !important;
+}
+.top {
+  background: #dedfca !important;
+  color: var(--hmi-text) !important;
+  border-bottom: 1px solid var(--hmi-border);
+}
+.top .logo,
+.top .ttl2,
+.top .chip,
+.top .live {
+  color: var(--hmi-text);
+}
+.top .strip {
+  background: #e7e5d2 !important;
+}
+.top .sc {
+  background: transparent !important;
+  border-color: var(--hmi-border) !important;
+}
+.top .sl {
+  color: var(--hmi-muted-text) !important;
+}
+.top .sv {
+  font-size: 13px !important;
+}
+.shell {
+  background: var(--hmi-page) !important;
+  gap: 14px !important;
+  padding: 14px !important;
+}
+.main {
+  background: transparent !important;
+  padding: 18px !important;
+  min-width: 0;
+}
+
+/* Navigation: softer, rounded HMI controls */
+.rail {
+  background: #e3e2cf !important;
+  border: 1px solid var(--hmi-border) !important;
+  border-radius: 12px !important;
+  padding: 12px 8px !important;
+  gap: 5px;
+}
+.rail .grp {
+  color: var(--hmi-muted-text) !important;
+  font-size: 12px !important;
+}
+.nv {
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  padding: 13px 12px !important;
+  font-size: 13px !important;
+  color: var(--hmi-text) !important;
+  transition: background .15s ease, border-color .15s ease;
+}
+.nv:hover {
+  background: var(--hmi-surface) !important;
+  border-color: var(--hmi-border) !important;
+}
+.nv[aria-selected="true"] {
+  background: var(--hmi-yellow-soft) !important;
+  color: #454b32 !important;
+  border-color: #c8c48c !important;
+  border-left: 1px solid #c8c48c !important;
+  box-shadow: none !important;
+}
+
+/* Dashboard cards and panels */
+.pn,
+.instrument,
+.vc,
+#exp-box,
+.signal-path,
+.gbox,
+.bm,
+#pn-battery,
+#pn-dq,
+#verdict,
+.alarm,
+.intake-card {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: var(--hmi-shadow) !important;
+}
+.pn {
+  background: var(--hmi-surface) !important;
+  border: 1px solid var(--hmi-border) !important;
+  margin-bottom: 14px !important;
+}
+.pn h2 {
+  background: #e7e5d2 !important;
+  border-bottom: 1px solid var(--hmi-border) !important;
+  color: var(--hmi-text) !important;
+  font-size: 14px !important;
+  padding: 13px 16px !important;
+}
+.pn .pb {
+  padding: 16px !important;
+}
+.verdict {
+  overflow: visible !important;
+  gap: 10px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.vc {
+  background: var(--hmi-surface) !important;
+  border: 1px solid var(--hmi-border) !important;
+  padding: 16px !important;
+}
+.vc .l,
+.vc .sub {
+  font-size: 12px !important;
+}
+.vc .big {
+  font-size: 22px !important;
+}
+.instrument-bank {
+  gap: 14px !important;
+}
+.instrument {
+  background: var(--hmi-surface) !important;
+  border: 1px solid var(--hmi-border) !important;
+  border-top: 4px solid var(--hmi-olive) !important;
+  padding: 14px !important;
+}
+.instrument-voltage {
+  border-top-color: #d2bd65 !important;
+}
+.instrument .n {
+  font-size: clamp(27px, 2.3vw, 38px) !important;
+}
+.instrument-label,
+.inst-label {
+  font-size: 12px !important;
+}
+.gbox {
+  background: var(--hmi-surface) !important;
+  border: 1px solid var(--hmi-border) !important;
+  padding: 14px !important;
+}
+#exp-box {
+  background: var(--hmi-surface) !important;
+  border: 1px solid var(--hmi-border) !important;
+  border-left: 5px solid var(--hmi-olive) !important;
+  padding: 16px !important;
+}
+.signal-path {
+  border: 1px solid #777f60 !important;
+  border-left: 5px solid var(--hmi-olive) !important;
+  background: #515943 !important;
+  color: #fbf8e9 !important;
+}
+.bm {
+  background: var(--hmi-surface) !important;
+  border: 1px solid var(--hmi-border) !important;
+  margin-bottom: 10px !important;
+}
+.bm summary {
+  padding: 13px 15px !important;
+  font-size: 13px !important;
+}
+.bbody {
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+}
+
+/* Readability throughout all dashboard workspaces */
+h1, h2, h3, h4 {
+  color: var(--hmi-text);
+}
+.pn .k,
+.t .k,
+.exp-h .l,
+.sl,
+.note,
+.foot p {
+  font-size: 12px !important;
+  line-height: 1.65 !important;
+}
+.t .v {
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+.note,
+.exp-txt,
+.bbody,
+#bench {
+  color: var(--hmi-muted-text) !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+.tag,
+.chip,
+.bd g,
+.pill,
+.exp-pill {
+  letter-spacing: .04em;
+}
+hr {
+  border: 0;
+  border-top: 1px solid var(--hmi-border);
+}
+
+/* Use olive for calm status accents while retaining clear safety meaning */
+.vc[data-tone="ok"],
+.tn-ok {
+  color: #536c3f !important;
+}
+.vc[data-tone="warn"],
+.tn-warn {
+  color: #8b742e !important;
+}
+.vc[data-tone="bad"],
+.tn-bad {
+  color: #a34e3f !important;
+}
+
+/* Opening form uses the same HMI palette */
+.intake-screen {
+  background: var(--hmi-page) !important;
+}
+.intake-card {
+  background: var(--hmi-surface) !important;
+  border: 1px solid var(--hmi-border) !important;
+  border-top: 5px solid var(--hmi-olive) !important;
+  padding: clamp(22px, 4vw, 40px) !important;
+}
+.intake-brand-name {
+  color: var(--hmi-text) !important;
+  font-weight: 900 !important;
+}
+.intake-brand-name span {
+  color: #9b9953 !important;
+}
+.intake-brand-sub,
+.intake-eyebrow,
+.intake-section-label {
+  color: var(--hmi-olive-dark) !important;
+}
+.intake-field input,
+.intake-field select {
+  background: #fffef7 !important;
+  color: var(--hmi-text) !important;
+  border: 1px solid var(--hmi-border) !important;
+  border-radius: 8px !important;
+  padding: 13px !important;
+  font-size: 15px !important;
+}
+.intake-field input:focus,
+.intake-field select:focus {
+  outline-color: var(--hmi-olive-dark) !important;
+}
+.intake-submit {
+  background: var(--hmi-olive-dark) !important;
+  color: #fffef7 !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+}
+.intake-submit:hover {
+  background: #53623f !important;
+}
+
+/* Responsive spacing */
+@media (max-width: 1100px) {
+  .shell {
+    padding: 10px !important;
+    gap: 10px !important;
+  }
+  .rail {
+    border-radius: 10px !important;
+  }
+  .main {
+    padding: 12px !important;
+  }
+}
+@media (max-width: 550px) {
+  .main {
+    padding: 8px !important;
+  }
+  .pn .pb {
+    padding: 12px !important;
+  }
+  .vc {
+    padding: 13px !important;
+  }
+  .instrument-bank {
+    gap: 10px !important;
+  }
+}
+
+
+/* NEXUS_PASTEL_ACCENT_BORDERS_V1 */
+/* Muted accent palette: blue, sage, butter yellow and crimson */
+:root {
+  --accent-blue: #a9c5d8;
+  --accent-blue-bg: #f4f8fa;
+  --accent-green: #b2c6a0;
+  --accent-green-bg: #f5f8f0;
+  --accent-yellow: #ddcf83;
+  --accent-yellow-bg: #fbf8e9;
+  --accent-crimson: #d6aaaa;
+  --accent-crimson-bg: #fbf4f3;
+}
+
+/* Top-level decision cards: subtle individual color identities */
+#verdict .vc:nth-child(1) {
+  border: 1px solid var(--accent-green) !important;
+  border-top: 3px solid var(--accent-green) !important;
+}
+#verdict .vc:nth-child(2) {
+  border: 1px solid var(--accent-blue) !important;
+  border-top: 3px solid var(--accent-blue) !important;
+}
+#verdict .vc:nth-child(3) {
+  border: 1px solid var(--accent-yellow) !important;
+  border-top: 3px solid var(--accent-yellow) !important;
+}
+#verdict .vc:nth-child(4) {
+  border: 1px solid var(--accent-crimson) !important;
+  border-top: 3px solid var(--accent-crimson) !important;
+}
+
+/* Measurement instruments: rotate through the four pastel accents */
+.instrument-bank .instrument:nth-child(4n + 1) {
+  border: 1px solid var(--accent-yellow) !important;
+  border-top: 4px solid var(--accent-yellow) !important;
+}
+.instrument-bank .instrument:nth-child(4n + 2) {
+  border: 1px solid var(--accent-blue) !important;
+  border-top: 4px solid var(--accent-blue) !important;
+}
+.instrument-bank .instrument:nth-child(4n + 3) {
+  border: 1px solid var(--accent-green) !important;
+  border-top: 4px solid var(--accent-green) !important;
+}
+.instrument-bank .instrument:nth-child(4n) {
+  border: 1px solid var(--accent-crimson) !important;
+  border-top: 4px solid var(--accent-crimson) !important;
+}
+
+/* Main panels: soft accent outlines, with restrained tinted headers */
+#pn-battery {
+  border: 1px solid var(--accent-blue) !important;
+}
+#pn-battery > h2 {
+  border-bottom: 1px solid var(--accent-blue) !important;
+}
+#pn-dq {
+  border: 1px solid var(--accent-green) !important;
+}
+#pn-dq > h2 {
+  border-bottom: 1px solid var(--accent-green) !important;
+}
+
+/* Explanation and graph panels */
+#exp-box {
+  border: 1px solid var(--accent-green) !important;
+  border-left: 4px solid var(--accent-green) !important;
+}
+.gbox {
+  border: 1px solid var(--accent-blue) !important;
+}
+
+/* Recorded benchmark cards */
+.bm {
+  border: 1px solid var(--accent-yellow) !important;
+}
+.bm[open] {
+  border-color: #c8ba70 !important;
+}
+
+/* Safety alerts get a muted crimson outline, not a loud fill */
+.alarm {
+  border: 1px solid var(--accent-crimson) !important;
+  border-left: 4px solid var(--accent-crimson) !important;
+}
+
+/* Keep the opening form coordinated with the dashboard */
+.intake-card {
+  border: 1px solid var(--accent-blue) !important;
+  border-top: 4px solid var(--accent-green) !important;
+}
+
+/* Keep focus visible for keyboard and accessibility */
+.nv:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #829bb0;
+  outline-offset: 2px;
+}
+
+
+/* NEXUS_ALL_WORKSPACE_BOX_BORDERS_V1
+   Consistent borders across all workspaces and nested information panels.
+*/
+:root {
+  --panel-line-blue: #b8cddd;
+  --panel-line-green: #bfceb0;
+  --panel-line-yellow: #dfd49a;
+  --panel-line-crimson: #dfbdb8;
+  --panel-shadow-soft: 0 2px 8px rgba(60, 63, 45, .055);
+}
+
+/* Every major workspace panel gets a clear but quiet outline. */
+.ws .pn,
+.ws .vc,
+.ws .instrument,
+.ws .gbox,
+.ws .bm,
+.ws .signal-path,
+.ws #exp-box,
+.ws .alarm,
+.ws .instrument-face,
+.ws .dduo > *,
+.ws .tiles > *,
+.ws .col > *,
+.ws .ov > *,
+.ws .verdict > * {
+  border: 1px solid var(--hmi-border, #d1d0b8) !important;
+  border-radius: 10px !important;
+}
+
+/* Larger panels: very mild shadow for separation from the page. */
+.ws .pn,
+.ws .gbox,
+.ws .bm,
+.ws .signal-path,
+.ws #exp-box,
+.ws .alarm,
+.ws .dduo > *,
+.ws .col > * {
+  box-shadow: var(--panel-shadow-soft) !important;
+}
+
+/* Keep section headers inside rounded panel edges. */
+.ws .pn > h2,
+.ws .pn > .ph,
+.ws .gbox > h3,
+.ws .gbox > .gh,
+.ws .bm > summary {
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+  border-bottom: 1px solid var(--hmi-border, #d1d0b8) !important;
+}
+
+/* Add restrained accent variation to major content panels. */
+.ws .pn:nth-of-type(4n + 1) {
+  border-color: var(--panel-line-blue) !important;
+}
+.ws .pn:nth-of-type(4n + 2) {
+  border-color: var(--panel-line-green) !important;
+}
+.ws .pn:nth-of-type(4n + 3) {
+  border-color: var(--panel-line-yellow) !important;
+}
+.ws .pn:nth-of-type(4n) {
+  border-color: var(--panel-line-crimson) !important;
+}
+
+/* Small information tiles and inner data blocks: border, no heavy shadow. */
+.ws .tiles > *,
+.ws .instrument-bank > *,
+.ws .dduo > *,
+.ws .t,
+.ws .bbody,
+.ws .exp-pill,
+.ws .pill,
+.ws .chip,
+.ws .vc .sub,
+.ws .vchip,
+.ws .trace-item,
+.ws .stage,
+.ws .reason,
+.ws .decision-item,
+.ws .metric,
+.ws .stat,
+.ws .kv,
+.ws .field,
+.ws .result,
+.ws .benchmark,
+.ws .bm .bbody > *,
+.ws .instrument-foot {
+  border-color: var(--hmi-border, #d1d0b8);
+}
+
+/* Give individual instrument cards their own light accent outline. */
+.ws .instrument-bank > :nth-child(4n + 1) {
+  border-color: var(--panel-line-yellow) !important;
+}
+.ws .instrument-bank > :nth-child(4n + 2) {
+  border-color: var(--panel-line-blue) !important;
+}
+.ws .instrument-bank > :nth-child(4n + 3) {
+  border-color: var(--panel-line-green) !important;
+}
+.ws .instrument-bank > :nth-child(4n) {
+  border-color: var(--panel-line-crimson) !important;
+}
+
+/* Common nested box patterns used by workspace visualizations. */
+.ws [class*="card"],
+.ws [class*="panel"],
+.ws [class*="tile"],
+.ws [class*="metric"],
+.ws [class*="stat"],
+.ws [class*="result"],
+.ws [class*="trace"],
+.ws [class*="stage"],
+.ws [class*="reason"] {
+  border-color: var(--hmi-border, #d1d0b8);
+}
+
+/* Ensure plot frames and controls remain distinct without recoloring plots. */
+.ws canvas,
+.ws svg {
+  border-radius: 5px;
+}
+.ws button:not(.nv) {
+  border-radius: 6px;
+}
+
+/* Safety state retains its semantic color while getting a defined outline. */
+.ws .tn-ok {
+  color: #536c3f !important;
+}
+.ws .tn-warn {
+  color: #8b742e !important;
+}
+.ws .tn-bad {
+  color: #a34e3f !important;
+}
+
+/* Avoid shadows and clipping on compact/mobile layouts. */
+@media (max-width: 800px) {
+  .ws .pn,
+  .ws .gbox,
+  .ws .bm,
+  .ws .signal-path,
+  .ws #exp-box {
+    box-shadow: 0 1px 5px rgba(60, 63, 45, .045) !important;
+  }
+}
+
+
+/* NEXUS_CHROME_YELLOW_V1
+   Rich chrome-gold yellow accents; retain cream and olive surfaces.
+*/
+:root {
+  --hmi-yellow: #f5c542;
+  --hmi-yellow-soft: #f9e8a0;
+  --accent-yellow: #f0c13c;
+  --accent-yellow-bg: #fff9e6;
+  --panel-line-yellow: #e9c65b;
+}
+
+/* Selected navigation and primary yellow accent */
+.nv[aria-selected="true"] {
+  background: #f9e8a0 !important;
+  border-color: #dfbd48 !important;
+  color: #3d3a2c !important;
+}
+
+/* Yellow-accented instrument cards and verdict panel */
+#verdict .vc:nth-child(3) {
+  border-color: #e9c65b !important;
+  border-top-color: #f0c13c !important;
+}
+.instrument-bank .instrument:nth-child(4n + 1) {
+  border-color: #e9c65b !important;
+  border-top-color: #f0c13c !important;
+}
+
+/* Small yellow tags, markers, and highlights */
+.intake-brand-name span {
+  color: #dca91b !important;
+}
+.intake-section-label,
+.inst-index {
+  color: #98751b !important;
+}
+.instrument-voltage {
+  border-top-color: #f0c13c !important;
+}
+.bm,
+.bm[open] {
+  border-color: #e9d58b !important;
+}
+
+/* Keep yellow highlights readable against the light HMI palette */
+.nv[aria-selected="true"]:hover {
+  background: #f6df83 !important;
+}
+
+
+/* Session History */
+.history-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.history-intro h2 { margin: 0 0 6px; }
+.history-intro p { margin: 0; color: var(--mut); }
+#history-count {
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  white-space: nowrap;
+  font-size: 12px;
+}
+.history-message { color: var(--mut); }
+.history-list { display: grid; gap: 10px; }
+.history-row {
+  border: 1px solid var(--ln);
+  border-radius: 14px;
+  background: var(--pn);
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(25, 35, 45, 0.04);
+}
+.history-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 17px;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
+}
+.history-main { min-width: 0; }
+.history-title { font-weight: 650; overflow-wrap: anywhere; }
+.history-subtitle { margin-top: 5px; color: var(--mut); font-size: 12px; }
+.history-status {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #f6df83;
+  color: #51451d;
+  font-size: 11px;
+  font-weight: 650;
+}
+.history-status[data-status="completed"] { background: #dcebdc; color: #315c3b; }
+.history-status[data-status="active"] { background: #dce7f4; color: #365777; }
+.history-status[data-status="error"] { background: #f3dedd; color: #8b4141; }
+.history-details {
+  padding: 0 17px 17px;
+  border-top: 1px solid var(--ln);
+}
+.history-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding-top: 15px;
+}
+.history-detail {
+  min-width: 0;
+  padding: 11px;
+  border-radius: 10px;
+  background: rgba(125, 140, 155, 0.07);
+}
+.history-detail-label {
+  margin-bottom: 5px;
+  color: var(--mut);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.history-detail-value { overflow-wrap: anywhere; font-size: 13px; }
+@media (max-width: 600px) {
+  .history-intro { align-items: flex-start; flex-direction: column; }
+  .history-detail-grid { grid-template-columns: 1fr; }
+}
+
+
+/* HISTORY_HMI_PASTEL_CARDS_V1
+   Use the dashboard's existing four muted HMI accent colors.
+*/
+#ws-history .history-row {
+  --history-accent: var(--panel-line-blue);
+  border: 1px solid var(--history-accent) !important;
+  background: color-mix(in srgb, var(--history-accent) 32%, white);
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+#ws-history .history-row:nth-child(4n + 1) {
+  --history-accent: var(--panel-line-blue);
+}
+#ws-history .history-row:nth-child(4n + 2) {
+  --history-accent: var(--panel-line-green);
+}
+#ws-history .history-row:nth-child(4n + 3) {
+  --history-accent: var(--panel-line-yellow);
+}
+#ws-history .history-row:nth-child(4n) {
+  --history-accent: var(--panel-line-crimson);
+}
+
+/* The battery summary gets a soft tint as well as its colored border. */
+#ws-history .history-toggle {
+  background: color-mix(in srgb, var(--history-accent) 28%, white);
+  border-left: 4px solid var(--history-accent);
+  transition: background 0.15s ease;
+}
+#ws-history .history-toggle:hover {
+  background: color-mix(in srgb, var(--history-accent) 43%, white);
+}
+#ws-history .history-status {
+  border: 1px solid color-mix(in srgb, var(--history-accent) 75%, white);
+}
+
+/* Expanded content is visibly tinted, not just outlined. */
+#ws-history .history-details {
+  background: color-mix(in srgb, var(--history-accent) 43%, white);
+  border-top: 1px solid var(--history-accent);
+  padding-top: 15px;
+}
+#ws-history .history-detail-grid {
+  padding-top: 0;
+}
+#ws-history .history-detail {
+  background: color-mix(in srgb, var(--history-accent) 20%, white);
+  border: 1px solid color-mix(in srgb, var(--history-accent) 60%, white);
+  border-radius: 9px;
+}
+#ws-history .history-detail-label {
+  color: #59636a;
+}
+
 </style>
 </head>
-<body>
+<body class="intake-mode">
+
+<section class="intake-screen" aria-label="Battery specimen intake">
+  <div class="intake-card">
+    <div class="intake-brand">
+      <div>
+        <div class="intake-brand-name">NEXUS<span>.</span></div>
+        <div class="intake-brand-sub">RMK REVOLT / BATTERY INTELLIGENCE</div>
+        <div class="intake-eyebrow">SPECIMEN INTAKE TERMINAL&nbsp; / &nbsp;01</div>
+      </div>
+      <svg class="intake-battery-art" viewBox="0 0 120 110"
+           role="img" aria-label="Technical battery illustration">
+        <g fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M42 12h36v9H42z"/>
+          <rect x="27" y="21" width="66" height="76" rx="3"/>
+          <path d="M43 40h34M43 49h34M43 58h20"/>
+          <path d="M60 65l-9 13h9l-3 10 13-16h-9l3-7z"
+                fill="#d97706" stroke="#d97706"/>
+          <path d="M10 32h11M10 38h7M99 72h11M103 78h7"/>
+        </g>
+        <circle cx="93" cy="21" r="4" fill="#16803c"/>
+      </svg>
+    </div>
+    <div class="intake-section-label">BATTERY SPECIMEN DETAILS</div>
+    <h1>Register Battery Specimen</h1>
+    <p class="intake-intro">
+      Enter the battery details to open the qualification console.
+      All six fields are required.
+    </p>
+
+    <form id="battery-intake-form">
+      <div class="intake-grid">
+        <div class="intake-field">
+          <label for="intake-battery-id">BATTERY ID</label>
+          <input id="intake-battery-id" name="batteryId"
+                 type="text" required autocomplete="off">
+        </div>
+        <div class="intake-field">
+          <label for="intake-cell-id">CELL ID</label>
+          <input id="intake-cell-id" name="cellId"
+                 type="text" required autocomplete="off">
+        </div>
+        <div class="intake-field">
+          <label for="intake-chemistry">DECLARED CHEMISTRY</label>
+          <select id="intake-chemistry" name="chemistry" required>
+            <option value="" selected disabled>Select chemistry</option>
+            <option value="Li-ion (LFP)">Li-ion (LFP)</option>
+            <option value="Li-ion (LCO)">Li-ion (LCO)</option>
+            <option value="Lead-acid">Lead-acid</option>
+            <option value="NiMH">NiMH</option>
+            <option value="Other">Other</option>
+            <option value="Li-ion (NMC)">Li-ion (NMC)</option>
+          </select>
+        </div>
+        <div class="intake-field">
+          <label for="intake-voltage">NOMINAL VOLTAGE (V)</label>
+          <input id="intake-voltage" name="voltage"
+                 type="number" min="0.01" step="any" required>
+        </div>
+        <div class="intake-field">
+          <label for="intake-capacity">NOMINAL CAPACITY (mAh)</label>
+          <input id="intake-capacity" name="capacity"
+                 type="number" min="1" step="any" required
+                 placeholder="e.g. 2500">
+        </div>
+        <div class="intake-field">
+          <label for="intake-source">DATA SOURCE</label>
+          <select id="intake-source" name="source" required>
+            <option value="" selected disabled>Select data source</option>
+            <option value="Physical battery">Physical battery</option>
+            <option value="Dataset / recorded data">Dataset / recorded data</option>
+            <option value="Simulated data">Simulated data</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="intake-submit" type="submit">
+        CONTINUE TO QUALIFICATION CONSOLE →
+      </button>
+      <p class="intake-footnote">
+        Intake details are held in this page session only.
+        They are not permanently saved by this form.
+      </p>
+    </form>
+  </div>
+</section>
+
 <header class="top">
   <div class="ttl">
     <span class="logo">NEXUS &bull; <b>RMK REVOLT</b></span>
@@ -353,6 +1615,7 @@ body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.45 var(--sans)}
     <button class="nv" type="button" data-ws="trend"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 14V2M2 14h12M4 10l3-3 2 2 4-5"/></svg>TEST GRAPH</button>
     <button class="nv" type="button" data-ws="trace"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3v10M3 4h9M3 8h6M3 12h8"/></svg>DECISION TRACE</button>
     <button class="nv" type="button" data-ws="bench"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3zM6 6h4M6 9h4"/></svg>BENCHMARKS</button>
+    <button class="nv" type="button" data-ws="history"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2a6 6 0 1 1-5.2 3M2 2v3h3M8 4v4l3 2"/></svg>HISTORY</button>
   </nav>
 
   <main class="main">
@@ -379,12 +1642,25 @@ body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.45 var(--sans)}
         <div class="exp-reasons" id="exp-reasons"></div>
       </div>
 
-      <!-- Live Measurements Tiles -->
-      <div class="tiles" aria-label="Live measurements">
-        <div class="tile"><div class="th"><span class="l"><span class="tag-cls tag-a">LIVE</span> VOLTAGE</span><span class="vchip" id="chip-v">N/A</span></div><div class="n na" id="volt">N/A</div></div>
-        <div class="tile"><div class="th"><span class="l"><span class="tag-cls tag-a">LIVE</span> CURRENT</span><span class="vchip" id="chip-i">N/A</span></div><div class="n na" id="curr">N/A</div></div>
-        <div class="tile"><div class="th"><span class="l"><span class="tag-cls tag-a">LIVE</span> POWER</span><span class="vchip" id="chip-p">N/A</span></div><div class="n na" id="power">N/A</div></div>
-        <div class="tile"><div class="th"><span class="l"><span class="tag-cls tag-a">LIVE</span> TEMP</span><span class="vchip" id="chip-t">N/A</span></div><div class="n na" id="temp">N/A</div></div>
+      <!-- Primary instruments: values remain driven by the existing telemetry adapter -->
+      <div class="instrument-bank" aria-label="Primary battery instruments">
+        <div class="instrument instrument-voltage"><div class="instrument-head"><span class="inst-index">01</span><span class="inst-label">CELL VOLTAGE</span><span class="vchip" id="chip-v">N/A</span></div><div class="instrument-face"><div class="dial-markers" aria-hidden="true"></div><div class="n na" id="volt">N/A</div><span class="unit">VOLTS</span></div><div class="instrument-foot"><span class="live-mark"></span> VOLTAGE CHANNEL</div></div>
+        <div class="instrument"><div class="instrument-head"><span class="inst-index">02</span><span class="inst-label">CURRENT</span><span class="vchip" id="chip-i">N/A</span></div><div class="instrument-face"><div class="dial-markers" aria-hidden="true"></div><div class="n na" id="curr">N/A</div><span class="unit">AMPERES</span></div><div class="instrument-foot"><span class="live-mark"></span> CURRENT CHANNEL</div></div>
+        <div class="instrument"><div class="instrument-head"><span class="inst-index">03</span><span class="inst-label">POWER</span><span class="vchip" id="chip-p">N/A</span></div><div class="instrument-face"><div class="dial-markers" aria-hidden="true"></div><div class="n na" id="power">N/A</div><span class="unit">WATTS</span></div><div class="instrument-foot"><span class="live-mark"></span> DERIVED MEASUREMENT</div></div>
+        <div class="instrument"><div class="instrument-head"><span class="inst-index">04</span><span class="inst-label">TEMPERATURE</span><span class="vchip" id="chip-t">N/A</span></div><div class="instrument-face"><div class="dial-markers" aria-hidden="true"></div><div class="n na" id="temp">N/A</div><span class="unit">CELSIUS</span></div><div class="instrument-foot"><span class="live-mark"></span> THERMAL CHANNEL</div></div>
+      </div>
+      <!-- Signal path overview; states are populated from the existing status fields, not simulated -->
+      <div class="signal-path" aria-label="Telemetry signal path">
+        <div class="signal-title"><span>01 / SIGNAL PATH</span><span>OBSERVABILITY ONLY · NO ACTUATION</span></div>
+        <div class="signal-nodes">
+          <div class="signal-node"><span class="node-index">A</span><strong>BATTERY SPECIMEN</strong><small>Measurement source</small></div>
+          <span class="signal-link" aria-hidden="true"></span>
+          <div class="signal-node signal-node-core"><span class="node-index">B</span><strong>ESP32 NODE</strong><small id="path-hw-state">Hardware status</small></div>
+          <span class="signal-link" aria-hidden="true"></span>
+          <div class="signal-node"><span class="node-index">C</span><strong>WI-FI / BACKEND</strong><small id="path-link-state">Telemetry link</small></div>
+          <span class="signal-link" aria-hidden="true"></span>
+          <div class="signal-node"><span class="node-index">D</span><strong>QUALIFICATION</strong><small>Last completed run</small></div>
+        </div>
       </div>
 
       <!-- Column 1: Hardware & Wi-Fi Node, Battery Identity, Data Quality -->
@@ -594,12 +1870,101 @@ body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.45 var(--sans)}
         <div id="bench"><span class="na">N/A</span></div>
       </div>
     </section>
+
+      <!-- Workspace: Session History -->
+      <section class="ws pn hist" id="ws-history" hidden>
+        <div class="history-intro">
+          <div>
+            <h2>Session History</h2>
+            <p>Review saved battery intake sessions and their latest measurements.</p>
+          </div>
+          <span id="history-count">0 sessions</span>
+        </div>
+        <p class="history-message" id="history-message">Loading saved sessions…</p>
+        <div class="history-list" id="history-list"></div>
+      </section>
   </main>
 </div>
 <footer class="foot"><p id="msg"></p></footer>
 
 <script>
 var NA = "N/A";
+var intakeData = null;
+var historySessionId = null;
+var historyLastSync = "";
+var historySyncInFlight = false;
+
+(function(){
+  var form = document.getElementById("battery-intake-form");
+  if (!form) return;
+
+  form.addEventListener("submit", function(event){
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+
+    var fd = new FormData(form);
+    var voltage = Number(fd.get("voltage"));
+    var capacity = Number(fd.get("capacity"));
+
+    var candidate = {
+      batteryId: String(fd.get("batteryId")).trim(),
+      cellId: String(fd.get("cellId")).trim(),
+      chemistry: String(fd.get("chemistry")).trim(),
+      voltage: voltage,
+      capacity: capacity,
+      source: String(fd.get("source")).trim()
+    };
+
+    if (!candidate.batteryId || !candidate.cellId ||
+        !candidate.chemistry || !candidate.source ||
+        !isFinite(voltage) || voltage <= 0 ||
+        !isFinite(capacity) || capacity < 1) {
+      return;
+    }
+
+    var button = form.querySelector('button[type="submit"]');
+    if (button) button.disabled = true;
+
+    fetch("/api/history/session", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({intake: candidate})
+    })
+    .then(function(response){
+      return response.json().then(function(data){
+        if (!response.ok) {
+          throw new Error(data.message || data.error || "History save failed.");
+        }
+        return data;
+      });
+    })
+    .then(function(data){
+      if (!data.session || !data.session.session_id) {
+        throw new Error("No session ID was returned by the server.");
+      }
+
+      intakeData = candidate;
+      historySessionId = data.session.session_id;
+      historyLastSync = "";
+
+      put("b-bat-id", candidate.batteryId);
+      put("b-cell-id", candidate.cellId);
+      put("b-decl-chem", candidate.chemistry);
+      put("b-nom-v", candidate.voltage.toFixed(2) + " V");
+      put("b-nom-cap", (candidate.capacity / 1000).toFixed(3) + " Ah");
+      put("b-source", candidate.source);
+
+      document.body.classList.remove("intake-mode");
+      loadHistory();
+    })
+    .catch(function(error){
+      alert("Could not save intake to History.\n" + error.message);
+    })
+    .finally(function(){
+      if (button) button.disabled = false;
+    });
+  });
+})();
 var last = null;
 var tab = "v";
 var TABS = [["v","VOLTAGE"],["i","CURRENT"],["p","POWER"],["t","TEMPERATURE"],["risk","MARGINAL RISK"],["soh","SOH"],["r0","R0"]];
@@ -612,6 +1977,195 @@ function txt(v){ return has(v) ? String(v) : NA; }
 function isn(v){ return typeof v === "number" && isFinite(v); }
 function pct(v, d){ return isn(v) ? (v * 100).toFixed(d) + "%" : NA; }
 function pretty(s){ return has(s) ? String(s).replace(/_/g, " ") : NA; }
+
+
+function renderHistory(sessions){
+  const list = $("history-list");
+  const message = $("history-message");
+  const count = $("history-count");
+  if (!list || !message || !count) return;
+
+  // Preserve expanded rows when new telemetry refreshes the list.
+  const expanded = new Set(
+    Array.from(list.querySelectorAll(".history-row[data-open='true']"))
+      .map(row => row.dataset.sessionId)
+  );
+
+  list.replaceChildren();
+  const records = Array.isArray(sessions) ? sessions : [];
+  count.textContent = records.length + (records.length === 1 ? " session" : " sessions");
+  message.textContent = records.length ? "" : "No saved sessions yet. Submit the battery intake form to create one.";
+  message.hidden = records.length > 0;
+
+  const safe = value => {
+    if (value === null || value === undefined || value === "") return "—";
+    return String(value);
+  };
+  const pretty = value => safe(value).replace(/_/g, " ");
+  const dateText = value => {
+    if (!value) return "—";
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? safe(value) : date.toLocaleString();
+  };
+  const addDetail = (grid, label, value) => {
+    const cell = document.createElement("div");
+    cell.className = "history-detail";
+    const heading = document.createElement("div");
+    heading.className = "history-detail-label";
+    heading.textContent = label;
+    const text = document.createElement("div");
+    text.className = "history-detail-value";
+    text.textContent = safe(value);
+    cell.append(heading, text);
+    grid.appendChild(cell);
+  };
+
+  records.forEach(session => {
+    const battery = session.battery || session.intake || {};
+    const measurements = session.measurements || {};
+    const id = safe(session.session_id);
+    const statusText = pretty(session.status || "STATUS UNAVAILABLE");
+    const statusClass = String(session.status || "").toLowerCase();
+
+    const row = document.createElement("article");
+    row.className = "history-row";
+    row.dataset.sessionId = id;
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "history-toggle";
+    toggle.setAttribute("aria-expanded", expanded.has(id) ? "true" : "false");
+
+    const main = document.createElement("div");
+    main.className = "history-main";
+
+    const title = document.createElement("div");
+    title.className = "history-title";
+    title.textContent = "Battery " + safe(battery.battery_id || session.battery_id);
+
+    const subtitle = document.createElement("div");
+    subtitle.className = "history-subtitle";
+    subtitle.textContent =
+      "Cell " + safe(battery.cell_id || session.cell_id) +
+      " · Started " + dateText(session.start_time || session.started_at);
+
+    const badge = document.createElement("span");
+    badge.className = "history-status";
+    badge.dataset.status = statusClass;
+    badge.textContent = statusText;
+
+    main.append(title, subtitle);
+    toggle.append(main, badge);
+
+    const details = document.createElement("div");
+    details.className = "history-details";
+    details.hidden = !expanded.has(id);
+
+    const grid = document.createElement("div");
+    grid.className = "history-detail-grid";
+
+    addDetail(grid, "Session ID", id);
+    addDetail(grid, "Start time", dateText(session.start_time || session.started_at));
+    addDetail(grid, "Battery ID", battery.battery_id || session.battery_id);
+    addDetail(grid, "Cell ID", battery.cell_id || session.cell_id);
+    addDetail(grid, "Chemistry", battery.chemistry || battery.declared_chemistry || session.chemistry);
+    addDetail(grid, "Nominal voltage", battery.nominal_voltage_v ?? session.nominal_voltage_v);
+    addDetail(grid, "Nominal capacity", battery.nominal_capacity_mah != null
+      ? (Number(battery.nominal_capacity_mah) / 1000).toFixed(3) + " Ah"
+      : session.nominal_capacity_ah != null ? session.nominal_capacity_ah + " Ah" : "—");
+    addDetail(grid, "Data source", battery.data_source || session.data_source);
+    addDetail(grid, "Latest voltage", measurements.voltage_v != null ? measurements.voltage_v + " V" : "—");
+    addDetail(grid, "Latest current", measurements.current_a != null ? measurements.current_a + " A" : "—");
+    addDetail(grid, "Latest power", measurements.power_w != null ? measurements.power_w + " W" : "—");
+    addDetail(grid, "Latest temperature", measurements.temperature_c != null ? measurements.temperature_c + " °C" : "—");
+    addDetail(grid, "Status", statusText);
+    addDetail(grid, "Last updated", dateText(session.updated_at || session.last_updated));
+
+    details.appendChild(grid);
+    toggle.addEventListener("click", () => {
+      const opening = details.hidden;
+      details.hidden = !opening;
+      toggle.setAttribute("aria-expanded", opening ? "true" : "false");
+      row.dataset.open = opening ? "true" : "false";
+    });
+
+    row.dataset.open = expanded.has(id) ? "true" : "false";
+    row.append(toggle, details);
+    list.appendChild(row);
+  });
+}
+
+function loadHistory(){
+  if (!$("history-list")) return;
+
+  fetch("/api/history")
+    .then(function(response){
+      if (!response.ok) throw new Error("History request failed.");
+      return response.json();
+    })
+    .then(function(data){
+      if (typeof renderHistory === "function") {
+        renderHistory(data.sessions || []);
+      }
+    })
+    .catch(function(error){
+      console.warn("History refresh failed:", error.message);
+    });
+}
+
+function syncHistoryFromSnapshot(snapshot, telemetry, session){
+  if (!historySessionId || !snapshot ||
+      snapshot.available !== true || historySyncInFlight) return;
+
+  telemetry = telemetry || {};
+  session = session || {};
+
+  var measurements = {
+    voltage_v: isn(telemetry.voltage_v) ? telemetry.voltage_v : null,
+    current_a: isn(telemetry.current_a) ? telemetry.current_a : null,
+    power_w: isn(telemetry.power_w) ? telemetry.power_w : null,
+    temperature_c: isn(telemetry.temperature_c) ? telemetry.temperature_c : null
+  };
+
+  var explicitStatus = has(session.status) ? String(session.status) : null;
+  var signature = JSON.stringify({
+    id: historySessionId,
+    measurements: measurements,
+    status: explicitStatus
+  });
+
+  if (signature === historyLastSync) return;
+
+  historySyncInFlight = true;
+  var sentSessionId = historySessionId;
+
+  fetch("/api/history/update", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      session_id: sentSessionId,
+      measurements: measurements,
+      status: explicitStatus
+    })
+  })
+  .then(function(response){
+    if (!response.ok) throw new Error("History update failed.");
+    return response.json();
+  })
+  .then(function(){
+    if (historySessionId === sentSessionId) {
+      historyLastSync = signature;
+    }
+    loadHistory();
+  })
+  .catch(function(error){
+    console.warn("History measurement update failed:", error.message);
+  })
+  .finally(function(){
+    historySyncInFlight = false;
+  });
+}
+
 function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
 function svg(tag, attrs, text){ var e = document.createElementNS(SVGNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text !== undefined) e.textContent = text; return e; }
 
@@ -652,7 +2206,7 @@ function showWs(name){
 }
 (function(){
   var nv = document.querySelectorAll(".nv");
-  for (var i = 0; i < nv.length; i++) nv[i].onclick = function(){ showWs(this.getAttribute("data-ws")); };
+  for (var i = 0; i < nv.length; i++) nv[i].onclick = function(){ var name = this.getAttribute("data-ws"); showWs(name); if (name === "history") loadHistory(); };
   showWs("overview");
 })();
 
@@ -1027,6 +2581,7 @@ function render(s){
   putNum("curr", t.current_a, 3, "A");
   putNum("power", t.power_w, 2, "W");
   putNum("temp", t.temperature_c, 1, "\u00b0C");
+  syncHistoryFromSnapshot(s, t, sess);
 
   var chipT = t.is_valid === true ? "VALID" : (t.is_valid === false ? "INVALID" : NA);
   ["chip-v","chip-i","chip-p","chip-t"].forEach(function(cid){
@@ -1072,12 +2627,12 @@ function render(s){
   put("hw-sensor-valid", hwSensText, tone(hwSensText));
 
   /* SECTION A: Battery Specimen & Protocol */
-  put("b-bat-id", bat.battery_id || s.cell_id || NA);
-  put("b-cell-id", bat.cell_id || s.cell_id || NA);
-  put("b-decl-chem", bat.declared_chemistry || c.declared_chemistry || NA);
-  put("b-nom-v", numStr(bat.nominal_voltage, 2, "V"));
-  put("b-nom-cap", numStr(bat.nominal_capacity_ah, 1, "Ah"));
-  put("b-source", bat.data_source || s.source || NA);
+  put("b-bat-id", intakeData ? intakeData.batteryId : (bat.battery_id || s.cell_id || NA));
+  put("b-cell-id", intakeData ? intakeData.cellId : (bat.cell_id || s.cell_id || NA));
+  put("b-decl-chem", intakeData ? intakeData.chemistry : (bat.declared_chemistry || c.declared_chemistry || NA));
+  put("b-nom-v", intakeData ? intakeData.voltage.toFixed(2) + " V" : numStr(bat.nominal_voltage, 2, "V"));
+  put("b-nom-cap", intakeData ? (intakeData.capacity / 1000).toFixed(3) + " Ah" : numStr(bat.nominal_capacity_ah, 1, "Ah"));
+  put("b-source", intakeData ? intakeData.source : (bat.data_source || s.source || NA));
   put("b-proto-id", sess.protocol_id || NA);
   put("b-soft-ver", bat.software_version || "SECONDShift-v2.0");
   put("b-cfg-ver", bat.configuration_version || "2.0.0");
@@ -1290,6 +2845,16 @@ function loadBenchmarks(){
 }
 
 renderTabs(); renderStages(false, {}, []); renderGraph();
+function syncSignalPath(){
+  var hw = $("hw-fsm-state"), wifi = $("hw-wifi-status"), back = $("hw-backend-status");
+  var hwText = hw && hw.textContent ? hw.textContent : "Hardware status";
+  var linkText = (wifi && wifi.textContent ? wifi.textContent : "Wi-Fi N/A") + " / " + (back && back.textContent ? back.textContent : "Backend N/A");
+  var a = $("path-hw-state"), b = $("path-link-state");
+  if (a) a.textContent = hwText;
+  if (b) b.textContent = linkText;
+}
+var originalRender = render;
+render = function(s){ originalRender(s); syncSignalPath(); };
 poll(); loadBenchmarks(); initStream(); setInterval(poll, 1000);
 </script>
 </body>
@@ -1316,6 +2881,11 @@ class DashboardHandler(http.server.BaseHTTPRequestHandler):
                 self._json(status_adapter.build_live_telemetry_snapshot(GLOBAL_INGEST_ENGINE))
             else:
                 self._json(status_adapter.read_status_snapshot(STATUS_PATH))
+        elif path == "/api/history":
+            try:
+                self._json({"available": True, "sessions": SESSION_HISTORY.list_sessions()})
+            except RuntimeError as exc:
+                self._json({"error": "HISTORY_READ_FAILED", "message": str(exc)}, 500)
         elif path == "/api/telemetry/live":
             if GLOBAL_INGEST_ENGINE:
                 self._json(GLOBAL_INGEST_ENGINE.get_live_snapshot())
@@ -1382,7 +2952,31 @@ class DashboardHandler(http.server.BaseHTTPRequestHandler):
 
         client_ip = self.client_address[0] if self.client_address else "127.0.0.1"
 
-        if path == "/api/telemetry":
+        if path == "/api/history/session":
+            try:
+                record = SESSION_HISTORY.create_session(payload.get("intake", {}))
+                self._json({"status": "CREATED", "session": record}, 201)
+            except ValueError as exc:
+                self._json({"error": "INVALID_INTAKE", "message": str(exc)}, 400)
+            except RuntimeError as exc:
+                self._json({"error": "HISTORY_WRITE_FAILED", "message": str(exc)}, 500)
+        elif path == "/api/history/update":
+            session_id = str(payload.get("session_id", "")).strip()
+            if not session_id:
+                self._json({"error": "SESSION_ID_REQUIRED"}, 400)
+                return
+            try:
+                record = SESSION_HISTORY.update_session(
+                    session_id,
+                    measurements=payload.get("measurements"),
+                    status=payload.get("status"),
+                )
+                self._json({"status": "UPDATED", "session": record})
+            except KeyError:
+                self._json({"error": "SESSION_NOT_FOUND"}, 404)
+            except RuntimeError as exc:
+                self._json({"error": "HISTORY_WRITE_FAILED", "message": str(exc)}, 500)
+        elif path == "/api/telemetry":
             if not GLOBAL_INGEST_ENGINE:
                 self._json({"error": "INGESTION_DISABLED"}, 503)
                 return
